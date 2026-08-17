@@ -3,354 +3,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Орта ғасырлар тарихы: Аналитикалық саралау</title>
+    <title>Орта ғасырлар тарихы: Интерактивті практикум</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #34495e;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --success: #27ae60;
-            --warning: #f39c12;
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text: #1F2937;
+            --success: #10B981;
+            --danger: #EF4444;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light);
-            color: var(--primary);
-            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
-        header {
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        header h1 { margin: 0; font-size: 2.5rem; }
-        header p { font-style: italic; opacity: 0.8; margin-top: 10px; }
-        
         .container {
             max-width: 900px;
-            margin: 30px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 0 auto;
         }
-        .question-card {
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            color: #6B7280;
+            font-size: 1.1rem;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background-color: #E5E7EB;
+            color: var(--text);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        .section {
             display: none;
-            animation: fadeIn 0.5s;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        .question-card.active {
+        .section.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Quiz Styles */
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E5E7EB;
+        }
         .question-text {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: var(--primary);
-            border-left: 5px solid var(--accent);
-            padding-left: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
         .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
         }
         .option-btn {
-            background-color: #f8f9fa;
-            border: 2px solid #bdc3c7;
             padding: 15px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
             text-align: left;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
         }
         .option-btn:hover {
-            background-color: #e2e6e9;
-            border-color: var(--secondary);
+            border-color: var(--primary);
+            background-color: #EEF2FF;
         }
         .option-btn.selected {
-            background-color: var(--secondary);
-            color: white;
             border-color: var(--primary);
+            background-color: var(--primary);
+            color: white;
         }
-        
-        .controls {
-            margin-top: 30px;
+        .option-btn.correct {
+            border-color: var(--success);
+            background-color: var(--success);
+            color: white;
+        }
+        .option-btn.wrong {
+            border-color: var(--danger);
+            background-color: var(--danger);
+            color: white;
+        }
+        /* Matching Styles */
+        .matching-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            gap: 20px;
         }
-        .btn {
-            background-color: var(--accent);
+        .match-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .match-item {
+            padding: 15px;
+            background: #F9FAFB;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .match-item:hover { background: #EEF2FF; }
+        .match-item.selected {
+            border-color: var(--primary);
+            background: #EEF2FF;
+        }
+        .match-item.matched {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+            cursor: default;
+        }
+        /* Controls */
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: 0.3s;
         }
-        .btn:hover { background-color: #c0392b; }
-        .btn:disabled { background-color: #95a5a6; cursor: not-allowed; }
-        
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .progress {
-            height: 100%;
-            background-color: var(--success);
-            width: 0%;
-            transition: width 0.4s ease;
-        }
-        
-        #results {
-            text-align: center;
-            display: none;
-        }
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            margin: 0 auto 20px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        }
-        .analysis-box {
-            background: #fdfae6;
-            border: 1px solid var(--warning);
+        .action-btn:hover { background-color: var(--primary-hover); }
+        .result-box {
+            margin-top: 20px;
             padding: 20px;
             border-radius: 8px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        .img-placeholder {
-            width: 100%;
-            height: 250px;
-            background: url('https://images.unsplash.com/photo-1599839619722-39751411ea63?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') center/cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: flex-end;
-            padding: 15px;
-            box-sizing: border-box;
-            color: white;
+            text-align: center;
+            font-size: 1.5rem;
             font-weight: bold;
-            text-shadow: 1px 1px 3px black;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Тарихи Сараптама: Орта Ғасырлар</h1>
-    <p>«Атамұра» баспасы және авторлық база мәліметтері негізіндегі күрделі тест</p>
-</header>
+<div class="container">
+    <header>
+        <h1>Тарих Әлемі: Орта ғасырлар</h1>
+        <p class="subtitle">Феодалдық қоғам мен экономиканы талдауға арналған авторлық кешен</p>
+    </header>
 
-<div class="container" id="quiz-container">
-    <div class="progress-bar"><div class="progress" id="progress"></div></div>
-    
-    <div id="questions-area"></div>
-    
-    <div class="controls">
-        <span id="question-tracker">1 / 6</span>
-        <button class="btn" id="next-btn" disabled>Келесі сұрақ</button>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('quiz')">Аналитикалық Тест</button>
+        <button class="tab-btn" onclick="switchTab('matching')">Сәйкестендіру (Терминдер)</button>
+    </div>
+
+    <div id="quiz" class="section active">
+        <h2>Талдау және логикалық сұрақтар</h2>
+        <p>Жай фактілер емес, себеп-салдарды анықтаңыз.</p>
+        <div id="quiz-container"></div>
+        <button class="action-btn" onclick="checkQuiz()">Нәтижені тексеру</button>
+        <div id="quiz-result" class="result-box"></div>
+    </div>
+
+    <div id="matching" class="section">
+        <h2>Концептуалды сәйкестендіру</h2>
+        <p>Терминдер мен олардың тарихи мағынасын дәл табыңыз.</p>
+        <div class="matching-container">
+            <div class="match-column" id="terms-col"></div>
+            <div class="match-column" id="defs-col"></div>
+        </div>
+        <div id="match-result" class="result-box" style="display: block; background: #EEF2FF; color: var(--primary);">Жұптарды басып сәйкестендіріңіз</div>
     </div>
 </div>
 
-<div class="container" id="results">
-    <h2>Сараптама қорытындысы</h2>
-    <div class="score-circle" id="score-display">0%</div>
-    <h3 id="level-title"></h3>
-    <div class="analysis-box" id="analysis-text"></div>
-    <button class="btn" onclick="location.reload()" style="margin-top: 20px;">Қайта бастау</button>
-</div>
-
 <script>
+    // --- ДЕРЕКТЕР ҚОРЫ (Құжаттан алынған күрделі сұрақтар) ---
     const quizData = [
         {
-            topic: "Тарихтағы орта ғасырлар түсінігі",
-            question: "Гуманист-тарихшы Флавио Бьондоның көзқарасы бойынша «Қара түнек» кезеңі қандай тарихи құбылыстармен тікелей байланысты болды?",
+            question: "Италиялық гуманистер антикалық мәдениеттің күйреуінен бастап Қайта өрлеу дәуіріне дейінгі кезеңді неліктен «Қара түнек» деп атады?",
             options: [
-                "Христиан шіркеуінің екіге бөлінуі мен саяси бытыраңқылықтың күшеюімен",
-                "Батыс Рим империясының құлауы мен антикалық өнер, философия, ғылымның ұмытылуымен",
-                "Кейінгі орта ғасырлардағы капиталистік өндіріс тәсілінің туа бастауымен",
-                "Ұлы географиялық ашылулар мен Америка құрлығының табылуымен"
+                "Бұл кезде күн тұтылу жиі болғандықтан",
+                "Еуропада антикалық өнер, философия, ғылым ұмытылып, қаталдық жайлағандықтан",
+                "Жаңа мемлекеттердің саяси өмірі қарқынды дамығандықтан",
+                "Адамдар тек түнде жұмыс істеуге мәжбүр болғандықтан"
             ],
-            correct: 1,
-            explanation: "Флавио Бьондо Батыс Рим империясының құлауы антикалық мәдениет пен ғылымның күйреуіне әкелді, сондықтан Қайта өрлеуге дейінгі кезеңді «қара түнек» деп санады."
+            correct: 1
         },
         {
-            topic: "Феодалдық шаруашылық түрінің ерекшеліктері",
-            question: "Натуралды шаруашылық жағдайында шаруалар мен феодалдар арасындағы экономикалық байланыстың негізгі сипаты қандай болды?",
+            question: "Ерте орта ғасырларда аумағы өте үлкен болған Ұлы Карл империясының тез ыдырап кетуінің басты экономикалық-әлеуметтік себебі неде?",
             options: [
-                "Сауда-саттық жоғары деңгейде дамып, қажетті өнімдер қаладан сатып алынды",
-                "Феодалдар шаруаларға жалақы төлеп, өнімді нарыққа шығарды",
-                "Еш нәрсе сатылмады және сатып алынбады, қажетті азық-түлік пен бұйымдар (тұз бен темірден басқасы) поместьенің өзінде өндірілді",
-                "Шаруалар ақшалай рентаны толығымен төлеп, томаға-тұйықтықтан құтылды"
+                "Шығыс елдерінің үздіксіз шабуылынан",
+                "Мемлекеттің басқару аппаратының болмауынан",
+                "Империяға біріктірілген көптеген халықтардың шаруашылығы мен әдет-ғұрпы әртүрлі болып, бір-бірін түсінбеуінен",
+                "Жердің тек мемлекет меншігінде болуынан"
             ],
-            correct: 2,
-            explanation: "Натуралды шаруашылықта «бәрі өзімізде бар» қағидасы ұстанылды, тек тұз бен темір ғана айырбасқа түсті."
+            correct: 2
         },
         {
-            topic: "Феодалдық қоғамның әлеуметтік құрылымы",
-            question: "Еуропаның кейбір елдерінде (Францияда) «менің вассалымның вассалы менің вассалым емес» қағидасы жұмыс істесе, Германияда бұл жүйе қандай ерекшелікке ие болды?",
+            question: "Франциядағы «Менің вассалымның вассалы – менің вассалым емес» қағидасының негізгі саяси зардабы қандай болды?",
             options: [
-                "Германияда тек ірі феодалдар ғана корольге бағынды, ұсақ рыцарьлар тәуелсіз болды",
-                "Германияда феодалдық сатыдағылардың бәрі өздерін төменнен жоғары қарай корольге бағыныштымыз деп есептеді",
-                "Германияда король билігі мүлдем болмады, оны шіркеу басқарды",
-                "Германия шаруалары тікелей корольге салық төлеп, вассалдық жүйені бұзды"
+                "Король билігінің шексіз күшеюі",
+                "Орталықтандырылған мықты мемлекеттің құрылуы",
+                "Феодалдық бытыраңқылықтың күшеюі және ірі феодалдардың тәуелсіздігі",
+                "Шаруалардың толық еркіндікке шығуы"
             ],
-            correct: 1,
-            explanation: "Францияда вассал тек өз сеньорына бағынса, Германияда барлық сатыдағылар корольге бағынышты саналды."
+            correct: 2
         },
         {
-            topic: "Феодалдық қоғамның негізгі белгілері мен ерекшеліктері",
-            question: "«Қожайынсыз жер болмайды» деген ортағасырлық нақыл нені білдіреді?",
+            question: "Натуралды шаруашылықтың басты сипаты қандай және ол феодалдық қоғамға қалай әсер етті?",
             options: [
-                "Жердің барлығы тек мемлекеттің меншігінде болуын",
-                "Жер кімнің иелігінде болса, биліктің де соның қолында болуын және жердің негізгі табыс көзіне айналуын",
-                "Шаруалардың өз бетінше жер иелену құқығының шексіздігін",
-                "Жердің шіркеу мен монастырьларға ғана тиесілі болуын"
+                "Сауданың дамуына үлкен үлес қосып, қалаларды гүлдендірді",
+                "Қажетті өнімдер поместьенің өзінде өндіріліп, сауда-саттық төмендеді, орталық билік әлсіреді",
+                "Тек ақшалай рентаны қолдану арқылы шаруалардың байюына әкелді",
+                "Көпестердің қоғамдағы ең жоғарғы топқа айналуына негіз болды"
             ],
-            correct: 1,
-            explanation: "Феодализмнің басты белгісі – жердің байлық пен билік көзіне айналуы. Жер сыйға беріліп, оның иесі феодал атанды."
+            correct: 1
         },
         {
-            topic: "Феодалдық шаруашылық түрінің ерекшеліктері",
-            question: "Ерте орта ғасырларда салынған замоктар (қамалдар) қандай күрделі функцияларды қатар атқарды?",
+            question: "Англиядағы «вилландар» мен Франциядағы «сервтердің» негізгі құқықтық айырмашылығы неде?",
             options: [
-                "Тек қана саудагерлердің демалатын орны және жәрмеңке өткізу орталығы",
-                "Шаруалардың балаларын оқытатын алғашқы мектептер мен университеттер базасы",
-                "Феодалдың саяси, соттық, әкімшілік, әскери билігінің орталығы әрі сыртқы жаудан, шаруалар көтерілісінен қорғаныс",
-                "Тек шіркеу қызметкерлерінің құдайға құлшылық ететін орны (соборлар)"
+                "Сервтер әскерге барды, ал вилландар тек егін екті",
+                "Вилландар толық басыбайлы болды, ал сервтер қалаға көше алды",
+                "Вилландар жекебасы ерікті шаруалар болды және жер үлесін мұраға қалдырды, ал сервтер феодалға толық тәуелді болды",
+                "Ешқандай айырмашылық болған жоқ, екеуі де рыцарьлар қатарына кірді"
             ],
-            correct: 2,
-            explanation: "Замок тек тұрақ емес, феодалдың барлық билігінің шоғырланған орталығы әрі қорғаныс бекінісі болды."
-        },
-        {
-            topic: "Феодалдық қоғамның әлеуметтік құрылымы",
-            question: "Басыбайлы шаруалар (сервтер) мен ерікті шаруалардың (вилландар) заңдық құқықтарындағы ең басты айырмашылық неде еді?",
-            options: [
-                "Сервтер өз жер үлесін мұрагерлікпен қалдыра алды, ал вилландар олай ете алмады",
-                "Сервтер тек оброк төледі, ал вилландар тек барщинамен айналысты",
-                "Вилландар саяси билікке араласып, рыцарь бола алды",
-                "Сервтер феодалға толық тәуелді болып, сатылуға немесе айырбасталуға жатты, ал вилландар мүліктерін еркін жұмсап, жерін мұраға қалдыра алды"
-            ],
-            correct: 3,
-            explanation: "Басыбайлы шаруалардың (сервтер) шешім қабылдауға құқығы жоқ және сатылатын мүлік саналды. Ерікті шаруаларда (вилландар) мұрагерлік құқық сақталды."
+            correct: 2
         }
     ];
 
-    let currentQuestion = 0;
-    let score = 0;
-    let selectedOption = null;
+    const matchData = [
+        { term: "Инвеститура", def: "Вассалға феодты (жер иелігін) салтанатты түрде беру рәсімі" },
+        { term: "Оммаж", def: "Вассалдық бағыныштылыққа түскен адам беретін адалдық анты" },
+        { term: "Донжон", def: "Замоктың орталығында орналасқан көп қабатты, қорғанысқа арналған бас мұнара" },
+        { term: "Барщина", def: "Шаруалардың феодалға жер үшін еңбекпен өтеу міндеткерлігі (рента)" },
+        { term: "Ратуша", def: "Қалалық кеңес үйі, қаланың маңызды мәселелері шешілетін орын" }
+    ];
 
-    const questionsArea = document.getElementById('questions-area');
-    const nextBtn = document.getElementById('next-btn');
-    const progress = document.getElementById('progress');
-    const tracker = document.getElementById('question-tracker');
+    // --- ЛОГИКА ---
 
-    function initQuiz() {
+    function switchTab(tabId) {
+        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    // Тестті құру
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
         quizData.forEach((q, index) => {
-            const card = document.createElement('div');
-            card.className = `question-card ${index === 0 ? 'active' : ''}`;
-            card.id = `q-${index}`;
-            
-            let optionsHtml = '';
-            q.options.forEach((opt, i) => {
-                optionsHtml += `<button class="option-btn" onclick="selectOption(${index}, ${i}, this)">${opt}</button>`;
-            });
-
-            card.innerHTML = `
-                <div class="img-placeholder">Тақырып: ${q.topic}</div>
+            let html = `<div class="question-block">
                 <div class="question-text">${index + 1}. ${q.question}</div>
-                <div class="options">${optionsHtml}</div>
-            `;
-            questionsArea.appendChild(card);
+                <div class="options" id="q${index}">`;
+            q.options.forEach((opt, oIndex) => {
+                html += `<button class="option-btn" onclick="selectOption(${index}, ${oIndex})">${opt}</button>`;
+            });
+            html += `</div></div>`;
+            container.innerHTML += html;
         });
-        updateProgress();
     }
 
-    window.selectOption = function(qIndex, optIndex, btnElement) {
-        selectedOption = optIndex;
-        const buttons = document.querySelectorAll(`#q-${qIndex} .option-btn`);
+    let userAnswers = new Array(quizData.length).fill(null);
+
+    function selectOption(qIndex, oIndex) {
+        userAnswers[qIndex] = oIndex;
+        const buttons = document.querySelectorAll(`#q${qIndex} .option-btn`);
         buttons.forEach(btn => btn.classList.remove('selected'));
-        btnElement.classList.add('selected');
-        nextBtn.disabled = false;
-    };
-
-    nextBtn.addEventListener('click', () => {
-        if (selectedOption === quizData[currentQuestion].correct) {
-            score++;
-        }
-        
-        document.getElementById(`q-${currentQuestion}`).classList.remove('active');
-        currentQuestion++;
-        selectedOption = null;
-        nextBtn.disabled = true;
-
-        if (currentQuestion < quizData.length) {
-            document.getElementById(`q-${currentQuestion}`).classList.add('active');
-            tracker.innerText = `${currentQuestion + 1} / ${quizData.length}`;
-            updateProgress();
-        } else {
-            showResults();
-        }
-    });
-
-    function updateProgress() {
-        progress.style.width = `${(currentQuestion / quizData.length) * 100}%`;
+        buttons[oIndex].classList.add('selected');
     }
 
-    function showResults() {
-        document.getElementById('quiz-container').style.display = 'none';
-        document.getElementById('results').style.display = 'block';
+    function checkQuiz() {
+        let score = 0;
+        let isComplete = true;
         
+        userAnswers.forEach((ans, index) => {
+            if (ans === null) isComplete = false;
+        });
+
+        if (!isComplete) {
+            alert("Барлық сұрақтарға жауап беріңіз!");
+            return;
+        }
+
+        userAnswers.forEach((ans, index) => {
+            const buttons = document.querySelectorAll(`#q${index} .option-btn`);
+            buttons.forEach(btn => btn.disabled = true);
+            if (ans === quizData[index].correct) {
+                score++;
+                buttons[ans].classList.add('correct');
+            } else {
+                buttons[ans].classList.add('wrong');
+                buttons[quizData[index].correct].classList.add('correct');
+            }
+        });
+
         const percent = Math.round((score / quizData.length) * 100);
-        document.getElementById('score-display').innerText = `${percent}%`;
+        const resultBox = document.getElementById('quiz-result');
+        resultBox.style.display = 'block';
         
-        const titleEl = document.getElementById('level-title');
-        const analysisEl = document.getElementById('analysis-text');
-        
-        let analysis = "";
         if (percent === 100) {
-            titleEl.innerText = "🏆 Эксперт деңгейі (Терең аналитика)";
-            titleEl.style.color = "var(--success)";
-            analysis = "Керемет! Сіз орта ғасырлар тарихындағы феодалдық жүйенің, әлеуметтік сатының және экономикалық ерекшеліктердің себеп-салдарлық байланыстарын толық әрі терең меңгергенсіз.";
+            resultBox.style.backgroundColor = '#D1FAE5';
+            resultBox.style.color = '#065F46';
+            resultBox.innerHTML = `Керемет! Сіз тақырыпты 100% меңгердіңіз. (${score}/${quizData.length})`;
         } else if (percent >= 60) {
-            titleEl.innerText = "📚 Жақсы деңгей (Сыни түсінік)";
-            titleEl.style.color = "var(--warning)";
-            analysis = "Жақсы нәтиже! Тарихи концепцияларды түсінесіз, бірақ кейбір заңдық (мысалы, сервтер мен вилландар) немесе географиялық-саяси ерекшеліктерді қайта қарап шығу ұсынылады.";
+            resultBox.style.backgroundColor = '#FEF3C7';
+            resultBox.style.color = '#92400E';
+            resultBox.innerHTML = `Жақсы нәтиже! Сіздің көрсеткіш: ${percent}%. Тағы да қайталап көріңіз.`;
         } else {
-            titleEl.innerText = "🌱 Бастапқы деңгей (Репродуктивті)";
-            titleEl.style.color = "var(--accent)";
-            analysis = "Бұл нәтиже сіздің тақырыппен енді танысып жатқаныңызды көрсетеді. «Феодалдық саты», «натуралды шаруашылық» және «вассалитет» ұғымдарының мәнін қайта оқып шығуға кеңес береміз.";
+            resultBox.style.backgroundColor = '#FEE2E2';
+            resultBox.style.color = '#991B1B';
+            resultBox.innerHTML = `Қайталау қажет. Сіздің көрсеткіш: ${percent}%. Мәтінді мұқият оқыңыз.`;
         }
-        
-        analysisEl.innerHTML = `<strong>Сараптама:</strong> ${analysis}`;
     }
 
-    initQuiz();
+    // Сәйкестендіруді құру
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    let selectedTerm = null;
+    let selectedDef = null;
+    let matchedCount = 0;
+
+    function renderMatching() {
+        const termsCol = document.getElementById('terms-col');
+        const defsCol = document.getElementById('defs-col');
+        
+        let terms = matchData.map((d, i) => ({ id: i, text: d.term, type: 'term' }));
+        let defs = matchData.map((d, i) => ({ id: i, text: d.def, type: 'def' }));
+
+        terms = shuffleArray(terms);
+        defs = shuffleArray(defs);
+
+        terms.forEach(t => {
+            let div = document.createElement('div');
+            div.className = 'match-item term-item';
+            div.innerText = t.text;
+            div.onclick = () => handleMatchClick(div, t);
+            termsCol.appendChild(div);
+        });
+
+        defs.forEach(d => {
+            let div = document.createElement('div');
+            div.className = 'match-item def-item';
+            div.innerText = d.text;
+            div.onclick = () => handleMatchClick(div, d);
+            defsCol.appendChild(div);
+        });
+    }
+
+    function handleMatchClick(element, data) {
+        if (element.classList.contains('matched')) return;
+
+        if (data.type === 'term') {
+            document.querySelectorAll('.term-item').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedTerm = { el: element, id: data.id };
+        } else {
+            document.querySelectorAll('.def-item').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedDef = { el: element, id: data.id };
+        }
+
+        if (selectedTerm && selectedDef) {
+            checkMatch();
+        }
+    }
+
+    function checkMatch() {
+        if (selectedTerm.id === selectedDef.id) {
+            selectedTerm.el.classList.add('matched');
+            selectedTerm.el.classList.remove('selected');
+            selectedDef.el.classList.add('matched');
+            selectedDef.el.classList.remove('selected');
+            matchedCount++;
+            
+            const matchRes = document.getElementById('match-result');
+            matchRes.innerText = `Дұрыс! Табылған жұптар: ${matchedCount}/${matchData.length}`;
+            
+            if (matchedCount === matchData.length) {
+                matchRes.style.background = '#10B981';
+                matchRes.style.color = 'white';
+                matchRes.innerText = "Тамаша! Сіз барлық терминдерді дұрыс сәйкестендірдіңіз!";
+            }
+        } else {
+            // Қате болса таңдауды алып тастау
+            setTimeout(() => {
+                selectedTerm.el.classList.remove('selected');
+                selectedDef.el.classList.remove('selected');
+                selectedTerm = null;
+                selectedDef = null;
+            }, 300);
+        }
+        selectedTerm = null;
+        selectedDef = null;
+    }
+
+    // Қосымшаны іске қосу
+    window.onload = () => {
+        renderQuiz();
+        renderMatching();
+    };
 </script>
 
 </body>
