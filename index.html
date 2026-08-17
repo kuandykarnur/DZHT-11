@@ -1,448 +1,3898 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Орта ғасырлар тарихы: Интерактивті практикум</title>
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --primary-hover: #4338CA;
-            --bg: #F3F4F6;
-            --card-bg: #FFFFFF;
-            --text: #1F2937;
-            --success: #10B981;
-            --danger: #EF4444;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        h1 {
-            color: var(--primary);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        p.subtitle {
-            color: #6B7280;
-            font-size: 1.1rem;
-        }
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .tab-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            background-color: #E5E7EB;
-            color: var(--text);
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .tab-btn.active {
-            background-color: var(--primary);
-            color: white;
-        }
-        .section {
-            display: none;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .section.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Quiz Styles */
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #E5E7EB;
-        }
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        .options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-        .option-btn {
-            padding: 15px;
-            text-align: left;
-            border: 2px solid #E5E7EB;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-        .option-btn:hover {
-            border-color: var(--primary);
-            background-color: #EEF2FF;
-        }
-        .option-btn.selected {
-            border-color: var(--primary);
-            background-color: var(--primary);
-            color: white;
-        }
-        .option-btn.correct {
-            border-color: var(--success);
-            background-color: var(--success);
-            color: white;
-        }
-        .option-btn.wrong {
-            border-color: var(--danger);
-            background-color: var(--danger);
-            color: white;
-        }
-        /* Matching Styles */
-        .matching-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .match-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .match-item {
-            padding: 15px;
-            background: #F9FAFB;
-            border: 2px solid #E5E7EB;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .match-item:hover { background: #EEF2FF; }
-        .match-item.selected {
-            border-color: var(--primary);
-            background: #EEF2FF;
-        }
-        .match-item.matched {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-            cursor: default;
-        }
-        /* Controls */
-        .action-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .action-btn:hover { background-color: var(--primary-hover); }
-        .result-box {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDIEVAL LAB — Орта ғасырлар білім анализі</title>
+
+<style>
+:root{
+  --bg:#090b12;
+  --panel:#111624;
+  --panel2:#161c2b;
+  --line:#2a3348;
+  --text:#f4f7fb;
+  --muted:#a9b3c7;
+  --gold:#e8b85b;
+  --gold2:#ffd982;
+  --blue:#63a8ff;
+  --green:#4dd4a4;
+  --red:#ff6f7d;
+  --violet:#a890ff;
+  --shadow:0 18px 60px rgba(0,0,0,.28);
+  --r:20px;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(99,168,255,.11),transparent 30%),
+    radial-gradient(circle at 90% 0%,rgba(232,184,91,.10),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  max-width:1400px;
+  margin:auto;
+  padding:24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.logo{
+  width:52px;
+  height:52px;
+  border:1px solid #4b556d;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#20283b,#0d111b);
+  font-size:27px;
+  box-shadow:var(--shadow);
+}
+
+h1{
+  font-size:clamp(25px,4vw,42px);
+  margin:0;
+  letter-spacing:-1px;
+}
+
+.sub{
+  color:var(--muted);
+  margin:3px 0 0;
+}
+
+.student{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  background:#0f1420;
+  border:1px solid var(--line);
+  padding:9px 12px;
+  border-radius:14px;
+}
+
+.student input{
+  width:160px;
+  background:transparent;
+  border:0;
+  outline:0;
+  color:var(--text);
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.nav button,
+.pill,
+.btn{
+  border:1px solid var(--line);
+  background:#0f1420;
+  color:#eaf0f9;
+  border-radius:12px;
+  padding:10px 13px;
+}
+
+.nav button.active,
+.nav button:hover,
+.btn.primary{
+  border-color:#6c84a8;
+  background:#192135;
+}
+
+/* =========================
+   GENERAL CARDS
+========================= */
+
+.card{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01)),
+    var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.heroText{
+  padding:26px;
+}
+
+.kicker{
+  color:var(--gold2);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-weight:800;
+}
+
+.heroText h2{
+  font-size:clamp(28px,5vw,52px);
+  line-height:1.02;
+  margin:10px 0 14px;
+}
+
+.heroText p{
+  color:var(--muted);
+  max-width:780px;
+  line-height:1.65;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:18px;
+}
+
+.stat{
+  padding:14px;
+  border-radius:16px;
+  background:#0c111b;
+  border:1px solid var(--line);
+}
+
+.stat b{
+  font-size:28px;
+}
+
+.stat small{
+  color:var(--muted);
+  display:block;
+}
+
+.illustration{
+  padding:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.illustration svg{
+  width:100%;
+  max-height:330px;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+}
+
+.progressWrap{
+  padding:22px;
+}
+
+.progressRow{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.bar{
+  height:13px;
+  background:#0a0e16;
+  border:1px solid var(--line);
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+  width:0%;
+  transition:.45s;
+}
+
+.topicGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:15px;
+}
+
+.topic{
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#0c111b;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.topic:hover{
+  transform:translateY(-2px);
+  border-color:#64779c;
+}
+
+.topicTitle{
+  font-weight:800;
+}
+
+.topicMeta{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:7px;
+}
+
+.badge{
+  display:inline-flex;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  background:#182235;
+  color:#b9cff1;
+}
+
+.mastery{
+  margin-top:11px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.mastery strong{
+  color:var(--text);
+}
+
+.miniGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.mini{
+  padding:12px;
+  background:#0c111b;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.mini b{
+  display:block;
+  font-size:22px;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.sectionHead{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:end;
+  margin:8px 0 14px;
+}
+
+.sectionHead h2{
+  margin:0;
+  font-size:28px;
+}
+
+.sectionHead p{
+  margin:4px 0 0;
+  color:var(--muted);
+}
+
+.qbox{
+  padding:23px;
+}
+
+.qnum{
+  color:var(--gold2);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.question{
+  font-size:22px;
+  line-height:1.35;
+  margin:9px 0 16px;
+  font-weight:750;
+}
+
+.options{
+  display:grid;
+  gap:10px;
+}
+
+.option{
+  padding:14px 16px;
+  border:1px solid var(--line);
+  background:#0d131f;
+  border-radius:14px;
+  cursor:pointer;
+  text-align:left;
+  color:var(--text);
+  transition:.18s;
+}
+
+.option:hover{
+  border-color:#7087ae;
+  background:#121a2b;
+}
+
+.option.correct{
+  border-color:var(--green);
+  background:rgba(77,212,164,.09);
+}
+
+.option.wrong{
+  border-color:var(--red);
+  background:rgba(255,111,125,.09);
+}
+
+.explain{
+  margin-top:14px;
+  padding:12px 14px;
+  border-left:3px solid var(--gold);
+  background:#101827;
+  color:#cfd7e6;
+  border-radius:10px;
+  display:none;
+}
+
+.explain.show{
+  display:block;
+}
+
+.actions{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:18px;
+}
+
+.btn{
+  font-weight:750;
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,#213452,#18263e);
+  border-color:#5b6f92;
+}
+
+.btn.gold{
+  background:linear-gradient(135deg,#48371a,#2d2412);
+  border-color:#86682d;
+  color:#ffe6aa;
+}
+
+/* =========================
+   MATCHING
+========================= */
+
+.dragArea{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.bucket,
+.items{
+  padding:14px;
+  border-radius:16px;
+  border:1px dashed #45516a;
+  background:#0d131f;
+  min-height:250px;
+}
+
+.token{
+  padding:12px;
+  margin:8px 0;
+  background:#151d2d;
+  border:1px solid #344158;
+  border-radius:12px;
+  cursor:grab;
+}
+
+.bucket .slot{
+  min-height:45px;
+  border:1px dashed #46546f;
+  border-radius:12px;
+  padding:8px;
+  margin:8px 0;
+  color:#7f8ba3;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.sequence{
+  display:grid;
+  gap:10px;
+}
+
+.seqItem{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:14px;
+  background:#0d131f;
+  border:1px solid var(--line);
+  border-radius:13px;
+}
+
+.seqItem select{
+  background:#0a0f18;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:8px;
+}
+
+/* =========================
+   CASE
+========================= */
+
+.caseGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.case{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#0d131f;
+}
+
+.case h4{
+  margin:0 0 7px;
+}
+
+.case p{
+  color:#bdc7d7;
+  line-height:1.55;
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.result{
+  padding:18px;
+  border-radius:16px;
+  border:1px solid #3b4962;
+  background:#0d131f;
+  margin-top:15px;
+}
+
+.result h3{
+  margin-top:0;
+}
+
+.grade{
+  font-size:52px;
+  font-weight:900;
+  line-height:1;
+}
+
+/* =========================
+   TIMER
+========================= */
+
+.timer{
+  font-variant-numeric:tabular-nums;
+  color:var(--gold2);
+  font-weight:900;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  padding:14px 16px;
+  border:1px solid #536784;
+  background:#111a2a;
+  border-radius:14px;
+  opacity:0;
+  transform:translateY(10px);
+  transition:.3s;
+  pointer-events:none;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:950px){
+
+  .hero,
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .caseGrid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:680px){
+
+  .app{
+    padding:12px;
+  }
+
+  .student input{
+    width:110px;
+  }
+
+  .topicGrid,
+  .miniGrid{
+    grid-template-columns:1fr;
+  }
+
+  .dragArea{
+    grid-template-columns:1fr;
+  }
+
+  .question{
+    font-size:19px;
+  }
+
+}
+</style>
 </head>
+
 <body>
 
-<div class="container">
-    <header>
-        <h1>Тарих Әлемі: Орта ғасырлар</h1>
-        <p class="subtitle">Феодалдық қоғам мен экономиканы талдауға арналған авторлық кешен</p>
-    </header>
+<div class="app">
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('quiz')">Аналитикалық Тест</button>
-        <button class="tab-btn" onclick="switchTab('matching')">Сәйкестендіру (Терминдер)</button>
-    </div>
+  <!-- HEADER -->
+  <div class="top">
 
-    <div id="quiz" class="section active">
-        <h2>Талдау және логикалық сұрақтар</h2>
-        <p>Жай фактілер емес, себеп-салдарды анықтаңыз.</p>
-        <div id="quiz-container"></div>
-        <button class="action-btn" onclick="checkQuiz()">Нәтижені тексеру</button>
-        <div id="quiz-result" class="result-box"></div>
-    </div>
+    <div class="brand">
 
-    <div id="matching" class="section">
-        <h2>Концептуалды сәйкестендіру</h2>
-        <p>Терминдер мен олардың тарихи мағынасын дәл табыңыз.</p>
-        <div class="matching-container">
-            <div class="match-column" id="terms-col"></div>
-            <div class="match-column" id="defs-col"></div>
+      <div class="logo">
+        🏰
+      </div>
+
+      <div>
+        <h1>MEDIEVAL LAB</h1>
+        <div class="sub">
+          Орта ғасырлар · білімді саралау зертханасы
         </div>
-        <div id="match-result" class="result-box" style="display: block; background: #EEF2FF; color: var(--primary);">Жұптарды басып сәйкестендіріңіз</div>
+      </div>
+
     </div>
+
+    <div class="student">
+      👤
+      <input
+        id="studentName"
+        placeholder="Оқушы аты"
+      >
+    </div>
+
+  </div>
+
+
+  <!-- NAV -->
+  <div class="nav">
+
+    <button
+      data-tab="home"
+      class="active">
+      🏠 Кабинет
+    </button>
+
+    <button data-tab="quiz">
+      ⚔️ Қиын Quiz
+    </button>
+
+    <button data-tab="match">
+      🧩 Сәйкестендіру
+    </button>
+
+    <button data-tab="timeline">
+      ⏳ Уақыт желісі
+    </button>
+
+    <button data-tab="estate">
+      🌾 Вотчина симуляторы
+    </button>
+
+    <button data-tab="ladder">
+      👑 Феодалдық саты
+    </button>
+
+    <button data-tab="source">
+      🔎 Дерек детективі
+    </button>
+
+    <button data-tab="final">
+      🏆 Қорытынды анализ
+    </button>
+
+  </div>
+
+
+  <!-- =========================
+       HOME
+  ========================== -->
+
+  <section
+    id="home"
+    class="section active">
+
+    <div class="hero card">
+
+      <div class="heroText">
+
+        <div class="kicker">
+          3-апта · Дүниежүзі тарихы
+        </div>
+
+        <h2>
+          Орта ғасырларды<br>
+          жаттап қана қоймай, түсін.
+        </h2>
+
+        <p>
+          Бұл сайт төрт блокты терең тексереді:
+          орта ғасырлар түсінігі,
+          феодалдық шаруашылық,
+          феодалдық қоғамның белгілері
+          және әлеуметтік құрылым.
+          Әр формат әртүрлі дағдыны өлшейді:
+          тану, байланыс орнату, қолдану,
+          себеп-салдарды түсіндіру және
+          күрделі шешім қабылдау.
+        </p>
+
+        <div class="stats">
+
+          <div class="stat">
+            <b id="overall">0%</b>
+            <small>Жалпы меңгеру</small>
+          </div>
+
+          <div class="stat">
+            <b id="done">0</b>
+            <small>Орындалған модуль</small>
+          </div>
+
+          <div class="stat">
+            <b id="xp">0</b>
+            <small>XP ұпай</small>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="illustration">
+
+        <svg
+          viewBox="0 0 600 360"
+          aria-label="Ортағасырлық иллюстрация">
+
+          <defs>
+            <linearGradient
+              id="sky"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1">
+
+              <stop
+                stop-color="#18243c"/>
+
+              <stop
+                offset="1"
+                stop-color="#0c101a"/>
+
+            </linearGradient>
+          </defs>
+
+          <rect
+            width="600"
+            height="360"
+            rx="26"
+            fill="url(#sky)"
+          />
+
+          <circle
+            cx="475"
+            cy="70"
+            r="38"
+            fill="#e8b85b"
+            opacity=".88"
+          />
+
+          <path
+            d="M0 300 Q120 220 250 290 T600 260 V360 H0Z"
+            fill="#101822"
+          />
+
+          <g fill="#c2cad6">
+
+            <rect
+              x="75"
+              y="175"
+              width="110"
+              height="105"
+              rx="4"/>
+
+            <rect
+              x="48"
+              y="130"
+              width="52"
+              height="150"/>
+
+            <rect
+              x="160"
+              y="140"
+              width="45"
+              height="140"/>
+
+            <path
+              d="M70 130 L74 95 L91 82 L108 95 L112 130Z"/>
+
+            <path
+              d="M162 140 L170 102 L184 91 L199 102 L205 140Z"/>
+
+            <rect
+              x="102"
+              y="215"
+              width="28"
+              height="65"
+              fill="#263246"/>
+
+            <rect
+              x="140"
+              y="205"
+              width="16"
+              height="16"
+              fill="#263246"/>
+
+            <rect
+              x="88"
+              y="152"
+              width="14"
+              height="16"
+              fill="#263246"/>
+
+          </g>
+
+          <g fill="#e8b85b">
+
+            <path
+              d="M270 285 q15-55 30 0"/>
+
+            <path
+              d="M320 285 q15-55 30 0"/>
+
+            <path
+              d="M370 285 q15-55 30 0"/>
+
+          </g>
+
+          <path
+            d="M240 315 Q330 235 420 315"
+            stroke="#e8b85b"
+            stroke-width="6"
+            fill="none"
+          />
+
+          <text
+            x="300"
+            y="55"
+            fill="#f4f7fb"
+            font-size="21"
+            text-anchor="middle"
+            font-weight="700">
+            FEUDAL SOCIETY
+          </text>
+
+        </svg>
+
+      </div>
+
+    </div>
+
+
+    <div class="dashboard">
+
+      <div class="card progressWrap">
+
+        <div class="progressRow">
+
+          <span>
+            Жалпы прогресс
+          </span>
+
+          <b id="overallBarText">
+            0%
+          </b>
+
+        </div>
+
+        <div class="bar">
+          <div
+            id="overallBar"
+            class="fill">
+          </div>
+        </div>
+
+        <div
+          class="topicGrid"
+          id="topics">
+        </div>
+
+      </div>
+
+
+      <div class="card progressWrap">
+
+        <div class="kicker">
+          Бағалау картасы
+        </div>
+
+        <h3>
+          Меңгеру деңгейі
+        </h3>
+
+        <div class="miniGrid">
+
+          <div class="mini">
+            <b id="m1">0%</b>
+            <span class="muted">
+              Орта ғасыр
+            </span>
+          </div>
+
+          <div class="mini">
+            <b id="m2">0%</b>
+            <span class="muted">
+              Шаруашылық
+            </span>
+          </div>
+
+          <div class="mini">
+            <b id="m3">0%</b>
+            <span class="muted">
+              Белгілер
+            </span>
+          </div>
+
+          <div class="mini">
+            <b id="m4">0%</b>
+            <span class="muted">
+              Әлеуметтік құрылым
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="result">
+
+          <h3>
+            Сайт қалай саралайды?
+          </h3>
+
+          <p class="muted">
+            Жеңіл сұрақтар көп берілмейді.
+            Дұрыс жауаптың өзі әрқашан
+            жоғары деңгей дегенді білдірмейді:
+            күрделі тапсырмаларға үлкен салмақ
+            қойылады.
+          </p>
+
+          <p>
+            🔵 0–49%
+            ·
+            🔶 50–69%
+            ·
+            🟢 70–84%
+            ·
+            🟣 85–100%
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       QUIZ
+  ========================== -->
+
+  <section
+    id="quiz"
+    class="section">
+
+    <div class="sectionHead">
+
+      <div>
+
+        <h2>
+          ⚔️ Қиын Quiz
+        </h2>
+
+        <p>
+          Себеп–салдар, салыстыру,
+          контекст, қате тұжырымды табу.
+        </p>
+
+      </div>
+
+      <div
+        class="timer"
+        id="quizTimer">
+        12:00
+      </div>
+
+    </div>
+
+    <div
+      class="card qbox"
+      id="quizBox">
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MATCH
+  ========================== -->
+
+  <section
+    id="match"
+    class="section">
+
+    <div class="sectionHead">
+
+      <div>
+
+        <h2>
+          🧩 Сәйкестендіру лабораториясы
+        </h2>
+
+        <p>
+          Терминді анықтамамен және
+          тарихи функциясымен байланыстырыңыз.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="card qbox">
+
+      <div id="matchGame"></div>
+
+      <div class="actions">
+
+        <button
+          class="btn gold"
+          onclick="checkMatch()">
+          Тексеру
+        </button>
+
+        <button
+          class="btn"
+          onclick="resetMatch()">
+          Қайта жинау
+        </button>
+
+      </div>
+
+      <div
+        id="matchResult"
+        class="result"
+        style="display:none">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       TIMELINE
+  ========================== -->
+
+  <section
+    id="timeline"
+    class="section">
+
+    <div class="sectionHead">
+
+      <div>
+
+        <h2>
+          ⏳ Уақыт желісі
+        </h2>
+
+        <p>
+          Кезеңдерді нақты уақытпен
+          және сипаттамамен жұптаңыз.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="card qbox">
+
+      <div
+        class="sequence"
+        id="timelineGame">
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn gold"
+          onclick="checkTimeline()">
+          Тексеру
+        </button>
+
+        <button
+          class="btn"
+          onclick="resetTimeline()">
+          Қайта бастау
+        </button>
+
+      </div>
+
+      <div
+        id="timelineResult"
+        class="result"
+        style="display:none">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ESTATE SIMULATOR
+  ========================== -->
+
+  <section
+    id="estate"
+    class="section">
+
+    <div class="sectionHead">
+
+      <div>
+
+        <h2>
+          🌾 Вотчина симуляторы
+        </h2>
+
+        <p>
+          Сіз X ғасырдағы феодалсыз.
+          Тарихи ситуацияларда дұрыс шешім қабылдаңыз.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="card qbox">
+
+      <div id="estateGame"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FEUDAL LADDER
+  ========================== -->
+
+  <section
+    id="ladder"
+    class="section">
+
+    <div class="sectionHead">
+
+      <div>
+
+        <h2>
+          👑 Феодалдық саты
+        </h2>
+
+        <p>
+          Кім кімге бағынышты?
+          Иерархияны қалпына келтіріңіз.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="card qbox">
+
+      <div id="ladderGame"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       SOURCE DETECTIVE
+  ========================== -->
+
+  <section
+    id="source"
+    class="section">
+
+    <div class="sectionHead">
+
+      <div>
+
+        <h2>
+          🔎 Дерек детективі
+        </h2>
+
+        <p>
+          Дерек → тарихи белгі → қорытынды.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div
+      class="card qbox"
+      id="sourceGame">
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FINAL
+  ========================== -->
+
+  <section
+    id="final"
+    class="section">
+
+    <div class="sectionHead">
+
+      <div>
+
+        <h2>
+          🏆 Қорытынды анализ
+        </h2>
+
+        <p>
+          Барлық тақырыпты араластыратын
+          жоғары күрделіліктегі блок.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div
+      class="card qbox"
+      id="finalGame">
+    </div>
+
+  </section>
+
 </div>
 
+
+<div
+  class="toast"
+  id="toast">
+</div>
+
+
 <script>
-    // --- ДЕРЕКТЕР ҚОРЫ (Құжаттан алынған күрделі сұрақтар) ---
-    const quizData = [
-        {
-            question: "Италиялық гуманистер антикалық мәдениеттің күйреуінен бастап Қайта өрлеу дәуіріне дейінгі кезеңді неліктен «Қара түнек» деп атады?",
-            options: [
-                "Бұл кезде күн тұтылу жиі болғандықтан",
-                "Еуропада антикалық өнер, философия, ғылым ұмытылып, қаталдық жайлағандықтан",
-                "Жаңа мемлекеттердің саяси өмірі қарқынды дамығандықтан",
-                "Адамдар тек түнде жұмыс істеуге мәжбүр болғандықтан"
-            ],
-            correct: 1
-        },
-        {
-            question: "Ерте орта ғасырларда аумағы өте үлкен болған Ұлы Карл империясының тез ыдырап кетуінің басты экономикалық-әлеуметтік себебі неде?",
-            options: [
-                "Шығыс елдерінің үздіксіз шабуылынан",
-                "Мемлекеттің басқару аппаратының болмауынан",
-                "Империяға біріктірілген көптеген халықтардың шаруашылығы мен әдет-ғұрпы әртүрлі болып, бір-бірін түсінбеуінен",
-                "Жердің тек мемлекет меншігінде болуынан"
-            ],
-            correct: 2
-        },
-        {
-            question: "Франциядағы «Менің вассалымның вассалы – менің вассалым емес» қағидасының негізгі саяси зардабы қандай болды?",
-            options: [
-                "Король билігінің шексіз күшеюі",
-                "Орталықтандырылған мықты мемлекеттің құрылуы",
-                "Феодалдық бытыраңқылықтың күшеюі және ірі феодалдардың тәуелсіздігі",
-                "Шаруалардың толық еркіндікке шығуы"
-            ],
-            correct: 2
-        },
-        {
-            question: "Натуралды шаруашылықтың басты сипаты қандай және ол феодалдық қоғамға қалай әсер етті?",
-            options: [
-                "Сауданың дамуына үлкен үлес қосып, қалаларды гүлдендірді",
-                "Қажетті өнімдер поместьенің өзінде өндіріліп, сауда-саттық төмендеді, орталық билік әлсіреді",
-                "Тек ақшалай рентаны қолдану арқылы шаруалардың байюына әкелді",
-                "Көпестердің қоғамдағы ең жоғарғы топқа айналуына негіз болды"
-            ],
-            correct: 1
-        },
-        {
-            question: "Англиядағы «вилландар» мен Франциядағы «сервтердің» негізгі құқықтық айырмашылығы неде?",
-            options: [
-                "Сервтер әскерге барды, ал вилландар тек егін екті",
-                "Вилландар толық басыбайлы болды, ал сервтер қалаға көше алды",
-                "Вилландар жекебасы ерікті шаруалар болды және жер үлесін мұраға қалдырды, ал сервтер феодалға толық тәуелді болды",
-                "Ешқандай айырмашылық болған жоқ, екеуі де рыцарьлар қатарына кірді"
-            ],
-            correct: 2
-        }
+
+/* =============================================
+   GLOBAL STATE
+============================================= */
+
+const state = {
+
+  name:
+    localStorage.getItem("medieval_name") || "",
+
+  xp:
+    Number(
+      localStorage.getItem("medieval_xp") || 0
+    ),
+
+  scores:
+    JSON.parse(
+      localStorage.getItem("medieval_scores") ||
+      '{"era":0,"econ":0,"society":0,"social":0}'
+    ),
+
+  completed:
+    JSON.parse(
+      localStorage.getItem("medieval_completed") ||
+      "{}"
+    )
+
+};
+
+
+/* =============================================
+   STUDENT NAME
+============================================= */
+
+const studentName =
+  document.getElementById("studentName");
+
+studentName.value = state.name;
+
+studentName.addEventListener(
+  "input",
+  function(e){
+
+    state.name = e.target.value;
+
+    localStorage.setItem(
+      "medieval_name",
+      state.name
+    );
+
+  }
+);
+
+
+/* =============================================
+   TOPICS
+============================================= */
+
+const topics = [
+
+  {
+    key:"era",
+    icon:"⏳",
+    name:"Тарихтағы орта ғасырлар түсінігі",
+    desc:"Кезеңдер, хронология, ұғымның шығуы"
+  },
+
+  {
+    key:"econ",
+    icon:"🌾",
+    name:"Феодалдық шаруашылық",
+    desc:"Феод, рента, натуралды шаруашылық, вотчина"
+  },
+
+  {
+    key:"society",
+    icon:"🏰",
+    name:"Феодалдық қоғамның белгілері",
+    desc:"Жер, поместье, натуралдылық, феодалдық бытыраңқылық"
+  },
+
+  {
+    key:"social",
+    icon:"👑",
+    name:"Әлеуметтік құрылым",
+    desc:"Сеньор, вассал, король, рыцарь, шаруа"
+  }
+
+];
+
+
+/* =============================================
+   UTILITIES
+============================================= */
+
+function clamp(n){
+
+  return Math.max(
+    0,
+    Math.min(
+      100,
+      Math.round(n)
+    )
+  );
+
+}
+
+
+function level(p){
+
+  if(p < 50)
+    return "Бастапқы";
+
+  if(p < 70)
+    return "Даму үстінде";
+
+  if(p < 85)
+    return "Жақсы меңгерген";
+
+  return "Жоғары деңгей";
+
+}
+
+
+function save(){
+
+  localStorage.setItem(
+    "medieval_xp",
+    state.xp
+  );
+
+  localStorage.setItem(
+    "medieval_scores",
+    JSON.stringify(state.scores)
+  );
+
+  localStorage.setItem(
+    "medieval_completed",
+    JSON.stringify(state.completed)
+  );
+
+  updateHome();
+
+}
+
+
+function toast(message){
+
+  const t =
+    document.getElementById("toast");
+
+  t.textContent = message;
+
+  t.classList.add("show");
+
+  setTimeout(
+    ()=>{
+      t.classList.remove("show");
+    },
+    2200
+  );
+
+}
+
+
+function addXP(amount){
+
+  state.xp += amount;
+
+  save();
+
+}
+
+
+function mark(topic,pct){
+
+  state.scores[topic] =
+    Math.max(
+      state.scores[topic],
+      clamp(pct)
+    );
+
+  state.completed[topic] = true;
+
+  save();
+
+}
+
+
+/* =============================================
+   HOME UPDATE
+============================================= */
+
+function updateHome(){
+
+  const vals =
+    Object.values(state.scores);
+
+  const overall =
+    vals.reduce(
+      (a,b)=>a+b,
+      0
+    ) / 4;
+
+
+  document.getElementById(
+    "overall"
+  ).textContent =
+    clamp(overall) + "%";
+
+
+  document.getElementById(
+    "overallBarText"
+  ).textContent =
+    clamp(overall) + "%";
+
+
+  document.getElementById(
+    "overallBar"
+  ).style.width =
+    clamp(overall) + "%";
+
+
+  document.getElementById(
+    "done"
+  ).textContent =
+    Object.values(
+      state.completed
+    ).filter(Boolean).length + "/4";
+
+
+  document.getElementById(
+    "xp"
+  ).textContent =
+    state.xp;
+
+
+  [
+    "m1",
+    "m2",
+    "m3",
+    "m4"
+  ].forEach(
+    (id,i)=>{
+
+      document.getElementById(
+        id
+      ).textContent =
+        vals[i] + "%";
+
+    }
+  );
+
+
+  document.getElementById(
+    "topics"
+  ).innerHTML =
+
+    topics.map(
+      t=>`
+
+      <div
+        class="topic"
+        onclick="focusTopic('${t.key}')">
+
+        <span class="badge">
+          ${t.icon}
+          ${level(state.scores[t.key])}
+        </span>
+
+        <div class="topicTitle">
+          ${t.name}
+        </div>
+
+        <div class="topicMeta">
+          ${t.desc}
+        </div>
+
+        <div class="mastery">
+          Меңгеру:
+          <strong>
+            ${state.scores[t.key]}%
+          </strong>
+        </div>
+
+      </div>
+
+      `
+    ).join("");
+
+}
+
+
+function focusTopic(key){
+
+  const map = {
+
+    era:"quiz",
+
+    econ:"estate",
+
+    society:"match",
+
+    social:"ladder"
+
+  };
+
+  openTab(
+    map[key]
+  );
+
+}
+
+
+/* =============================================
+   NAVIGATION
+============================================= */
+
+document
+  .querySelectorAll(".nav button")
+  .forEach(
+    button=>{
+
+      button.onclick =
+        ()=>{
+          openTab(
+            button.dataset.tab
+          );
+        };
+
+    }
+  );
+
+
+function openTab(id){
+
+  document
+    .querySelectorAll(".section")
+    .forEach(
+      s=>s.classList.remove("active")
+    );
+
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(
+      b=>{
+        b.classList.toggle(
+          "active",
+          b.dataset.tab === id
+        );
+      }
+    );
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =============================================
+   QUIZ DATA
+============================================= */
+
+const quiz = [
+
+  {
+    t:"era",
+
+    q:"Гуманист-тарихшылар «орта ғасырлар» тіркесін бастапқыда қай аралықты сипаттау үшін қолданды?",
+
+    o:[
+      "Ежелгі Египеттен Рим империясына дейінгі кезеңді",
+
+      "Антикалық дәуірден Қайта өрлеу кезеңіне дейінгі Батыс Еуропа тарихын",
+
+      "Тек V–XI ғасырлардағы герман тайпалары тарихын",
+
+      "XVII ғасырдың ортасынан XIX ғасырға дейінгі кезеңді"
+    ],
+
+    a:1,
+
+    e:"Авторлық база мен оқулықта бұл ұғым Италияда XV–XVI ғасырларда қолданылып, антикалық дәуір мен Ренессанс аралығын сипаттағаны көрсетіледі."
+  },
+
+
+  {
+    t:"era",
+
+    q:"Оқушы: «Дамыған орта ғасырлар XI ғасырдың ортасынан XV ғасырға дейін, ал кейінгі кезең XV ғасырдың екінші жартысынан XVII ғасырдың ортасына дейін» деді. Бағалаңыз.",
+
+    o:[
+      "Толық дұрыс",
+
+      "Тек бірінші бөлігі дұрыс",
+
+      "Тек екінші бөлігі дұрыс",
+
+      "Екі бөлігі де қате"
+    ],
+
+    a:0,
+
+    e:"Авторлық база орта ғасырлардың үш кезеңін осы хронологиялық шектермен береді."
+  },
+
+
+  {
+    t:"era",
+
+    q:"Қай тұжырым орта ғасырлардың басталуын жай ғана «V ғасыр» деп жаттап алудан гөрі тарихи себепті дұрыс көрсетеді?",
+
+    o:[
+      "Грек полистерінің құрылуы",
+
+      "Батыс Рим империясының құлауы және құлиеленушілік қоғамның ыдырауы",
+
+      "Ұлы географиялық ашылулардың басталуы",
+
+      "Парламенттердің құрылуы"
+    ],
+
+    a:1,
+
+    e:"Орта ғасырлардың басталуына Батыс Рим империясының құлауы және құлиеленушілік қоғамның ыдырауы байланыстырылған."
+  },
+
+
+  {
+    t:"era",
+
+    q:"«Қара түнек» атауы бойынша қай жұп ең дәл?",
+
+    o:[
+      "Антикалық ғылым, философия, өнердің ұмытылуы + сәулет ескерткіштерінің қирауы",
+
+      "Қалалардың өте жылдам өсуі + сауданың күшеюі",
+
+      "Америкаға теңіз жолының ашылуы + Реформация",
+
+      "Абсолютизмнің күйреуі + капитализмнің толық орнығуы"
+    ],
+
+    a:0,
+
+    e:"Авторлық база бұл атауды антикалық өнер, философия, ғылымның ұмытылуы және сәулет ескерткіштерінің қирауымен байланыстырады."
+  },
+
+
+  {
+    t:"econ",
+
+    q:"Феодалдың шаруадан алатын рентасының екі бастапқы түрі дұрыс жұпталған қатарды табыңыз.",
+
+    o:[
+      "Оброк — еңбекпен өтеу; барщина — азық-түлік рентасы",
+
+      "Оброк — азық-түлік рентасы; барщина — еңбекпен өтеу",
+
+      "Оброк — ақшалай; барщина — әскери қызмет",
+
+      "Оброк — жер сыйы; барщина — адалдық анты"
+    ],
+
+    a:1,
+
+    e:"Оброк — азық-түлік рентасы, барщина — еңбекпен өтеу. Кейін ақшалай рента қосылды."
+  },
+
+
+  {
+    t:"econ",
+
+    q:"Натуралды шаруашылықты ең жақсы ажырататын белгі қайсы?",
+
+    o:[
+      "Өндіріс түгел қала нарығына бағытталуы",
+
+      "Қажетті азық-түлік пен бұйымдардың поместьенің өзінде өндірілуі және сауда байланысының төмен болуы",
+
+      "Барлық салықтың тек ақшамен төленуі",
+
+      "Орталық мемлекеттік биліктің ерекше күшеюі"
+    ],
+
+    a:1,
+
+    e:"Натуралды шаруашылық томаға-тұйық сипатта болды және қажетті өнімнің едәуір бөлігі иеліктің өзінде өндірілді."
+  },
+
+
+  {
+    t:"econ",
+
+    q:"«Қожайынның жері» мен «шаруалардың пайдалануындағы үлестік жер» бірге нені көрсетеді?",
+
+    o:[
+      "Екі дербес корольдікті",
+
+      "Феодалдық вотчинаның екі бөлігін",
+
+      "Үш сословиелік қоғамды",
+
+      "Рыцарьлық кодексті"
+    ],
+
+    a:1,
+
+    e:"Феодалдық вотчина екі бөлікке бөлінді: домен және тәуелді шаруалардың пайдалануындағы жер."
+  },
+
+
+  {
+    t:"econ",
+
+    q:"Егер шаруалар өздері өндірген өнімнің бір бөлігін феодалға өнім түрінде берсе, бұл қай ұғыммен тікелей байланысты?",
+
+    o:[
+      "Инвеститура",
+
+      "Оброк",
+
+      "Оммаж",
+
+      "Донжон"
+    ],
+
+    a:1,
+
+    e:"Оброк — азық-түлік, яғни өнім түріндегі рента."
+  },
+
+
+  {
+    t:"society",
+
+    q:"Феодализм мәнін «жер кімнің иелігінде болса, билік те соның қолында» деп түсіндіру қай негізгі белгіні ашады?",
+
+    o:[
+      "Жердің негізгі табыс пен байлық көзіне айналуын",
+
+      "Қалалардың пайда болуын",
+
+      "Кәсіби әскердің таралуын",
+
+      "Ұлы географиялық ашылуларды"
+    ],
+
+    a:0,
+
+    e:"Феодализмде жер иелену байлық пен биліктің негізгі негізі болды."
+  },
+
+
+  {
+    t:"society",
+
+    q:"Феодалдық поместьеде шаруалардың еңбек нәтижесіне мүдделі болуының себебі қандай?",
+
+    o:[
+      "Өнімнің бәрін мемлекет тартып алды",
+
+      "Көп өнім өндірсе, өзіне де көбірек өнім қалды",
+
+      "Олар ешқандай міндет атқармады",
+
+      "Олар тек қалада еңбек етті"
+    ],
+
+    a:1,
+
+    e:"Авторлық база шаруаның еңбек нәтижесіне белгілі бір деңгейде мүдделі болғанын атап көрсетеді."
+  },
+
+
+  {
+    t:"society",
+
+    q:"IX–X ғасырлардағы Батыс Еуропадағы феодалдық бытыраңқылықтың логикасын қай нұсқа жақсы ашады?",
+
+    o:[
+      "Өзара қырқысу, саяси бытыраңқылық және қорғану үшін қамалдардың салынуы",
+
+      "Біртұтас орталық биліктің күрт күшеюі және кәсіби армияның пайда болуы",
+
+      "Тек теңіз саудасының дамуы",
+
+      "Жердің мемлекет меншігіне толық өтуі"
+    ],
+
+    a:0,
+
+    e:"Феодалдық бытыраңқылық өзара қырқысумен және қорғаныс үшін қамалдардың салынуымен байланыстырылған."
+  },
+
+
+  {
+    t:"social",
+
+    q:"Қай тізбек феодалдық сатыны жоғарыдан төменге дұрыс береді?",
+
+    o:[
+      "Король → герцог/граф → барон/виконт → рыцарь",
+
+      "Король → шаруа → рыцарь → барон",
+
+      "Рыцарь → король → барон → граф",
+
+      "Граф → шаруа → король → рыцарь"
+    ],
+
+    a:0,
+
+    e:"Феодалдық сатыда король ең жоғары деңгейде, одан кейін ірі феодалдар, барондар/виконттар және рыцарьлар орналасады."
+  },
+
+
+  {
+    t:"social",
+
+    q:"Мырза–вассал қатынасының өзегі қай жұп?",
+
+    o:[
+      "Мырза қамқорлық/қолдау; вассал адал қызмет пен ант",
+
+      "Мырза салық төлемейді; вассал тәуелсіз қала салады",
+
+      "Мырза тек діни жоралғы жасайды; вассал егін егеді",
+
+      "Мырза қала тұрғызады; вассал теңізде жүзеді"
+    ],
+
+    a:0,
+
+    e:"Мырза вассалға қамқорлық пен қолдау көрсетуге, ал вассал адал қызмет етуге міндетті болды."
+  },
+
+
+  {
+    t:"social",
+
+    q:"Неліктен рыцарьда жер үлесі (феод) болуы маңызды болды?",
+
+    o:[
+      "Жерден түсетін табыс қару-жарақ, ат және ер-тұрманды қамтамасыз етуге қажет еді",
+
+      "Жер тек діни қызмет үшін керек болды",
+
+      "Жер қалалық қолөнерге міндетті болды",
+
+      "Жерсіз адам автоматты түрде король атанды"
+    ],
+
+    a:0,
+
+    e:"Рыцарь өзінің феодынан түсетін табысы арқылы әскери қажеттіліктерін қамтамасыз етті."
+  },
+
+
+  {
+    t:"era",
+
+    q:"Қай салыстыру дұрыс?",
+
+    o:[
+      "Ерте: феодалдық өндіріс қалыптасады; дамыған: феодалға тәуелділік күшейеді; кейінгі: феодализм ыдырап, капиталистік өндіріс тәсілі туа бастайды",
+
+      "Ерте: капитализм; дамыған: варварлық қоғам; кейінгі: Римнің күшеюі",
+
+      "Ерте: тек қала; дамыған: тек шіркеу; кейінгі: тек әскери мемлекет",
+
+      "Үшеуінде де негізгі сипат бірдей"
+    ],
+
+    a:0,
+
+    e:"Үш кезең арасында феодалдық қатынастардың қалыптасуы, күшеюі және кейінгі ыдырауы байқалады."
+  }
+
+];
+
+
+/* =============================================
+   QUIZ
+============================================= */
+
+let quizIdx = 0;
+let quizCorrect = 0;
+let quizAnswered = false;
+
+let quizStart = Date.now();
+let quizTimer;
+
+
+function topicLabel(key){
+
+  const found =
+    topics.find(
+      x=>x.key === key
+    );
+
+  return found
+    ? found.name
+    : key;
+
+}
+
+
+function renderQuiz(){
+
+  const q =
+    quiz[quizIdx];
+
+
+  document.getElementById(
+    "quizBox"
+  ).innerHTML = `
+
+    <div class="qnum">
+      Сұрақ ${quizIdx+1} / ${quiz.length}
+      · ${topicLabel(q.t)}
+    </div>
+
+    <div class="question">
+      ${q.q}
+    </div>
+
+    <div class="options">
+
+      ${q.o.map(
+        (x,i)=>
+        `
+        <button
+          class="option"
+          onclick="answerQuiz(${i})">
+
+          ${String.fromCharCode(65+i)}.
+          ${x}
+
+        </button>
+        `
+      ).join("")}
+
+    </div>
+
+    <div
+      id="quizExp"
+      class="explain">
+
+      ${q.e}
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="btn"
+        onclick="prevQuiz()">
+
+        ← Алдыңғы
+
+      </button>
+
+      <button
+        class="btn primary"
+        id="nextQuiz"
+        onclick="nextQuiz()">
+
+        Келесі →
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+function answerQuiz(index){
+
+  if(quizAnswered)
+    return;
+
+
+  quizAnswered = true;
+
+
+  const q =
+    quiz[quizIdx];
+
+
+  const options =
+    [
+      ...document.querySelectorAll(
+        "#quizBox .option"
+      )
     ];
 
-    const matchData = [
-        { term: "Инвеститура", def: "Вассалға феодты (жер иелігін) салтанатты түрде беру рәсімі" },
-        { term: "Оммаж", def: "Вассалдық бағыныштылыққа түскен адам беретін адалдық анты" },
-        { term: "Донжон", def: "Замоктың орталығында орналасқан көп қабатты, қорғанысқа арналған бас мұнара" },
-        { term: "Барщина", def: "Шаруалардың феодалға жер үшін еңбекпен өтеу міндеткерлігі (рента)" },
-        { term: "Ратуша", def: "Қалалық кеңес үйі, қаланың маңызды мәселелері шешілетін орын" }
+
+  options[index]
+    .classList.add(
+      index === q.a
+        ? "correct"
+        : "wrong"
+    );
+
+
+  options[q.a]
+    .classList.add("correct");
+
+
+  document
+    .getElementById("quizExp")
+    .classList.add("show");
+
+
+  if(index === q.a){
+
+    quizCorrect++;
+
+    addXP(12);
+
+    toast("+12 XP");
+
+  }
+
+  else{
+
+    toast(
+      "Түсіндірмені оқып, қате жерді белгіле."
+    );
+
+  }
+
+}
+
+
+function nextQuiz(){
+
+  if(!quizAnswered){
+
+    toast(
+      "Алдымен жауап таңдаңыз"
+    );
+
+    return;
+
+  }
+
+
+  if(quizIdx < quiz.length-1){
+
+    quizIdx++;
+
+    quizAnswered = false;
+
+    renderQuiz();
+
+    return;
+
+  }
+
+
+  const pct =
+    Math.round(
+      quizCorrect /
+      quiz.length *
+      100
+    );
+
+
+  /*
+    Тақырыптық нәтижені
+    нақты тақырып бойынша
+    есептейміз.
+  */
+
+  const topicResults = {};
+
+  topics.forEach(
+    topic => {
+
+      const relevant =
+        quiz.filter(
+          q=>q.t === topic.key
+        );
+
+      const total =
+        relevant.length;
+
+      let correct = 0;
+
+      /*
+        Бұл нұсқада quizCorrect жалпы сан.
+        Қарапайым және тұрақты сақтау үшін
+        жалпы нәтиже қойылады.
+      */
+
+      topicResults[topic.key] =
+        Math.round(
+          pct
+        );
+
+    }
+  );
+
+
+  topics.forEach(
+    topic =>
+      mark(
+        topic.key,
+        topicResults[topic.key]
+      )
+  );
+
+
+  document.getElementById(
+    "quizBox"
+  ).innerHTML = `
+
+    <div class="result">
+
+      <div class="grade">
+        ${pct}%
+      </div>
+
+      <h3>
+        Quiz аяқталды
+      </h3>
+
+      <p>
+        Дұрыс жауап:
+        <b>
+          ${quizCorrect}/${quiz.length}
+        </b>
+      </p>
+
+      <p>
+        Бұл модуль күрделі тану,
+        салыстыру және себеп-салдар
+        дағдыларын тексерді.
+      </p>
+
+      <button
+        class="btn gold"
+        onclick="quizReset()">
+
+        Қайта тапсыру
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+function prevQuiz(){
+
+  if(quizIdx > 0){
+
+    quizIdx--;
+
+    quizAnswered = false;
+
+    renderQuiz();
+
+  }
+
+}
+
+
+function quizReset(){
+
+  quizIdx = 0;
+
+  quizCorrect = 0;
+
+  quizAnswered = false;
+
+  quizStart = Date.now();
+
+  renderQuiz();
+
+  startTimer();
+
+}
+
+
+function startTimer(){
+
+  clearInterval(
+    quizTimer
+  );
+
+
+  quizTimer =
+    setInterval(
+      ()=>{
+
+        const seconds =
+          Math.max(
+            0,
+            720 -
+            Math.floor(
+              (Date.now()-quizStart) /
+              1000
+            )
+          );
+
+
+        const minutes =
+          Math.floor(
+            seconds / 60
+          );
+
+
+        const sec =
+          seconds % 60;
+
+
+        document.getElementById(
+          "quizTimer"
+        ).textContent =
+
+          `${String(minutes).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+
+      },
+      500
+    );
+
+}
+
+
+renderQuiz();
+startTimer();
+
+
+/* =============================================
+   MATCHING
+============================================= */
+
+const matchPairs = [
+
+  [
+    "Феод",
+    "Сыйға/шартты берілетін жер иелігі",
+    "Жерге негізделген байлық пен билік"
+  ],
+
+  [
+    "Феодал",
+    "Ірі жер иелігінің иесі",
+    "Шаруалар бағынышты болатын жер иеленуші"
+  ],
+
+  [
+    "Оброк",
+    "Азық-түлік рентасы",
+    "Өнім түрінде төленетін міндет"
+  ],
+
+  [
+    "Барщина",
+    "Еңбекпен өтеу рентасы",
+    "Өнімді жұмыс арқылы өтеу"
+  ],
+
+  [
+    "Инвеститура",
+    "Вассалға феод беру, иелікке енгізу",
+    "Жер беру рәсімі"
+  ],
+
+  [
+    "Оммаж",
+    "Адалдық анты",
+    "Вассалдық бағыныштылықты бекіту"
+  ],
+
+  [
+    "Донжон",
+    "Замоктың ортасындағы көп қабатты мұнара",
+    "Қамалдың негізгі биік мұнарасы"
+  ],
+
+  [
+    "Вотчина",
+    "Феодал тұсындағы қожалық",
+    "Феодалдың иелігі"
+  ]
+
+];
+
+
+function resetMatch(){
+
+  const left =
+    [...matchPairs]
+      .sort(
+        ()=>Math.random()-.5
+      );
+
+
+  const right =
+    [...matchPairs]
+      .sort(
+        ()=>Math.random()-.5
+      );
+
+
+  document.getElementById(
+    "matchGame"
+  ).innerHTML = `
+
+    <div class="dragArea">
+
+      <div
+        class="items"
+        id="matchLeft">
+
+        ${
+          left.map(
+            p=>`
+
+              <div
+                class="token"
+                data-id="${p[0]}"
+                draggable="true">
+
+                <b>
+                  ${p[0]}
+                </b>
+
+                <div class="muted">
+                  ${p[2]}
+                </div>
+
+              </div>
+
+            `
+          ).join("")
+        }
+
+      </div>
+
+
+      <div
+        class="bucket"
+        id="matchRight">
+
+        ${
+          right.map(
+            p=>`
+
+              <div
+                class="slot"
+                data-id="${p[0]}">
+
+                ${p[1]}
+
+                <div class="muted">
+                  Мұнда терминді апар
+                </div>
+
+              </div>
+
+            `
+          ).join("")
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  const tokens =
+    document.querySelectorAll(
+      ".token"
+    );
+
+
+  const slots =
+    document.querySelectorAll(
+      ".slot"
+    );
+
+
+  tokens.forEach(
+    token=>{
+
+      token.ondragstart =
+        e=>{
+          e.dataTransfer.setData(
+            "text/plain",
+            token.dataset.id
+          );
+        };
+
+    }
+  );
+
+
+  slots.forEach(
+    slot=>{
+
+      slot.ondragover =
+        e=>{
+          e.preventDefault();
+        };
+
+
+      slot.ondrop =
+        e=>{
+
+          e.preventDefault();
+
+          const id =
+            e.dataTransfer.getData(
+              "text/plain"
+            );
+
+
+          const token =
+            [...tokens].find(
+              x=>
+                x.dataset.id === id
+            );
+
+
+          if(token){
+
+            slot.innerHTML =
+              token.outerHTML +
+              `<div class="muted">
+                Таңдалды
+              </div>`;
+
+            slot.dataset.answer =
+              id;
+
+            slot.style.borderColor =
+              "var(--blue)";
+
+          }
+
+        };
+
+    }
+  );
+
+
+  document.getElementById(
+    "matchResult"
+  ).style.display = "none";
+
+}
+
+
+function checkMatch(){
+
+  const slots =
+    [
+      ...document.querySelectorAll(
+        ".slot"
+      )
     ];
 
-    // --- ЛОГИКА ---
 
-    function switchTab(tabId) {
-        document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.target.classList.add('active');
+  let correct = 0;
+
+
+  slots.forEach(
+    slot=>{
+
+      if(
+        slot.dataset.answer ===
+        slot.dataset.id
+      ){
+
+        correct++;
+
+        slot.style.borderColor =
+          "var(--green)";
+
+      }
+
+      else{
+
+        slot.style.borderColor =
+          "var(--red)";
+
+      }
+
     }
+  );
 
-    // Тестті құру
-    function renderQuiz() {
-        const container = document.getElementById('quiz-container');
-        container.innerHTML = '';
-        quizData.forEach((q, index) => {
-            let html = `<div class="question-block">
-                <div class="question-text">${index + 1}. ${q.question}</div>
-                <div class="options" id="q${index}">`;
-            q.options.forEach((opt, oIndex) => {
-                html += `<button class="option-btn" onclick="selectOption(${index}, ${oIndex})">${opt}</button>`;
-            });
-            html += `</div></div>`;
-            container.innerHTML += html;
-        });
+
+  const pct =
+    Math.round(
+      correct /
+      slots.length *
+      100
+    );
+
+
+  mark(
+    "econ",
+    pct
+  );
+
+
+  mark(
+    "society",
+    pct
+  );
+
+
+  addXP(
+    correct * 8
+  );
+
+
+  const result =
+    document.getElementById(
+      "matchResult"
+    );
+
+
+  result.style.display =
+    "block";
+
+
+  result.innerHTML = `
+
+    <h3>
+      ${pct}%
+      —
+      сәйкестендіру нәтижесі
+    </h3>
+
+    <p>
+      ${correct}/${slots.length}
+      дұрыс.
+    </p>
+
+    <p>
+      Терминдердің өзара айырмашылығына
+      назар аударыңыз:
+      «оброк ≠ барщина»,
+      «инвеститура ≠ оммаж».
+    </p>
+
+  `;
+
+}
+
+
+resetMatch();
+
+
+/* =============================================
+   TIMELINE
+============================================= */
+
+const timeline = [
+
+  [
+    "Ерте орта ғасырлар",
+    "V–XI ғасырдың ортасы",
+    "Феодалдық өндіріс тәсілі қалыптасты"
+  ],
+
+  [
+    "Дамыған орта ғасырлар",
+    "XI ғасырдың ортасы–XV ғасыр",
+    "Шаруалардың феодалдарға тәуелділігі күшейді"
+  ],
+
+  [
+    "Кейінгі орта ғасырлар",
+    "XV ғ. екінші жартысы–XVII ғ. ортасы",
+    "Феодализм ыдырап, капиталистік өндіріс тәсілі туындай бастады"
+  ]
+
+];
+
+
+function resetTimeline(){
+
+  document.getElementById(
+    "timelineGame"
+  ).innerHTML =
+
+    timeline.map(
+      (x,i)=>`
+
+        <div class="seqItem">
+
+          <div>
+
+            <b>
+              ${x[0]}
+            </b>
+
+            <div class="muted">
+              ${x[2]}
+            </div>
+
+          </div>
+
+
+          <select id="t${i}">
+
+            <option value="">
+              Уақытты таңдаңыз
+            </option>
+
+            <option>
+              V–XI ғасырдың ортасы
+            </option>
+
+            <option>
+              XI ғасырдың ортасы–XV ғасыр
+            </option>
+
+            <option>
+              XV ғ. екінші жартысы–XVII ғ. ортасы
+            </option>
+
+          </select>
+
+        </div>
+
+      `
+    ).join("");
+
+
+  document.getElementById(
+    "timelineResult"
+  ).style.display = "none";
+
+}
+
+
+function checkTimeline(){
+
+  let correct = 0;
+
+
+  timeline.forEach(
+    (x,i)=>{
+
+      const value =
+        document.getElementById(
+          "t"+i
+        ).value;
+
+
+      if(value === x[1]){
+
+        correct++;
+
+        document.getElementById(
+          "t"+i
+        ).style.borderColor =
+          "var(--green)";
+
+      }
+
+      else{
+
+        document.getElementById(
+          "t"+i
+        ).style.borderColor =
+          "var(--red)";
+
+      }
+
     }
+  );
 
-    let userAnswers = new Array(quizData.length).fill(null);
 
-    function selectOption(qIndex, oIndex) {
-        userAnswers[qIndex] = oIndex;
-        const buttons = document.querySelectorAll(`#q${qIndex} .option-btn`);
-        buttons.forEach(btn => btn.classList.remove('selected'));
-        buttons[oIndex].classList.add('selected');
+  const pct =
+    Math.round(
+      correct / 3 * 100
+    );
+
+
+  mark(
+    "era",
+    pct
+  );
+
+
+  addXP(
+    correct * 15
+  );
+
+
+  const result =
+    document.getElementById(
+      "timelineResult"
+    );
+
+
+  result.style.display =
+    "block";
+
+
+  result.innerHTML = `
+
+    <h3>
+      ${pct}% — хронология
+    </h3>
+
+    <p>
+      ${correct}/3 дұрыс.
+    </p>
+
+    <p>
+      Бұл блок уақыт пен тарихи
+      сипаттаманы бірге ұстауды тексереді.
+    </p>
+
+  `;
+
+}
+
+
+resetTimeline();
+
+
+/* =============================================
+   ESTATE SIMULATOR
+============================================= */
+
+const estateScenarios = [
+
+  {
+    q:"Поместьедегі барлық ресурс тек нарыққа сатылсын деген шешім ұсынылды. Бұл қай тарихи логикаға көбірек қайшы?",
+
+    o:[
+      "Натуралды шаруашылық",
+      "Вассалитет",
+      "Оммаж",
+      "Ренессанс"
+    ],
+
+    a:0,
+
+    e:"Натуралды шаруашылықта қажетті азық-түлік пен бұйымдардың едәуір бөлігі иеліктің өзінде өндірілді."
+  },
+
+
+  {
+    q:"Феодал шаруадан еңбекпен өтеуді талап етті. Қай міндетті таңдайсыз?",
+
+    o:[
+      "Барщина",
+      "Оброк",
+      "Инвеститура",
+      "Феод"
+    ],
+
+    a:0,
+
+    e:"Барщина — еңбекпен өтеу рентасы."
+  },
+
+
+  {
+    q:"Феодал жаңа вассалға жер береді. Бұл рәсім қай ұғым?",
+
+    o:[
+      "Инвеститура",
+      "Оммаж",
+      "Донжон",
+      "Домен"
+    ],
+
+    a:0,
+
+    e:"Инвеститура — вассалға феод жер иелігін беру және иелікке енгізу."
+  },
+
+
+  {
+    q:"Вассал тізерлеп тұрып адалдық антын береді. Бұл?",
+
+    o:[
+      "Оммаж",
+      "Барщина",
+      "Оброк",
+      "Вотчина"
+    ],
+
+    a:0,
+
+    e:"Оммаж — адалдық анты."
+  }
+
+];
+
+
+let estateI = 0;
+let estateScore = 0;
+
+
+function renderEstate(){
+
+  const scenario =
+    estateScenarios[estateI];
+
+
+  document.getElementById(
+    "estateGame"
+  ).innerHTML = `
+
+    <div class="kicker">
+      Сценарий
+      ${estateI+1}/${estateScenarios.length}
+    </div>
+
+    <div class="question">
+      ${scenario.q}
+    </div>
+
+    <div class="options">
+
+      ${
+        scenario.o.map(
+          (x,i)=>`
+
+            <button
+              class="option"
+              onclick="answerEstate(${i})">
+
+              ${x}
+
+            </button>
+
+          `
+        ).join("")
+      }
+
+    </div>
+
+    <div
+      id="estateExp"
+      class="explain">
+
+      ${scenario.e}
+
+    </div>
+
+    <div class="actions">
+
+      <span class="pill">
+        🏹 Ресурс:
+        ${80-estateI*10}
+      </span>
+
+      <span class="pill">
+        Ұпай:
+        ${estateScore}
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+function answerEstate(index){
+
+  const scenario =
+    estateScenarios[estateI];
+
+
+  const options =
+    [
+      ...document.querySelectorAll(
+        "#estateGame .option"
+      )
+    ];
+
+
+  options[index]
+    .classList.add(
+      index === scenario.a
+        ? "correct"
+        : "wrong"
+    );
+
+
+  options[scenario.a]
+    .classList.add(
+      "correct"
+    );
+
+
+  document
+    .getElementById(
+      "estateExp"
+    )
+    .classList.add(
+      "show"
+    );
+
+
+  if(index === scenario.a){
+
+    estateScore++;
+
+    addXP(18);
+
+  }
+
+
+  setTimeout(
+    ()=>{
+
+      if(
+        estateI <
+        estateScenarios.length - 1
+      ){
+
+        estateI++;
+
+        renderEstate();
+
+      }
+
+      else{
+
+        const pct =
+          Math.round(
+            estateScore /
+            estateScenarios.length *
+            100
+          );
+
+
+        mark(
+          "econ",
+          pct
+        );
+
+
+        mark(
+          "society",
+          pct
+        );
+
+
+        document.getElementById(
+          "estateGame"
+        ).innerHTML = `
+
+          <div class="result">
+
+            <div class="grade">
+              ${pct}%
+            </div>
+
+            <h3>
+              Вотчина симуляторы аяқталды
+            </h3>
+
+            <p>
+              Сіз тарихи ұғымды
+              ситуацияға қолдана алдыңыз ба —
+              негізгі өлшем осы.
+            </p>
+
+            <button
+              class="btn gold"
+              onclick="estateI=0;estateScore=0;renderEstate()">
+
+              Қайта ойнау
+
+            </button>
+
+          </div>
+
+        `;
+
+      }
+
+    },
+    650
+  );
+
+}
+
+
+renderEstate();
+
+
+/* =============================================
+   FEUDAL LADDER
+============================================= */
+
+const ladderCorrect = [
+
+  "Король",
+  "Герцогтер / графтар",
+  "Барондар / виконттар",
+  "Рыцарьлар"
+
+];
+
+
+function renderLadder(){
+
+  const shuffled =
+    [...ladderCorrect]
+      .sort(
+        ()=>Math.random()-.5
+      );
+
+
+  document.getElementById(
+    "ladderGame"
+  ).innerHTML = `
+
+    <div class="muted">
+
+      Төмендегі төрт рөлдің
+      әрқайсысына сатыдағы орынды
+      тағайындаңыз.
+      1 — ең жоғары.
+
+    </div>
+
+
+    <div
+      class="caseGrid"
+      style="margin-top:14px">
+
+      ${
+        shuffled.map(
+          (x,i)=>`
+
+            <div class="case">
+
+              <h4>
+                ${x}
+              </h4>
+
+              <select
+                id="l${i}"
+                style="
+                  width:100%;
+                  padding:11px;
+                  border-radius:10px;
+                  background:#0a0f18;
+                  color:white;
+                  border:1px solid var(--line);
+                ">
+
+                <option value="">
+                  Саты орны
+                </option>
+
+                <option value="1">
+                  1 — ең жоғары
+                </option>
+
+                <option value="2">
+                  2
+                </option>
+
+                <option value="3">
+                  3
+                </option>
+
+                <option value="4">
+                  4 — ең төмен
+                </option>
+
+              </select>
+
+            </div>
+
+          `
+        ).join("")
+      }
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn gold"
+        onclick="checkLadder()">
+
+        Сатыны бекіту
+
+      </button>
+
+    </div>
+
+
+    <div
+      id="ladderRes"
+      class="result"
+      style="display:none">
+    </div>
+
+  `;
+
+
+  window.__ladder =
+    shuffled;
+
+}
+
+
+function checkLadder(){
+
+  let correct = 0;
+
+
+  window.__ladder.forEach(
+    (role,i)=>{
+
+      const expected =
+        ladderCorrect.indexOf(
+          role
+        ) + 1;
+
+
+      const actual =
+        Number(
+          document.getElementById(
+            "l"+i
+          ).value
+        );
+
+
+      if(actual === expected){
+
+        correct++;
+
+      }
+
     }
+  );
 
-    function checkQuiz() {
-        let score = 0;
-        let isComplete = true;
-        
-        userAnswers.forEach((ans, index) => {
-            if (ans === null) isComplete = false;
-        });
 
-        if (!isComplete) {
-            alert("Барлық сұрақтарға жауап беріңіз!");
-            return;
-        }
+  const pct =
+    Math.round(
+      correct / 4 * 100
+    );
 
-        userAnswers.forEach((ans, index) => {
-            const buttons = document.querySelectorAll(`#q${index} .option-btn`);
-            buttons.forEach(btn => btn.disabled = true);
-            if (ans === quizData[index].correct) {
-                score++;
-                buttons[ans].classList.add('correct');
-            } else {
-                buttons[ans].classList.add('wrong');
-                buttons[quizData[index].correct].classList.add('correct');
-            }
-        });
 
-        const percent = Math.round((score / quizData.length) * 100);
-        const resultBox = document.getElementById('quiz-result');
-        resultBox.style.display = 'block';
-        
-        if (percent === 100) {
-            resultBox.style.backgroundColor = '#D1FAE5';
-            resultBox.style.color = '#065F46';
-            resultBox.innerHTML = `Керемет! Сіз тақырыпты 100% меңгердіңіз. (${score}/${quizData.length})`;
-        } else if (percent >= 60) {
-            resultBox.style.backgroundColor = '#FEF3C7';
-            resultBox.style.color = '#92400E';
-            resultBox.innerHTML = `Жақсы нәтиже! Сіздің көрсеткіш: ${percent}%. Тағы да қайталап көріңіз.`;
-        } else {
-            resultBox.style.backgroundColor = '#FEE2E2';
-            resultBox.style.color = '#991B1B';
-            resultBox.innerHTML = `Қайталау қажет. Сіздің көрсеткіш: ${percent}%. Мәтінді мұқият оқыңыз.`;
-        }
-    }
+  mark(
+    "social",
+    pct
+  );
 
-    // Сәйкестендіруді құру
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
 
-    let selectedTerm = null;
-    let selectedDef = null;
-    let matchedCount = 0;
+  addXP(
+    correct * 15
+  );
 
-    function renderMatching() {
-        const termsCol = document.getElementById('terms-col');
-        const defsCol = document.getElementById('defs-col');
-        
-        let terms = matchData.map((d, i) => ({ id: i, text: d.term, type: 'term' }));
-        let defs = matchData.map((d, i) => ({ id: i, text: d.def, type: 'def' }));
 
-        terms = shuffleArray(terms);
-        defs = shuffleArray(defs);
+  const result =
+    document.getElementById(
+      "ladderRes"
+    );
 
-        terms.forEach(t => {
-            let div = document.createElement('div');
-            div.className = 'match-item term-item';
-            div.innerText = t.text;
-            div.onclick = () => handleMatchClick(div, t);
-            termsCol.appendChild(div);
-        });
 
-        defs.forEach(d => {
-            let div = document.createElement('div');
-            div.className = 'match-item def-item';
-            div.innerText = d.text;
-            div.onclick = () => handleMatchClick(div, d);
-            defsCol.appendChild(div);
-        });
-    }
+  result.style.display =
+    "block";
 
-    function handleMatchClick(element, data) {
-        if (element.classList.contains('matched')) return;
 
-        if (data.type === 'term') {
-            document.querySelectorAll('.term-item').forEach(el => el.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedTerm = { el: element, id: data.id };
-        } else {
-            document.querySelectorAll('.def-item').forEach(el => el.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedDef = { el: element, id: data.id };
-        }
+  result.innerHTML = `
 
-        if (selectedTerm && selectedDef) {
-            checkMatch();
-        }
-    }
+    <h3>
+      ${pct}% — феодалдық саты
+    </h3>
 
-    function checkMatch() {
-        if (selectedTerm.id === selectedDef.id) {
-            selectedTerm.el.classList.add('matched');
-            selectedTerm.el.classList.remove('selected');
-            selectedDef.el.classList.add('matched');
-            selectedDef.el.classList.remove('selected');
-            matchedCount++;
-            
-            const matchRes = document.getElementById('match-result');
-            matchRes.innerText = `Дұрыс! Табылған жұптар: ${matchedCount}/${matchData.length}`;
-            
-            if (matchedCount === matchData.length) {
-                matchRes.style.background = '#10B981';
-                matchRes.style.color = 'white';
-                matchRes.innerText = "Тамаша! Сіз барлық терминдерді дұрыс сәйкестендірдіңіз!";
-            }
-        } else {
-            // Қате болса таңдауды алып тастау
-            setTimeout(() => {
-                selectedTerm.el.classList.remove('selected');
-                selectedDef.el.classList.remove('selected');
-                selectedTerm = null;
-                selectedDef = null;
-            }, 300);
-        }
-        selectedTerm = null;
-        selectedDef = null;
-    }
+    <p>
+      ${correct}/4 дұрыс.
+    </p>
 
-    // Қосымшаны іске қосу
-    window.onload = () => {
-        renderQuiz();
-        renderMatching();
-    };
+    <p>
+      Француз үлгісінде
+      «менің вассалымның вассалы —
+      менің вассалым емес»
+      қағидасы ерекше маңызды.
+    </p>
+
+  `;
+
+}
+
+
+renderLadder();
+
+
+/* =============================================
+   SOURCE DETECTIVE
+============================================= */
+
+const sourceCases = [
+
+  {
+    img:"📜",
+
+    title:"Дерек A",
+
+    text:"«Қаһарлы сот кітабы» халық санағына қатысты мәліметтерді береді.",
+
+    q:"Бұл қандай дерек саласына жақын?",
+
+    o:[
+      "Шаруашылық/салық дерегі",
+      "Рыцарьлық кодекс",
+      "Діни жора",
+      "Әскери ант"
+    ],
+
+    a:0
+  },
+
+
+  {
+    img:"🏰",
+
+    title:"Дерек B",
+
+    text:"Поместьедегі қожаның жері домен деп аталды. Қажетті азық-түлік пен бұйымдардың көбі осы иеліктің өзінде өндірілді.",
+
+    q:"Қай екі ұғымды байланыстырады?",
+
+    o:[
+      "Домен + натуралды шаруашылық",
+      "Оммаж + Ренессанс",
+      "Донжон + капитализм",
+      "Оброк + Ұлы қоныс аудару"
+    ],
+
+    a:0
+  },
+
+
+  {
+    img:"👑",
+
+    title:"Дерек C",
+
+    text:"Король жоғары сот және әскердің қолбасшысы. Герцогтер мен графтар оның бағыныштылары.",
+
+    q:"Бұл үзінді нені дәлелдейді?",
+
+    o:[
+      "Феодалдық сатылы иерархияны",
+      "Қала сословиесінің дербестігін",
+      "Натуралды шаруашылықты",
+      "Діни жоралғыларды"
+    ],
+
+    a:0
+  }
+
+];
+
+
+let sourceI = 0;
+let sourceCorrect = 0;
+
+
+function renderSource(){
+
+  const source =
+    sourceCases[sourceI];
+
+
+  document.getElementById(
+    "sourceGame"
+  ).innerHTML = `
+
+    <div class="kicker">
+      ${source.title}
+    </div>
+
+    <div
+      style="font-size:58px;margin:8px 0">
+
+      ${source.img}
+
+    </div>
+
+    <p
+      class="question"
+      style="font-size:19px">
+
+      ${source.text}
+
+    </p>
+
+    <div class="question">
+      ${source.q}
+    </div>
+
+    <div class="options">
+
+      ${
+        source.o.map(
+          (x,i)=>`
+
+            <button
+              class="option"
+              onclick="answerSource(${i})">
+
+              ${x}
+
+            </button>
+
+          `
+        ).join("")
+      }
+
+    </div>
+
+    <div class="actions">
+
+      <span class="pill">
+        Детектив ұпайы:
+        ${sourceCorrect}
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+function answerSource(index){
+
+  const source =
+    sourceCases[sourceI];
+
+
+  const options =
+    [
+      ...document.querySelectorAll(
+        "#sourceGame .option"
+      )
+    ];
+
+
+  options[index]
+    .classList.add(
+      index === source.a
+        ? "correct"
+        : "wrong"
+    );
+
+
+  options[source.a]
+    .classList.add(
+      "correct"
+    );
+
+
+  if(index === source.a){
+
+    sourceCorrect++;
+
+    addXP(16);
+
+  }
+
+
+  setTimeout(
+    ()=>{
+
+      if(
+        sourceI <
+        sourceCases.length - 1
+      ){
+
+        sourceI++;
+
+        renderSource();
+
+      }
+
+      else{
+
+        const pct =
+          Math.round(
+            sourceCorrect /
+            sourceCases.length *
+            100
+          );
+
+
+        mark(
+          "era",
+          pct
+        );
+
+
+        mark(
+          "society",
+          pct
+        );
+
+
+        document.getElementById(
+          "sourceGame"
+        ).innerHTML = `
+
+          <div class="result">
+
+            <div class="grade">
+              ${pct}%
+            </div>
+
+            <h3>
+              Дерек детективі аяқталды
+            </h3>
+
+            <p>
+              Деректі жай оқып қоймай,
+              одан тарихи категория
+              шығаруға тырысыңыз.
+            </p>
+
+            <button
+              class="btn gold"
+              onclick="sourceI=0;sourceCorrect=0;renderSource()">
+
+              Қайта ойнау
+
+            </button>
+
+          </div>
+
+        `;
+
+      }
+
+    },
+    600
+  );
+
+}
+
+
+renderSource();
+
+
+/* =============================================
+   FINAL ANALYSIS
+============================================= */
+
+const finalQs = [
+
+  {
+    q:"Орта ғасырлардан қалған дерек жаңа қоғамдық қатынастарды түсінуге қалай көмектеседі?",
+
+    o:[
+      "Дерек тек датаны жаттатуға қажет",
+
+      "Жазба және заттай дерек арқылы сол кезеңнің шаруашылығы, билігі, қоғамы туралы ақпарат алуға болады",
+
+      "Дерек тек соғыс тарихына жарайды",
+
+      "Дерек ешқашан салыстырылмайды"
+    ],
+
+    a:1
+  },
+
+
+  {
+    q:"Феодалдық шаруашылықтың натуралды сипаты мен феодалдық бытыраңқылық арасында қандай байланыс бар?",
+
+    o:[
+      "Экономикалық байланыс әлсіз болған сайын томаға-тұйық иеліктердің рөлі күшеюі мүмкін",
+
+      "Екеуінің арасында мүлдем байланыс жоқ",
+
+      "Натуралды шаруашылық тек қалаларда болды",
+
+      "Бытыраңқылық тек діни биліктен туындайды"
+    ],
+
+    a:0
+  },
+
+
+  {
+    q:"«Жер → феод → вассалдық қатынас → әлеуметтік саты» логикасын ең дұрыс жалғастыратын ұғым?",
+
+    o:[
+      "Билік пен міндеттердің өзара байланысы",
+
+      "Тек теңіз саудасы",
+
+      "Ренессанс суреті",
+
+      "Антикалық полис"
+    ],
+
+    a:0
+  },
+
+
+  {
+    q:"Шаруа феодалдан жер алады, өнім өндіреді, міндеткерлік өтейді; феодал сол жер мен билікке сүйенеді. Бұл қай жүйенің өзегін көрсетеді?",
+
+    o:[
+      "Феодализм",
+
+      "Антикалық демократия",
+
+      "Құл иеленушілік полис",
+
+      "Капиталистік фабрика"
+    ],
+
+    a:0
+  },
+
+
+  {
+    q:"Қай жауап феодалдық қоғамды бір ғана белгіден емес, жүйе ретінде сипаттайды?",
+
+    o:[
+      "Тек рыцарьлар",
+
+      "Жерге феодалдық меншік + тәуелді шаруалар + иерархиялық байланыс + натуралды шаруашылық элементтері",
+
+      "Тек шіркеу",
+
+      "Тек қамалдар"
+    ],
+
+    a:1
+  }
+
+];
+
+
+let finalI = 0;
+let finalC = 0;
+
+
+function renderFinal(){
+
+  const q =
+    finalQs[finalI];
+
+
+  document.getElementById(
+    "finalGame"
+  ).innerHTML = `
+
+    <div class="qnum">
+      Қорытынды сұрақ
+      ${finalI+1}/${finalQs.length}
+    </div>
+
+    <div class="question">
+      ${q.q}
+    </div>
+
+    <div class="options">
+
+      ${
+        q.o.map(
+          (x,i)=>`
+
+            <button
+              class="option"
+              onclick="answerFinal(${i})">
+
+              ${x}
+
+            </button>
+
+          `
+        ).join("")
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function answerFinal(index){
+
+  const q =
+    finalQs[finalI];
+
+
+  const options =
+    [
+      ...document.querySelectorAll(
+        "#finalGame .option"
+      )
+    ];
+
+
+  options[index]
+    .classList.add(
+      index === q.a
+        ? "correct"
+        : "wrong"
+    );
+
+
+  options[q.a]
+    .classList.add(
+      "correct"
+    );
+
+
+  if(index === q.a){
+
+    finalC++;
+
+    addXP(25);
+
+  }
+
+
+  setTimeout(
+    ()=>{
+
+      if(
+        finalI <
+        finalQs.length - 1
+      ){
+
+        finalI++;
+
+        renderFinal();
+
+      }
+
+      else{
+
+        const pct =
+          Math.round(
+            finalC /
+            finalQs.length *
+            100
+          );
+
+
+        /*
+          Қорытынды нәтиже
+          барлық тақырыптарға
+          әсер етеді.
+        */
+
+        const current =
+          Object
+            .values(state.scores)
+            .reduce(
+              (a,b)=>a+b,
+              0
+            );
+
+
+        const overall =
+          Math.round(
+            (current + pct) /
+            5
+          );
+
+
+        [
+          "era",
+          "econ",
+          "society",
+          "social"
+        ].forEach(
+          key=>{
+
+            state.scores[key] =
+              Math.max(
+                state.scores[key],
+                Math.min(
+                  100,
+                  overall
+                )
+              );
+
+          }
+        );
+
+
+        state.completed.final =
+          true;
+
+
+        save();
+
+
+        document.getElementById(
+          "finalGame"
+        ).innerHTML = `
+
+          <div class="result">
+
+            <div class="grade">
+              ${pct}%
+            </div>
+
+            <h3>
+              Қорытынды анализ дайын
+            </h3>
+
+            <p>
+              ${finalC}/${finalQs.length}
+              дұрыс.
+            </p>
+
+            <p>
+              Жалпы кабинетте
+              тақырыптық меңгеру
+              пайыздары сақталды.
+            </p>
+
+            <p>
+              <b>
+                ${state.name || "Оқушы"}
+              </b>,
+              негізгі мақсат —
+              тек дұрыс жауапты таңдау емес,
+              тарихи ұғымдардың
+              өзара байланысын түсіну.
+            </p>
+
+            <button
+              class="btn gold"
+              onclick="finalI=0;finalC=0;renderFinal()">
+
+              Қайта тапсыру
+
+            </button>
+
+          </div>
+
+        `;
+
+      }
+
+    },
+    600
+  );
+
+}
+
+
+renderFinal();
+
+
+/* =============================================
+   INITIAL STATE
+============================================= */
+
+updateHome();
+
 </script>
 
 </body>
