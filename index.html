@@ -1,845 +1,1113 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Орта ғасырлар тарихы: Білімді саралау және Аналитика платформасы</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
-        .tab-btn.active { background-color: #4f46e5; color: white; shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2); }
-        .pyramid-slot { transition: all 0.3s ease; }
-        .pyramid-slot.drag-over { border-color: #6366f1; background-color: #e0e7ff; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Орта ғасырлар тарихы: Білімді Саралау және Аналитика Платформасы</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel CDN for JSX parsing -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- FontAwesome / Lucide Icons support -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js CDN for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+    .amber-gradient {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+    .card-glass {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+  </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col">
+<body class="min-h-screen custom-scrollbar">
+  <div id="root"></div>
 
-    <!-- Navbar -->
-    <header class="bg-indigo-900 text-white shadow-xl sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="p-2.5 bg-indigo-700 rounded-xl shadow-inner">
-                    <i class="fa-solid fa-castle text-2xl text-amber-400"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight">Орта Ғасырлар Тарихы</h1>
-                    <p class="text-xs text-indigo-200">Оқушы білімін саралау & Сараптамалық Аналитика (6-сынып)</p>
-                </div>
-            </div>
-            
-            <nav class="flex flex-wrap gap-2 bg-indigo-950/60 p-1.5 rounded-2xl border border-indigo-700/50">
-                <button onclick="switchTab('test')" id="btn-test" class="tab-btn active px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2">
-                    <i class="fa-solid fa-list-check"></i> Тапсырмалар
-                </button>
-                <button onclick="switchTab('pyramid')" id="btn-pyramid" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-indigo-200 hover:text-white transition-all duration-200 flex items-center gap-2">
-                    <i class="fa-solid fa-sitemap"></i> Феодалдық Саты
-                </button>
-                <button onclick="switchTab('matching')" id="btn-matching" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-indigo-200 hover:text-white transition-all duration-200 flex items-center gap-2">
-                    <i class="fa-solid fa-puzzle-piece"></i> Терминдер
-                </button>
-                <button onclick="switchTab('analytics')" id="btn-analytics" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold text-indigo-200 hover:text-white transition-all duration-200 flex items-center gap-2">
-                    <i class="fa-solid fa-chart-pie"></i> Аналитика & Саралау
-                </button>
-            </nav>
-        </div>
-    </header>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    // --- DATA BASE FROM TEXTBOOK ---
+    const topicsData = [
+      {
+        id: "topic1",
+        title: "1. Тарихтағы орта ғасырлар түсінігі",
+        source: "Атамұра & Негізгі оқулық",
+        description: "Орта ғасырлар ұғымының пайда болуы, периодизация, Флавио Бьондо, Ренессанс және Гуманистер."
+      },
+      {
+        id: "topic2",
+        title: "2. Феодалдық шаруашылық түрі мен ерекшеліктері",
+        source: "Атамұра баспасы",
+        description: "Феод, натуралды шаруашылық, барщина мен оброк, домен, вотчина (поместье) және бытыраңқылық."
+      },
+      {
+        id: "topic3",
+        title: "3. Феодалдық қоғамның әлеуметтік құрылымы",
+        source: "Атамұра баспасы",
+        description: "3 сословие, феодалдық саты (иерархия), вассалитет, рыцарьлар кодексі, сервтер мен вилландар."
+      }
+    ];
 
-        <!-- Banner / Info -->
-        <div class="mb-8 p-6 rounded-3xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-800 text-white shadow-lg relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black">Medieval</div>
-            <div class="relative z-10 max-w-3xl">
-                <span class="px-3 py-1 bg-amber-400 text-indigo-950 rounded-full text-xs font-bold uppercase tracking-wider">Атамұра & Авторлық база бойынша</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold mt-2">Тарихи білімді бағалау және саралау сервисі</h2>
-                <p class="text-indigo-100 mt-2 text-sm sm:text-base">
-                    Тапсырмалар А, В, С деңгейлері бойынша топтастырылған. Оқушының тақырыпты меңгеру пайызы, күшті және әлсіз тұстары авто-аналитика арқылы нақты уақытта есептеледі.
-                </p>
-            </div>
-        </div>
+    // Quiz Questions for Deep Understanding & Analysis
+    const questionsDatabase = [
+      // Topic 1
+      {
+        id: 1,
+        topicId: "topic1",
+        level: "remember", // Білу / Жаттау
+        levelName: "Есте сақтау & Деректер",
+        question: "«Орта ғасырлар» (Medium aevum) терминін алғаш рет XV ғасырда ғылымға енгізген итальяндық гуманист тарихшы кім?",
+        options: [
+          { text: "Флавио Бьондо", isCorrect: true, explanation: "Флавио Бьондо (1392-1463) алғаш рет бұл терминді антикалық кезең мен өз заманы арасын сипаттау үшін енгізді." },
+          { text: "Роджер Бэкон", isCorrect: false, explanation: "Роджер Бэкон - XIII ғасырдағы ағылшын табиғаттанушы ғалымы." },
+          { text: "Карл Мартелл", isCorrect: false, explanation: "Карл Мартелл - франк майордомы, бенефициялық реформа жасаушы." },
+          { text: "Иоганн Гутенберг", isCorrect: false, explanation: "Иоганн Гутенберг - 1445 жылы баспахана ойлап тапқан неміс шебері." }
+        ]
+      },
+      {
+        id: 2,
+        topicId: "topic1",
+        level: "understand", // Түсіну
+        levelName: "Түсіну & Концепция",
+        question: "Гуманистер не себепті орта ғасырларды алғашында «Қара түнек» кезеңі деп атады?",
+        options: [
+          { text: "Антикалық өнер, философия мен ғылым ұмытылып, надандық жайлады деп санағандықтан", isCorrect: true, explanation: "Гуманистер бұл кезеңде Ежелгі Грекия мен Римнің өркениеттік жетістіктері құлдырады деп есептеді." },
+          { text: "Бұл кезеңде күн сәулесі азайып, Еуропада үнемі суық климат орнағандықтан", isCorrect: false, explanation: "Бұл табиғи суыту процесіне қатысты, бірақ «Қара түнек» атауы мәдениеттің бәсеңдеуіне берілген баға." },
+          { text: "Еуропада кітап басып шығару ісі мүлде тоқтатылғандықтан", isCorrect: false, explanation: "Кітап басу керісінше кейінгі орта ғасырларда (1445 ж.) пайда болды." },
+          { text: "Феодалдар шаруаларды құл ретінде сатуды заңдастырғандықтан", isCorrect: false, explanation: "Феодализмде шаруалар құл емес, жерге тәуелді немесе ерікті өндірушілер болды." }
+        ]
+      },
+      {
+        id: 3,
+        topicId: "topic1",
+        level: "analyze", // Талдау / Қолдану
+        levelName: "Талдау & Логика",
+        question: "Ерте орта ғасырлардағы (V-XI ғғ.) қоғамның қалыптасуына әсер еткен негізгі екі тарихи дәстүрдің тоғысуын анықтаңыз:",
+        options: [
+          { text: "Антикалық (римдік) және варварлық (германдық) дәстүрлер", isCorrect: true, explanation: "Феодализм дәл осы екі бастаудың: римдік институттар мен герман тайпалық құрылымының синтeзінен пайда болды." },
+          { text: "Араб-мұсылмандық және Византиялық заңдар", isCorrect: false, explanation: "Бұл Батыс Еуропа феодализмінің негізгі қос бастауына жатпайды." },
+          { text: "Славяндық қауым және далалық көшпелілер жүйесі", isCorrect: false, explanation: "Бұл Шығыс Еуропа мен Еуразияға тән болғанымен, Батыс феодализмінің өзегі емес." },
+          { text: "Эллинистік мәдениет пен азиялық деспотизм", isCorrect: false, explanation: "Эллинизм б.з.б. кезеңде болған." }
+        ]
+      },
 
-        <!-- TAB 1: DIFFERENTIATED QUIZ / TASKS -->
-        <section id="tab-test" class="space-y-6">
-            <!-- Filter & Level Controls -->
-            <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider mr-2">Деңгей бойынша:</span>
-                    <button onclick="filterLevel('all')" class="level-btn bg-indigo-100 text-indigo-700 hover:bg-indigo-200 px-3 py-1.5 rounded-lg text-xs font-bold transition">Барлығы</button>
-                    <button onclick="filterLevel('A')" class="level-btn bg-emerald-100 text-emerald-800 hover:bg-emerald-200 px-3 py-1.5 rounded-lg text-xs font-bold transition">А деңгей (Жеңіл)</button>
-                    <button onclick="filterLevel('B')" class="level-btn bg-amber-100 text-amber-800 hover:bg-amber-200 px-3 py-1.5 rounded-lg text-xs font-bold transition">В деңгей (Орташа)</button>
-                    <button onclick="filterLevel('C')" class="level-btn bg-rose-100 text-rose-800 hover:bg-rose-200 px-3 py-1.5 rounded-lg text-xs font-bold transition">С деңгей (Күрделі)</button>
-                </div>
-                <div class="text-xs font-semibold text-slate-500 flex items-center gap-2">
-                    <span>Орындалғаны: <strong id="progress-text" class="text-indigo-600">0 / 9</strong></span>
-                    <div class="w-24 bg-slate-200 rounded-full h-2">
-                        <div id="progress-bar" class="bg-indigo-600 h-2 rounded-full w-0 transition-all duration-300"></div>
-                    </div>
-                </div>
-            </div>
+      // Topic 2
+      {
+        id: 4,
+        topicId: "topic2",
+        level: "remember",
+        levelName: "Есте сақтау & Деректер",
+        question: "Феодалдық шаруашылықтағы «Барщина» мен «Оброк» рентасының басты айырмашылығы неде?",
+        options: [
+          { text: "Барщина – еңбекпен өтеу міндеті, ал Оброк – өніммен немесе ақшалай төлеу", isCorrect: true, explanation: "Барщинада шаруа феодал доменінде тегін жұмыс істейді, оброкта өз өнімінің бір бөлігін береді." },
+          { text: "Барщина тек шеберханада өтеледі, ал оброк тек соғыс кезінде жиналады", isCorrect: false, explanation: "Барщина егістіктегі және қожалықтағы еңбекке қатысты." },
+          { text: "Барщинаны ерікті шаруалар, ал оброкты тек феодалдар төлейді", isCorrect: false, explanation: "Феодалдар рента төлемейді, керісінше оны алады." },
+          { text: "Екеуі де корольге төленетін әскери салық түрі болып табылады", isCorrect: false, explanation: "Бұлар феодалдық жер рентасының түрлері." }
+        ]
+      },
+      {
+        id: 5,
+        topicId: "topic2",
+        level: "understand",
+        levelName: "Түсіну & Концепция",
+        question: "«Натуралды шаруашылық» жүйесінің ең негізгі әлеуметтік-экономикалық сипатын белгілеңіз:",
+        options: [
+          { text: "Тұтынылатын барлық азық-түлік пен бұйымдар сату үшін емес, поместьенің өзінде өндіріледі", isCorrect: true, explanation: "Натуралды шаруашылық томаға-тұйық, нарықпен байланысы төмен және өзін-өзі қамтамасыз етеді." },
+          { text: "Бүкіл тауарлар тек жәрмеңкеде алтын мен күміске айырбасталады", isCorrect: false, explanation: "Бұл тауар-ақша қатынастарына тән." },
+          { text: "Егіншілік мүлде дамымай, тек сыртқы саудамен күн көру", isCorrect: false, explanation: "Натуралды шаруашылықтың негізі - жер мен егіншілік." },
+          { text: "Мемлекеттік банкілер арқылы шаруаларға несие беру", isCorrect: false, explanation: "Бұл капиталистік қатынастарға тән." }
+        ]
+      },
+      {
+        id: 6,
+        topicId: "topic2",
+        level: "analyze",
+        levelName: "Талдау & Логика",
+        question: "IX-X ғасырларда Батыс Еуропада Феодалдық бытыраңқылықтың орнауына себеп болған негізгі фактор қайсысы?",
+        options: [
+          { text: "Натуралды шаруашылықтың үстемдігі және аймақтар арасындағы экономикалық байланыстың әлсіздігі", isCorrect: true, explanation: "Әрбір феодалдық поместье өзін-өзі қамтамасыз еткендіктен, орталық королдік билікке экономикалық зәрулік болмады." },
+          { text: "Византия империясының Еуропаны толық жаулап алуы", isCorrect: false, explanation: "Византия Батыс Еуропаны жаулаған жоқ." },
+          { text: "Барлық шаруалардың қалаларға жаппай көшіп кете бастауы", isCorrect: false, explanation: "Қалалар XI ғасырдан бастап қана қарқынды дамыды." },
+          { text: "Корольдердің әскер ұстаудан бас тартуы", isCorrect: false, explanation: "Корольдер бытыраңқылық кезінде әлсіреді, бірақ әскерден бас тартқан жоқ." }
+        ]
+      },
 
-            <!-- Quiz Questions List -->
-            <div id="quiz-container" class="space-y-6">
-                <!-- Dynamically generated via JavaScript -->
-            </div>
-        </section>
+      // Topic 3
+      {
+        id: 7,
+        topicId: "topic3",
+        level: "remember",
+        levelName: "Есте сақтау & Деректер",
+        question: "Ортағасырлық Еуропадағы үш сословиенің міндеттерін дұрыс сәйкестендіріңіз:",
+        options: [
+          { text: "Дін иелері – құдайға сыйыну; Рыцарьлар – қорғау/соғысу; Шаруалар – еңбек ету/асырау", isCorrect: true, explanation: "Ортағасырлық идеология бойынша қоғам осы 3 функциялық топқа бөлінді." },
+          { text: "Дін иелері – егін егу; Рыцарьлар – сауда жасау; Шаруалар – заң жазу", isCorrect: false, explanation: "Бұл рөлдер қате бөлінген." },
+          { text: "Дін иелері – әскер бастау; Рыцарьлар – шіркеу салу; Шаруалар – король сайлау", isCorrect: false, explanation: "Бұл сословиелік құрылым ережесіне қайшы." },
+          { text: "Барлық сословиелер бірдей әскери қызмет ақысын төледі", isCorrect: false, explanation: "Сословиелердің міндеттері мен артықшылықтары әртүрлі болды." }
+        ]
+      },
+      {
+        id: 8,
+        topicId: "topic3",
+        level: "understand",
+        levelName: "Түсіну & Концепция",
+        question: "Франциядағы «Менің вассалымның вассалы менің вассалым емес» қағидасы нені білдірді?",
+        options: [
+          { text: "Феодал тек өзі тікелей жер алған сеньорына ғана бағынады, жоғары тұрған корольге тікелей бағынбайды", isCorrect: true, explanation: "Францияда иерархиялық сатыда тікелей сеньорға ғана бағыныштылық болды, бұл король билігін әлсіретті." },
+          { text: "Рыцарьлар шаруаларға өз жерлерін тегін сыйға тартуға міндетті", isCorrect: false, explanation: "Феодалдар шаруаларға жерді меншікке берген жоқ, тек пайдалануға берді." },
+          { text: "Король барлық герцогтерді кез келген уақытта сотсыз өлім жазасына кесе алады", isCorrect: false, explanation: "Бұл вассалитетке емес, деспотизмге тән." },
+          { text: "Барлық герцогтер мен барондар тек Германия императорына бағынады", isCorrect: false, explanation: "Бұл Франция тарихына қатысты ереже." }
+        ]
+      },
+      {
+        id: 9,
+        topicId: "topic3",
+        level: "analyze",
+        levelName: "Талдау & Логика",
+        question: "Басыбайлы шаруалар (сервтер) мен Ерікті шаруалардың (вилландар) құқықтық айырмашылығын талдаңыз:",
+        options: [
+          { text: "Сервтер феодалға жеке басымен де тәуелді болды, ал вилландар өз үлесін мұраға қалдыруға құқылы жеке еркін сақтады", isCorrect: true, explanation: "Сервтердің жеке еркі болмады, ал вилландар заңды түрде мұрагерлік құқыққа ие еді." },
+          { text: "Сервтер тек қалаларда тұрды, ал вилландар монастырда қызмет етті", isCorrect: false, explanation: "Екеуі де ауылдық жердегі шаруалар тобы." },
+          { text: "Вилландар соғысқа рыцарь ретінде қатысуға міндетті болды", isCorrect: false, explanation: "Шаруалар рыцарь сословиесіне кірмейді." },
+          { text: "Сервтер корольді сайлауға қатысты", isCorrect: false, explanation: "Сервтердің саяси құқықтары болған жоқ." }
+        ]
+      }
+    ];
 
-        <!-- TAB 2: FEUDAL HIERARCHY SIMULATOR -->
-        <section id="tab-pyramid" class="hidden space-y-6">
-            <div class="glass-card p-6 rounded-3xl shadow-sm border border-slate-200">
-                <div class="text-center max-w-2xl mx-auto mb-8">
-                    <h3 class="text-xl font-bold text-slate-900">Феодалдық сатыны (иерархияны) құрастыру</h3>
-                    <p class="text-slate-600 text-sm mt-1">
-                        Феодалдық қоғамның әлеуметтік баспалдағын жоғарыдан төмен қарай дұрыс орналастырыңыз. Деректер: Атамұра баспасы.
-                    </p>
-                </div>
+    // Term Matching Game Data
+    const termMatchingData = [
+      { id: "t1", term: "Феод", definition: "Адал әскери қызметі үшін мұрагерлікке берілетін ірі жер иелігі" },
+      { id: "t2", term: "Инвеститура", definition: "Вассалға феодты және жер иелігін тапсырудың салтанатты рәсімі" },
+      { id: "t3", term: "Оммаж", definition: "Вассалдың өзінің сеньорына адал болуға беретін салтанатты анты" },
+      { id: "t4", term: "Домен", definition: "Феодалдық поместьедегі қожайынның тікелей өз иелігіндегі жері" },
+      { id: "t5", term: "Донжон", definition: "Ортағасырлық қамалдың (замок) ортасындағы ең биік қорғаныс мұнарасы" }
+    ];
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                    <!-- Pyramid Structure -->
-                    <div class="flex flex-col items-center space-y-3">
-                        <div class="w-full max-w-md py-3 bg-indigo-900 text-white rounded-t-2xl font-bold text-center shadow-md relative">
-                            1-саты: Бас феодал
-                            <div id="slot-1" data-rank="1" class="pyramid-slot border-2 border-dashed border-indigo-300/60 bg-indigo-800/50 m-2 p-3 rounded-xl min-h-[50px] flex items-center justify-center text-sm">
-                                Осы жерге қойыңыз
-                            </div>
-                        </div>
-                        <div class="w-full max-w-lg py-3 bg-indigo-800 text-white font-bold text-center shadow-md">
-                            2-саты: Ірі феодалдар
-                            <div id="slot-2" data-rank="2" class="pyramid-slot border-2 border-dashed border-indigo-300/60 bg-indigo-700/50 m-2 p-3 rounded-xl min-h-[50px] flex items-center justify-center text-sm">
-                                Осы жерге қойыңыз
-                            </div>
-                        </div>
-                        <div class="w-full max-w-xl py-3 bg-indigo-700 text-white font-bold text-center shadow-md">
-                            3-саты: Орта феодалдар
-                            <div id="slot-3" data-rank="3" class="pyramid-slot border-2 border-dashed border-indigo-300/60 bg-indigo-600/50 m-2 p-3 rounded-xl min-h-[50px] flex items-center justify-center text-sm">
-                                Осы жерге қойыңыз
-                            </div>
-                        </div>
-                        <div class="w-full max-w-2xl py-3 bg-indigo-600 text-white font-bold text-center shadow-md">
-                            4-саты: Ұсақ феодалдар (Саны басым жауынгерлер)
-                            <div id="slot-4" data-rank="4" class="pyramid-slot border-2 border-dashed border-indigo-300/60 bg-indigo-500/50 m-2 p-3 rounded-xl min-h-[50px] flex items-center justify-center text-sm">
-                                Осы жерге қойыңыз
-                            </div>
-                        </div>
-                        <div class="w-full max-w-3xl py-3 bg-amber-600 text-white rounded-b-2xl font-bold text-center shadow-md">
-                            Сатыға кірмейтін өндіруші тап
-                            <div id="slot-5" data-rank="5" class="pyramid-slot border-2 border-dashed border-amber-300/60 bg-amber-700/50 m-2 p-3 rounded-xl min-h-[50px] flex items-center justify-center text-sm">
-                                Осы жерге қойыңыз
-                            </div>
-                        </div>
-                    </div>
+    // Hierarchy Sorting Data
+    const initialHierarchy = [
+      { id: "h4", title: "Рыцарьлар", level: 4, desc: "Шептегі салт атты жауынгерлер" },
+      { id: "h1", title: "Король", level: 1, desc: "Жоғарғы сеньор және әскер қолбасшысы" },
+      { id: "h3", title: "Барондар мен Виконттар", level: 3, desc: "20-30 елді мекенді басқаратын феодалдар" },
+      { id: "h2", title: "Герцогтер мен Графтар", level: 2, desc: "Жүздеген елді мекені бар ірі сеньорлар" }
+    ];
 
-                    <!-- Draggable Options -->
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                        <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-hand-pointer text-indigo-600"></i> Әлеуметтік топтар (Шертіп немесе сүйреп апарыңыз):
-                        </h4>
-                        <div id="draggable-container" class="space-y-3">
-                            <div draggable="true" id="item-king" data-rank="1" class="drag-item p-3.5 bg-white border border-slate-200 rounded-xl shadow-sm cursor-grab hover:border-indigo-500 hover:shadow font-semibold text-slate-700 flex justify-between items-center">
-                                <span>Король (Жоғарғы сот, әскер қолбасшысы, сеньор)</span>
-                                <i class="fa-solid fa-crown text-amber-500"></i>
-                            </div>
-                            <div draggable="true" id="item-dukes" data-rank="2" class="drag-item p-3.5 bg-white border border-slate-200 rounded-xl shadow-sm cursor-grab hover:border-indigo-500 hover:shadow font-semibold text-slate-700 flex justify-between items-center">
-                                <span>Герцогтер мен Графтар (Жүздеген елді мекені, әскері бар)</span>
-                                <i class="fa-solid fa-chess-knight text-indigo-500"></i>
-                            </div>
-                            <div draggable="true" id="item-barons" data-rank="3" class="drag-item p-3.5 bg-white border border-slate-200 rounded-xl shadow-sm cursor-grab hover:border-indigo-500 hover:shadow font-semibold text-slate-700 flex justify-between items-center">
-                                <span>Барондар мен Виконттар (20-30 елді мекенді басқарады)</span>
-                                <i class="fa-solid fa-shield-halved text-purple-500"></i>
-                            </div>
-                            <div draggable="true" id="item-knights" data-rank="4" class="drag-item p-3.5 bg-white border border-slate-200 rounded-xl shadow-sm cursor-grab hover:border-indigo-500 hover:shadow font-semibold text-slate-700 flex justify-between items-center">
-                                <span>Рыцарьлар (Салт атты әскер, жер үлесі бар)</span>
-                                <i class="fa-solid fa-horse text-slate-600"></i>
-                            </div>
-                            <div draggable="true" id="item-peasants" data-rank="5" class="drag-item p-3.5 bg-white border border-slate-200 rounded-xl shadow-sm cursor-grab hover:border-indigo-500 hover:shadow font-semibold text-slate-700 flex justify-between items-center">
-                                <span>Шаруалар (Басыбайлы сервтер мен ерікті вилландар)</span>
-                                <i class="fa-solid fa-wheat-awn text-emerald-600"></i>
-                            </div>
-                        </div>
+    // --- MAIN APP COMPONENT ---
+    function App() {
+      const [activeTab, setActiveTab] = useState("dashboard"); // dashboard, quiz, matching, hierarchy, analytics, theory
+      const [selectedTopicFilter, setSelectedTopicFilter] = useState("all");
 
-                        <div class="mt-6 flex gap-3">
-                            <button onclick="checkPyramid()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition shadow-md">
-                                Тексеру
-                            </button>
-                            <button onclick="resetPyramid()" class="px-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-xl transition">
-                                Қайта бастау
-                            </button>
-                        </div>
-                        <div id="pyramid-feedback" class="mt-4 hidden p-4 rounded-xl font-bold text-sm text-center"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      // Quiz state
+      const [currentQIndex, setCurrentQIndex] = useState(0);
+      const [selectedAnswers, setSelectedAnswers] = useState({});
+      const [isQuizSubmitted, setIsQuizSubmitted] = useState(false);
+      const [quizStartTime, setQuizStartTime] = useState(null);
+      const [quizEndTime, setQuizEndTime] = useState(null);
 
-        <!-- TAB 3: MATCHING TERMS GAME -->
-        <section id="tab-matching" class="hidden space-y-6">
-            <div class="glass-card p-6 rounded-3xl shadow-sm border border-slate-200">
-                <div class="text-center max-w-2xl mx-auto mb-8">
-                    <h3 class="text-xl font-bold text-slate-900">Терминдер мен Ұғымдарды Сәйкестендіру</h3>
-                    <p class="text-slate-600 text-sm mt-1">Орта ғасыр тарихындағы негізгі терминдерді өз анықтамасымен жұптастырыңыз.</p>
-                </div>
+      // Term Matching state
+      const [selectedTerm, setSelectedTerm] = useState(null);
+      const [matchedPairs, setMatchedPairs] = useState([]);
+      const [matchingScore, setMatchingScore] = useState(0);
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="matching-board">
-                    <!-- Matching content injected via JS -->
-                </div>
+      // Hierarchy State
+      const [hierarchyList, setHierarchyList] = useState(initialHierarchy);
+      const [hierarchyFeedback, setHierarchyFeedback] = useState(null);
 
-                <div class="mt-8 text-center">
-                    <button onclick="checkMatching()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl transition shadow-md">
-                        Нәтижені тексеру
-                    </button>
-                    <div id="matching-feedback" class="mt-4 hidden p-4 rounded-xl font-bold text-sm max-w-md mx-auto"></div>
-                </div>
-            </div>
-        </section>
+      // Initialize quiz timer
+      useEffect(() => {
+        if (activeTab === "quiz" && !quizStartTime) {
+          setQuizStartTime(Date.now());
+        }
+      }, [activeTab]);
 
-        <!-- TAB 4: ANALYTICS & DIFFERENTIATION DASHBOARD -->
-        <section id="tab-analytics" class="hidden space-y-6">
-            <!-- Summary Stats -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="p-3 bg-indigo-100 text-indigo-600 rounded-xl text-2xl"><i class="fa-solid fa-bullseye"></i></div>
-                    <div>
-                        <p class="text-xs text-slate-500 font-bold uppercase">Жалпы Меңгеру Пайызы</p>
-                        <h4 id="analytic-overall-percent" class="text-2xl font-black text-indigo-900">0%</h4>
-                    </div>
-                </div>
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="p-3 bg-emerald-100 text-emerald-600 rounded-xl text-2xl"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <div>
-                        <p class="text-xs text-slate-500 font-bold uppercase">Білім Деңгейі</p>
-                        <h4 id="analytic-level-badge" class="text-lg font-bold text-slate-700">Анықталмаған</h4>
-                    </div>
-                </div>
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="p-3 bg-amber-100 text-amber-600 rounded-xl text-2xl"><i class="fa-solid fa-check-double"></i></div>
-                    <div>
-                        <p class="text-xs text-slate-500 font-bold uppercase">Дұрыс Тапсырмалар</p>
-                        <h4 id="analytic-correct-count" class="text-2xl font-black text-slate-800">0 / 0</h4>
-                    </div>
-                </div>
-                <div class="glass-card p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="p-3 bg-purple-100 text-purple-600 rounded-xl text-2xl"><i class="fa-solid fa-brain"></i></div>
-                    <div>
-                        <p class="text-xs text-slate-500 font-bold uppercase">Саралау Индексі</p>
-                        <h4 id="analytic-diff-status" class="text-base font-bold text-purple-900">Тестілеуді өтіңіз</h4>
-                    </div>
-                </div>
-            </div>
+      // Filtered questions
+      const filteredQuestions = selectedTopicFilter === "all" 
+        ? questionsDatabase 
+        : questionsDatabase.filter(q => q.topicId === selectedTopicFilter);
 
-            <!-- Detailed Analysis Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Topic Mastery Breakdown -->
-                <div class="lg:col-span-2 glass-card p-6 rounded-3xl shadow-sm border border-slate-200">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-column text-indigo-600"></i> Тақырыптар бойынша меңгеру динамикасы
-                    </h3>
-                    <div class="space-y-5" id="topic-analytics-list">
-                        <!-- Dynamic topic bars -->
-                    </div>
-                </div>
+      // Handle Quiz Option Selection
+      const handleSelectOption = (questionId, optionIndex) => {
+        if (isQuizSubmitted) return;
+        setSelectedAnswers(prev => ({
+          ...prev,
+          [questionId]: optionIndex
+        }));
+      };
 
-                <!-- Pedagogical Recommendations -->
-                <div class="glass-card p-6 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-clipboard-user text-amber-600"></i> Мұғалімге Аналитикалық Сараптама
-                        </h3>
-                        <div id="pedagogical-advice" class="space-y-3 text-sm text-slate-600">
-                            <p class="italic text-slate-400">Аналитикалық қорытынды жасау үшін тапсырмаларды орындаңыз...</p>
-                        </div>
-                    </div>
-                    
-                    <button onclick="printReport()" class="mt-6 w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-print"></i> Аналитикалық есепті басып шығару
-                    </button>
-                </div>
-            </div>
-        </section>
+      const handleSubmitQuiz = () => {
+        setIsQuizSubmitted(true);
+        setQuizEndTime(Date.now());
+      };
 
-    </main>
+      const handleResetQuiz = () => {
+        setSelectedAnswers({});
+        setIsQuizSubmitted(false);
+        setCurrentQIndex(0);
+        setQuizStartTime(Date.now());
+        setQuizEndTime(null);
+      };
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 mt-12 text-center text-xs">
-        <p>© 2026 Дүниежүзі тарихы — Орта ғасырлар түсінігі & Феодалдық қоғам (6-сынып)</p>
-        <p class="mt-1 text-slate-500">Атамұра баспасы мен Авторлық база негізінде әзірленген саралау жүйесі</p>
-    </footer>
+      // Calculate Quiz Results
+      const calculateScore = () => {
+        let correctCount = 0;
+        let rememberScore = { total: 0, correct: 0 };
+        let understandScore = { total: 0, correct: 0 };
+        let analyzeScore = { total: 0, correct: 0 };
 
-    <!-- JavaScript Logic -->
-    <script>
-        // Data Structure for Questions (Based on User's provided PDF texts)
-        const questionsData = [
-            // Тақырып 1: Тарихтағы орта ғасырлар түсінігі
-            {
-                id: 1,
-                topicId: 't1',
-                topicName: 'Тарихтағы орта ғасырлар түсінігі',
-                level: 'A',
-                question: '«Орта ғасырлар» (Медиум-орта, аевум-ғасыр) түсінігін алғаш рет ғылымға енгізген италиялық гуманист-тарихшы кім?',
-                options: [
-                    { text: 'Флавио Бьондо', isCorrect: true },
-                    { text: 'Роджер Бэкон', isCorrect: false },
-                    { text: 'Иоганн Гутенберг', isCorrect: false },
-                    { text: 'Карл Мартелл', isCorrect: false }
-                ],
-                rationale: '«Орта ғасырлар» тіркесін алғаш рет XV-XVI ғғ. Италияда Флавио Бьондо сияқты гуманист-тарихшылар антикалық кезеңнен Ренессансқа дейінгі аралықты сипаттау үшін енгізген.',
-                hint: 'Бұл қайраткер XV ғасырда өмір сүрген италиялық тарихшы.'
-            },
-            {
-                id: 2,
-                topicId: 't1',
-                topicName: 'Тарихтағы орта ғасырлар түсінігі',
-                level: 'B',
-                question: 'Гуманистер неліктен Батыс Рим империясының құлауынан басталатын орта ғасыр кезеңін «Қара түнек» деп атады?',
-                options: [
-                    { text: 'Антикалық өнер, философия, ғылым ұмытылып, мәдениет күйрегендіктен', isCorrect: true },
-                    { text: 'Бұл кезеңде күн тутылуы жиі орын алғандықтан', isCorrect: false },
-                    { text: 'Барлық халықтар сауда жасаудан бас тартқандықтан', isCorrect: false },
-                    { text: 'Шіркеулер түгелдей жабылып қалғандықтан', isCorrect: false }
-                ],
-                rationale: 'Гуманистердің пікірінше, Рим құлаған соң антикалық өнер, ғылым мен сәулет ұмыт болып, Еуропада надандық пен қаталдық орын алған, содан «Қара түнек» деп аталған.',
-                hint: 'Антикалық мәдениеттің тағдырын еске түсіріңіз.'
-            },
-            {
-                id: 3,
-                topicId: 't1',
-                topicName: 'Тарихтағы орта ғасырлар түсінігі',
-                level: 'C',
-                question: 'Шығыс елдеріндегі орталықтанған мемлекеттердің Еуропаға қарағанда күштірек болуының басты себебін талдаңыз:',
-                options: [
-                    { text: 'Жердің мемлекет меншігінде болуы және суландыру жүйесін мемлекеттің басқаруы', isCorrect: true },
-                    { text: 'Шығыста феодалдардың мүлде болмауы', isCorrect: false },
-                    { text: 'Шығыс елдерінде тек көшпелі шаруашылықтың үстемдік етуі', isCorrect: false },
-                    { text: 'Шығыста қалалардың мүлде салынбауы', isCorrect: false }
-                ],
-                rationale: 'Шығыс елдерінде жер мемлекеттің меншігінде болды және арық қазу, тоған салу сияқты ауқымды ирригациялық жұмыстарды орталық мемлекеттік құрылым атқарды.',
-                hint: 'Ауыл шаруашылығына қажетті суландыру желілерін кім жүргізгенін ойлаңыз.'
-            },
+        filteredQuestions.forEach(q => {
+          const userAns = selectedAnswers[q.id];
+          const isCorrect = userAns !== undefined && q.options[userAns]?.isCorrect;
+          
+          if (isCorrect) correctCount++;
 
-            // Тақырып 2: Феодалдық шаруашылық түрінің ерекшеліктері
-            {
-                id: 4,
-                topicId: 't2',
-                topicName: 'Феодалдық шаруашылық ерекшеліктері',
-                level: 'A',
-                question: 'Феодализмнің ең басты белгісі және басты байлық көзі не болды?',
-                options: [
-                    { text: 'Жер иелігі', isCorrect: true },
-                    { text: 'Алтын теңгелер', isCorrect: false },
-                    { text: 'Кемелер мен флот', isCorrect: false },
-                    { text: 'Қолөнер шеберханалары', isCorrect: false }
-                ],
-                rationale: 'Феодализмде негізгі байлық көзі мен биліктің тиесілігі жерге жеке меншікпен анықталды («Қожайынсыз жер болмайды»).',
-                hint: '«Феод» сөзінің латынша мағынасын еске түсіріңіз.'
-            },
-            {
-                id: 5,
-                topicId: 't2',
-                topicName: 'Феодалдық шаруашылық ерекшеліктері',
-                level: 'B',
-                question: 'Феодалдық шаруашылықтағы «Барщина» мен «Оброк» ренталарының басты айырмашылығы неде?',
-                options: [
-                    { text: 'Барщина — еңбекпен өтеу рентасы, ал Оброк — азық-түліктей салық төлеу', isCorrect: true },
-                    { text: 'Барщина — тек ақшалай салық, ал Оброк — әскери қызмет', isCorrect: false },
-                    { text: 'Барщина — шіркеуге төленетін салық, Оброк — король салығы', isCorrect: false },
-                    { text: 'Екеуі де тек қала қолөнершілеріне қойылған талап', isCorrect: false }
-                ],
-                rationale: 'Барщинада шаруа феодалдың доменінде тегін еңбек етеді (еңбекпен өтеу), ал Оброкта өз өндірген азық-түлігінен феодалға үлес береді (азық-түлік рентасы).',
-                hint: 'Еңбек ету мен дайын өнімді беру арасындағы айырмашылық.'
-            },
-            {
-                id: 6,
-                topicId: 't2',
-                topicName: 'Феодалдық шаруашылық ерекшеліктері',
-                level: 'C',
-                question: 'VI-X ғасырлардағы Натуралды шаруашылықтың «томаға-тұйық» сипатын ең дәл сипаттайтын белгі қайсысы?',
-                options: [
-                    { text: 'Өнімдер мен бұйымдар сату үшін емес, тек поместьенің өз қажетін өтеуге өндірілді', isCorrect: true },
-                    { text: 'Барлық тауарлар шетелдік жәрмеңкелерде сатылды', isCorrect: false },
-                    { text: 'Ақша айналымы өте жоғары дәрежеде болды', isCorrect: false },
-                    { text: 'Шаруалар тек сырттан келген тауарларды тұтынды', isCorrect: false }
-                ],
-                rationale: 'Натуралды шаруашылықта тұз пен темірден басқа қажеттінің бәрі поместьенің өзінде дайындалды, сыртқы экономикалық байланыстар нашар дамыды.',
-                hint: '«Бәрі өзімізде бар» үрдісін еске түсіріңіз.'
-            },
-
-            // Тақырып 3: Феодалдық қоғамның әлеуметтік құрылымы
-            {
-                id: 7,
-                topicId: 't3',
-                topicName: 'Феодалдық қоғамның әлеуметтік құрылымы',
-                level: 'A',
-                question: 'Ортағасырлық Еуропадағы қоғам қандай үш сословиеге (жікке) бөлінді?',
-                options: [
-                    { text: 'Дін иелері, рыцарьлар (феодалдар) және шаруалар', isCorrect: true },
-                    { text: 'Сенаторлар, патрицийлер және плебейлер', isCorrect: false },
-                    { text: 'Брахмандар, кшатрийлер және шудралар', isCorrect: false },
-                    { text: 'Көпестер, құлдар және әскербасылар', isCorrect: false }
-                ],
-                rationale: 'Ортағасырлық қоғам негізгі 3 топқа бөлінді: Дін иелері (құдайға сыйынушылар), Феодал-рыцарьлар (қорғаушылар) және Шаруалар (жұмыс істеушілер).',
-                hint: '«Құдайға сыйынатындар, соғысатындар және еңбек ететіндер» деген формула.'
-            },
-            {
-                id: 8,
-                topicId: 't3',
-                topicName: 'Феодалдық қоғамның әлеуметтік құрылымы',
-                level: 'B',
-                question: 'Басыбайлы шаруалар (сервтер) мен Ерікті шаруалардың (вилландар) басты айырмашылығы неде?',
-                options: [
-                    { text: 'Ерікті шаруалар өз жер үлесін балаларына мұраға қалдыра алды, ал сервтер феодалға толық тәуелді болды', isCorrect: true },
-                    { text: 'Сервтер тек қалаларда тұрды, ал вилландар әскерде қызмет етті', isCorrect: false },
-                    { text: 'Ерікті шаруалар мүлде салық төлемеді', isCorrect: false },
-                    { text: 'Сервтер корольге тікелей бағынышты феодалдар болды', isCorrect: false }
-                ],
-                rationale: 'Франциядағы сервтер феодалға толық басыбайлы тәуелді болса, Англиядағы вилландар өз жерін мұраға қалдыруға және белгілі бір құқықтарға ие болды.',
-                hint: 'Атамұра баспасындағы Франция мен Англия шаруаларының айырмашылығы.'
-            },
-            {
-                id: 9,
-                topicId: 't3',
-                topicName: 'Феодалдық қоғамның әлеуметтік құрылымы',
-                level: 'C',
-                question: 'Франциядағы «Менің вассалымның вассалы менің вассалым емес» қағидасы нені білдіреді?',
-                options: [
-                    { text: 'Әрбір вассал тек өзіне тікелей жер берген сеньорға ғана бағынатынын', isCorrect: true },
-                    { text: 'Барлық рыцарьлар тікелей корольге ғана ант беретінін', isCorrect: false },
-                    { text: 'Корольдің барлық феодалдарды кез келген уақытта жазалай алатынын', isCorrect: false },
-                    { text: 'Шаруалардың вассалдарға әмір жүргізетінін', isCorrect: false }
-                ],
-                rationale: 'Бұл қағида феодалдық бытыраңқылықты көрсетеді: кіші вассалдар жоғарғы сеньорға (мысалы, корольге) емес, тек өзіне жер берген тікелей мырзасына бағынды.',
-                hint: 'Бағыныштылық сатысындағы тікелей байланысты ойлаңыз.'
-            }
-        ];
-
-        // Matching Game Data
-        const matchingData = [
-            { id: 'm1', term: 'Бенефиция', def: 'Әскер қатарында қызмет еткені үшін берілген уақытша жер иелігі' },
-            { id: 'm2', term: 'Оммаж', def: 'Вассалдың сеньорға беретін адалдық анты мен бағыныштылық рәсімі' },
-            { id: 'm3', term: 'Донжон', def: 'Феодалдық қамалдың (замок) орталығындағы ең биік көп қабатты мұнара' },
-            { id: 'm4', term: 'Вотчина (Поместье)', def: 'Феодалдың мұрагерлік жер қожалығы және әлеуметтік-шаруашылық ұйымы' }
-        ];
-
-        // App State
-        let userAnswers = {};
-        let activeTab = 'test';
-        let currentFilter = 'all';
-
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', () => {
-            renderQuiz();
-            renderMatching();
-            setupPyramidDragAndDrop();
-            updateAnalytics();
+          if (q.level === "remember") {
+            rememberScore.total++;
+            if (isCorrect) rememberScore.correct++;
+          } else if (q.level === "understand") {
+            understandScore.total++;
+            if (isCorrect) understandScore.correct++;
+          } else if (q.level === "analyze") {
+            analyzeScore.total++;
+            if (isCorrect) analyzeScore.correct++;
+          }
         });
 
-        // Tab Navigation
-        function switchTab(tabId) {
-            activeTab = tabId;
-            ['test', 'pyramid', 'matching', 'analytics'].forEach(t => {
-                const el = document.getElementById(`tab-${t}`);
-                const btn = document.getElementById(`btn-${t}`);
-                if (t === tabId) {
-                    el.classList.remove('hidden');
-                    btn.classList.add('active');
-                    btn.classList.remove('text-indigo-200');
-                    btn.classList.add('text-white');
-                } else {
-                    el.classList.add('hidden');
-                    btn.classList.remove('active');
-                    btn.classList.add('text-indigo-200');
-                    btn.classList.remove('text-white');
-                }
-            });
-            if (tabId === 'analytics') updateAnalytics();
+        const totalQ = filteredQuestions.length;
+        const percentage = Math.round((correctCount / totalQ) * 100) || 0;
+
+        return {
+          correctCount,
+          totalQ,
+          percentage,
+          rememberScore,
+          understandScore,
+          analyzeScore
+        };
+      };
+
+      const scoreData = calculateScore();
+
+      // Determine Differentiation Level (A, B, C)
+      const getDifferentiationTier = (percentage) => {
+        if (percentage >= 85) {
+          return {
+            tier: "A Деңгейі (Жоғары / Сарапшы)",
+            badgeBg: "bg-emerald-500/20 text-emerald-400 border-emerald-500/40",
+            description: "Оқушы орта ғасырлар тарихының негізгі ұғымдарын, феодалдық шаруашылық себеп-салдарларын және әлеуметтік иерархияны толық меңгерген. Салыстырмалы талдау жасау қабілеті жоғары.",
+            recommendations: [
+              "Ортағасырлық феодалдық бытыраңқылық пен орталықтанған мемлекеттің айырмашылығына эссе жазу.",
+              "«Феодалдық бытыраңқылық оң құбылыс па, әлде теріс пе?» деген тақырыпта дебатқа дайындалу."
+            ]
+          };
+        } else if (percentage >= 60) {
+          return {
+            tier: "B Деңгейі (Орташа / Алға басушы)",
+            badgeBg: "bg-amber-500/20 text-amber-400 border-amber-500/40",
+            description: "Оқушы негізгі терминдер мен фактілерді біледі, бірақ кейбір күрделі әлеуметтік-экономикалық логикалық байланыстарда (вассалитет заңдылықтары) толықтыруды қажет етеді.",
+            recommendations: [
+              "«Менің вассалымның вассалы...» ережесінің француздық және германдық үлгілерін қайта қарап, айырмашылығын сызбаға түсіру.",
+              "Натуралды шаруашылықтың белгілерін Атамұра оқулығындағы §5 бойынша қайталау."
+            ]
+          };
+        } else {
+          return {
+            tier: "C Деңгейі (Бастапқы / Қолдауды қажет ететін)",
+            badgeBg: "bg-rose-500/20 text-rose-400 border-rose-500/40",
+            description: "Оқушы тақырыптардың негізгі терминдерін (феод, вассал, домен, рента) жаттау мен қарапайым түсіну деңгейінде қайталауы керек.",
+            recommendations: [
+              "Оқулықтағы §1, §5, §6 бөлімдеріндегі глоссарий мен терминдер карточкаларын оқып шығу.",
+              "«Терминдерді Сәйкестендіру» және «Иерархия П пирамидасын» интерактивті режимде қайталап орындау."
+            ]
+          };
         }
+      };
 
-        // Filter Quiz by Level
-        function filterLevel(level) {
-            currentFilter = level;
-            renderQuiz();
+      const tierInfo = getDifferentiationTier(scoreData.percentage);
+
+      // Handle Term Match logic
+      const handleTermClick = (termObj) => {
+        if (matchedPairs.includes(termObj.id)) return;
+        setSelectedTerm(termObj);
+      };
+
+      const handleDefClick = (defObj) => {
+        if (!selectedTerm) return;
+        if (selectedTerm.id === defObj.id) {
+          setMatchedPairs(prev => [...prev, selectedTerm.id]);
+          setMatchingScore(prev => prev + 20);
+          setSelectedTerm(null);
+        } else {
+          alert("Қате сәйкестік! Қайтадан байқап көріңіз.");
+          setSelectedTerm(null);
         }
+      };
 
-        // Render Quiz Questions
-        function renderQuiz() {
-            const container = document.getElementById('quiz-container');
-            container.innerHTML = '';
+      // Handle Hierarchy Move
+      const moveHierarchy = (index, direction) => {
+        const newList = [...hierarchyList];
+        const targetIndex = direction === "up" ? index - 1 : index + 1;
+        if (targetIndex < 0 || targetIndex >= newList.length) return;
 
-            const filtered = currentFilter === 'all' 
-                ? questionsData 
-                : questionsData.filter(q => q.level === currentFilter);
+        const temp = newList[index];
+        newList[index] = newList[targetIndex];
+        newList[targetIndex] = temp;
 
-            filtered.forEach((q, index) => {
-                const isAnswered = userAnswers.hasOwnProperty(q.id);
-                const selectedIdx = userAnswers[q.id];
+        setHierarchyList(newList);
+        setHierarchyFeedback(null);
+      };
 
-                let levelBadge = '';
-                if(q.level === 'A') levelBadge = '<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-md font-bold">A деңгей (Жеңіл)</span>';
-                else if(q.level === 'B') levelBadge = '<span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-md font-bold">B деңгей (Орташа)</span>';
-                else levelBadge = '<span class="bg-rose-100 text-rose-800 text-xs px-2.5 py-1 rounded-md font-bold">C деңгей (Күрделі)</span>';
+      const checkHierarchy = () => {
+        const isCorrect = hierarchyList.every((item, idx) => item.level === idx + 1);
+        if (isCorrect) {
+          setHierarchyFeedback({
+            success: true,
+            msg: "Өте тамаша! Феодалдық сатының (Король -> Герцог/Граф -> Барон -> Рыцарь) иерархиясы дұрыс орналастырылды!"
+          });
+        } else {
+          setHierarchyFeedback({
+            success: false,
+            msg: "Иерархияда қателік бар. Феодалдық сатыда ең жоғары билік иесі кім? Төменгі сатыда кім тұр? Қайта реттеп көріңіз."
+          });
+        }
+      };
 
-                const card = document.createElement('div');
-                card.className = 'glass-card p-6 rounded-3xl shadow-sm border border-slate-200/90 transition hover:shadow-md';
-                
-                let optionsHTML = '';
-                q.options.forEach((opt, optIdx) => {
-                    let btnStyle = 'border-slate-200 bg-white hover:border-indigo-300 text-slate-700';
-                    let iconHTML = '';
+      return (
+        <div className="min-h-screen flex flex-col">
+          {/* TOP HEADER */}
+          <header className="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
+            <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl amber-gradient flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/20">
+                  🏰
+                </div>
+                <div>
+                  <h1 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+                    Орта ғасырлар тарихы
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                      Атамұра баспасы
+                    </span>
+                  </h1>
+                  <p className="text-xs text-slate-400">Оқушылар білімін саралау мен сараптамалық талдау веб-платформасы</p>
+                </div>
+              </div>
 
-                    if (isAnswered) {
-                        if (opt.isCorrect) {
-                            btnStyle = 'border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold';
-                            iconHTML = '<i class="fa-solid fa-circle-check text-emerald-600 ml-auto"></i>';
-                        } else if (selectedIdx === optIdx && !opt.isCorrect) {
-                            btnStyle = 'border-rose-500 bg-rose-50 text-rose-900 font-semibold';
-                            iconHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 ml-auto"></i>';
-                        } else {
-                            btnStyle = 'border-slate-100 bg-slate-50 opacity-60 text-slate-500';
-                        }
-                    }
+              {/* Navigation Tabs */}
+              <nav className="flex items-center gap-1 bg-slate-950/60 p-1 rounded-xl border border-slate-800 text-xs sm:text-sm overflow-x-auto">
+                <button
+                  onClick={() => setActiveTab("dashboard")}
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+                    activeTab === "dashboard" ? "bg-amber-500 text-slate-950 shadow-md font-semibold" : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  📌 Басты бет
+                </button>
+                <button
+                  onClick={() => setActiveTab("quiz")}
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+                    activeTab === "quiz" ? "bg-amber-500 text-slate-950 shadow-md font-semibold" : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  🎯 Сараланған Тест
+                </button>
+                <button
+                  onClick={() => setActiveTab("matching")}
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+                    activeTab === "matching" ? "bg-amber-500 text-slate-950 shadow-md font-semibold" : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  🧩 Термин Сәйкестігі
+                </button>
+                <button
+                  onClick={() => setActiveTab("hierarchy")}
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+                    activeTab === "hierarchy" ? "bg-amber-500 text-slate-950 shadow-md font-semibold" : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  👑 Феодалдық Саты
+                </button>
+                <button
+                  onClick={() => setActiveTab("analytics")}
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+                    activeTab === "analytics" ? "bg-amber-500 text-slate-950 shadow-md font-semibold" : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  📊 Білім Аналитикасы
+                </button>
+                <button
+                  onClick={() => setActiveTab("theory")}
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+                    activeTab === "theory" ? "bg-amber-500 text-slate-950 shadow-md font-semibold" : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  📖 Түйін База
+                </button>
+              </nav>
+            </div>
+          </header>
 
-                    optionsHTML += `
-                        <button onclick="selectOption(${q.id}, ${optIdx})" ${isAnswered ? 'disabled' : ''} 
-                            class="w-full text-left p-4 rounded-xl border-2 ${btnStyle} transition flex items-center gap-3 text-sm">
-                            <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold border">${String.fromCharCode(65 + optIdx)}</span>
-                            <span class="flex-1">${opt.text}</span>
-                            ${iconHTML}
-                        </button>
-                    `;
-                });
+          {/* MAIN CONTAINER */}
+          <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
 
-                let feedbackHTML = '';
-                if (isAnswered) {
-                    const isCorrect = q.options[selectedIdx].isCorrect;
-                    feedbackHTML = `
-                        <div class="mt-4 p-4 rounded-xl ${isCorrect ? 'bg-emerald-50 border border-emerald-200 text-emerald-900' : 'bg-rose-50 border border-rose-200 text-rose-900'} text-xs sm:text-sm">
-                            <p class="font-bold mb-1">${isCorrect ? '✓ Дұрыс жауап!' : '✗ Қате жауап!'}</p>
-                            <p>${q.rationale}</p>
+            {/* TAB 1: DASHBOARD */}
+            {activeTab === "dashboard" && (
+              <div className="space-y-6">
+                {/* Hero Banner */}
+                <div className="relative rounded-2xl overflow-hidden border border-amber-500/20 bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950/40 p-6 sm:p-10">
+                  <div className="max-w-2xl space-y-4 relative z-10">
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
+                      <span>✨</span> Тарихи білімді деңгейлеп меңгеру
+                    </span>
+                    <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-100 leading-tight">
+                      Орта ғасырлар түсінігі және Феодалдық қоғам ерекшеліктері
+                    </h2>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      Оқушылардың тақырыпты түсінуін, жаттау деңгейін және терең талдау дағдысын саралауға арналған интерактивті тапсырмалар мен аналитикалық кешен.
+                    </p>
+                    <div className="flex flex-wrap gap-3 pt-2">
+                      <button
+                        onClick={() => setActiveTab("quiz")}
+                        className="px-5 py-2.5 rounded-xl amber-gradient text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/25 hover:brightness-110 transition-all flex items-center gap-2"
+                      >
+                        🚀 Саралау тестін бастау
+                      </button>
+                      <button
+                        onClick={() => setActiveTab("analytics")}
+                        className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold text-sm transition-all flex items-center gap-2"
+                      >
+                        📈 Нәтижелер талдауы
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Topics Overview Cards */}
+                <div>
+                  <h3 className="text-lg font-bold text-slate-100 mb-4 flex items-center gap-2">
+                    <span>📚</span> Қамтылатын бағдарламалық тақырыптар:
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {topicsData.map((topic, idx) => (
+                      <div key={topic.id} className="card-glass rounded-xl p-5 space-y-3 border-l-4 border-l-amber-500 hover:border-l-amber-400 transition-all">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded-md">
+                            §{idx === 0 ? "1" : idx === 1 ? "5" : "6"} Тақырып
+                          </span>
+                          <span className="text-xs text-slate-400">{topic.source}</span>
                         </div>
-                    `;
-                }
+                        <h4 className="font-bold text-slate-100 text-base">{topic.title}</h4>
+                        <p className="text-xs text-slate-300 leading-relaxed">{topic.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-                card.innerHTML = `
-                    <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
-                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Тақырып: ${q.topicName}</span>
-                        ${levelBadge}
+                {/* Differentiation Task Modules */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+                    <span>🎮</span> Интерактивті оқыту мен саралау модульдері:
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div 
+                      onClick={() => setActiveTab("quiz")}
+                      className="card-glass rounded-2xl p-5 hover:bg-slate-800/80 cursor-pointer transition-all border border-slate-700/60 group space-y-3"
+                    >
+                      <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                        🎯
+                      </div>
+                      <h4 className="font-bold text-slate-100">1. Сараланған Тестілеу</h4>
+                      <p className="text-xs text-slate-400">
+                        Есте сақтау, концепцияны түсіну және себеп-салдарлық талдау сұрақтарынан құралған кешен.
+                      </p>
+                      <span className="inline-block text-xs font-semibold text-blue-400 group-hover:translate-x-1 transition-transform">
+                        Бастау &rarr;
+                      </span>
                     </div>
-                    <h4 class="text-base sm:text-lg font-bold text-slate-900 mb-4">${q.id}. ${q.question}</h4>
-                    <div class="space-y-2.5">
-                        ${optionsHTML}
+
+                    <div 
+                      onClick={() => setActiveTab("matching")}
+                      className="card-glass rounded-2xl p-5 hover:bg-slate-800/80 cursor-pointer transition-all border border-slate-700/60 group space-y-3"
+                    >
+                      <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                        🧩
+                      </div>
+                      <h4 className="font-bold text-slate-100">2. Тарихи Терминдер</h4>
+                      <p className="text-xs text-slate-400">
+                        Феод, оммаж, инвеститура, домен сөздерін өз анықтамасымен жылдам сәйкестендіру ойыны.
+                      </p>
+                      <span className="inline-block text-xs font-semibold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                        Сәйкестендіру &rarr;
+                      </span>
                     </div>
-                    ${feedbackHTML}
-                    <div class="mt-3 text-right">
-                        <button onclick="toggleHint(${q.id})" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 ml-auto">
-                            <i class="fa-regular fa-lightbulb"></i> Көмек / Кеңес
-                        </button>
-                        <p id="hint-${q.id}" class="hidden mt-2 text-xs text-amber-700 italic bg-amber-50 p-2.5 rounded-lg border border-amber-200 text-left">
-                            💡 ${q.hint}
+
+                    <div 
+                      onClick={() => setActiveTab("hierarchy")}
+                      className="card-glass rounded-2xl p-5 hover:bg-slate-800/80 cursor-pointer transition-all border border-slate-700/60 group space-y-3"
+                    >
+                      <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                        👑
+                      </div>
+                      <h4 className="font-bold text-slate-100">3. Феодалдық Пирамида</h4>
+                      <p className="text-xs text-slate-400">
+                        Ортағасырлық иерархия сатысын (Корольден Рыцарьға дейін) дұрыс ретімен орналастыру.
+                      </p>
+                      <span className="inline-block text-xs font-semibold text-purple-400 group-hover:translate-x-1 transition-transform">
+                        Құрастыру &rarr;
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 2: DIFFERENTIATED QUIZ */}
+            {activeTab === "quiz" && (
+              <div className="space-y-6">
+                {/* Header & Topic Filter */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-glass p-4 rounded-xl">
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-100">Сараланған Тапсырмалар Тесті</h2>
+                    <p className="text-xs text-slate-400">Білгіштік, түсіну және талдау деңгейін анықтау тесті</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <label className="text-xs text-slate-300 font-medium">Тақырып сүзгісі:</label>
+                    <select
+                      value={selectedTopicFilter}
+                      onChange={(e) => {
+                        setSelectedTopicFilter(e.target.value);
+                        handleResetQuiz();
+                      }}
+                      className="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-none"
+                    >
+                      <option value="all">Барлық 3 тақырып</option>
+                      <option value="topic1">§1. Орта ғасырлар түсінігі</option>
+                      <option value="topic2">§5. Феодалдық шаруашылық</option>
+                      <option value="topic3">§6. Әлеуметтік құрылым</option>
+                    </select>
+                  </div>
+                </div>
+
+                {!isQuizSubmitted ? (
+                  <div className="space-y-6">
+                    {/* Progress Bar */}
+                    <div className="card-glass p-4 rounded-xl space-y-2">
+                      <div className="flex justify-between text-xs text-slate-300 font-medium">
+                        <span>Орындалу барысы: {Object.keys(selectedAnswers).length} / {filteredQuestions.length} сұрақ</span>
+                        <span>{Math.round((Object.keys(selectedAnswers).length / filteredQuestions.length) * 100)}%</span>
+                      </div>
+                      <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div 
+                          className="amber-gradient h-full transition-all duration-300"
+                          style={{ width: `${(Object.keys(selectedAnswers).length / filteredQuestions.length) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+
+                    {/* Questions Cards */}
+                    <div className="space-y-6">
+                      {filteredQuestions.map((q, qIndex) => {
+                        const isAnswered = selectedAnswers[q.id] !== undefined;
+
+                        return (
+                          <div key={q.id} className="card-glass rounded-2xl p-6 space-y-4 border border-slate-800">
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-800 text-amber-400 border border-slate-700">
+                                Сұрақ #{qIndex + 1}
+                              </span>
+                              <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${
+                                q.level === "remember" ? "bg-blue-500/10 text-blue-400 border-blue-500/30" :
+                                q.level === "understand" ? "bg-purple-500/10 text-purple-400 border-purple-500/30" :
+                                "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                              }`}>
+                                {q.levelName}
+                              </span>
+                            </div>
+
+                            <h3 className="text-slate-100 font-bold text-base sm:text-lg leading-snug">
+                              {q.question}
+                            </h3>
+
+                            {/* Options */}
+                            <div className="grid grid-cols-1 gap-3 pt-2">
+                              {q.options.map((opt, oIdx) => {
+                                const isSelected = selectedAnswers[q.id] === oIdx;
+                                return (
+                                  <button
+                                    key={oIdx}
+                                    onClick={() => handleSelectOption(q.id, oIdx)}
+                                    className={`w-full text-left p-4 rounded-xl border transition-all text-sm flex items-start gap-3 ${
+                                      isSelected 
+                                        ? "bg-amber-500/15 border-amber-500 text-slate-100 font-medium shadow-md shadow-amber-500/10" 
+                                        : "bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-300 hover:bg-slate-800/50"
+                                    }`}
+                                  >
+                                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
+                                      isSelected ? "bg-amber-500 text-slate-950" : "bg-slate-800 text-slate-400 border border-slate-700"
+                                    }`}>
+                                      {String.fromCharCode(65 + oIdx)}
+                                    </span>
+                                    <span className="flex-1 leading-relaxed">{opt.text}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="flex justify-end pt-4">
+                      <button
+                        onClick={handleSubmitQuiz}
+                        disabled={Object.keys(selectedAnswers).length === 0}
+                        className={`px-8 py-3 rounded-xl font-bold text-sm transition-all shadow-lg flex items-center gap-2 ${
+                          Object.keys(selectedAnswers).length > 0
+                            ? "amber-gradient text-slate-950 hover:brightness-110 shadow-amber-500/20 cursor-pointer"
+                            : "bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700"
+                        }`}
+                      >
+                        ✅ Тапсырманы Аяқтау мен Талдау Жасау
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  /* QUIZ RESULT & DETAILED FEEDBACK */
+                  <div className="space-y-6">
+                    {/* Score Summary Box */}
+                    <div className="card-glass rounded-2xl p-6 sm:p-8 space-y-6 border border-slate-700">
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-800">
+                        <div className="space-y-2 text-center sm:text-left">
+                          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">Тестілеу нәтижесі</span>
+                          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-100">
+                            Түсіну мен Меңгеру: {scoreData.percentage}%
+                          </h3>
+                          <p className="text-xs text-slate-400">
+                            Дұрыс жауаптар: {scoreData.correctCount} / {scoreData.totalQ} сұрақ
+                          </p>
+                        </div>
+                        <div className="w-28 h-28 rounded-full border-4 border-amber-500/40 bg-slate-900 flex flex-col items-center justify-center text-center p-2 shadow-xl shadow-amber-500/10">
+                          <span className="text-3xl font-black text-amber-400">{scoreData.percentage}%</span>
+                          <span className="text-[10px] text-slate-400 font-medium">меңгеру</span>
+                        </div>
+                      </div>
+
+                      {/* Tier Badge & Pedagogical Recommendation */}
+                      <div className={`p-5 rounded-xl border ${tierInfo.badgeBg} space-y-3`}>
+                        <div className="flex items-center justify-between">
+                          <span className="font-extrabold text-sm sm:text-base">{tierInfo.tier}</span>
+                          <span className="text-xs px-2.5 py-1 rounded-full bg-slate-950/40 font-semibold">
+                            Саралау мәртебесі
+                          </span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                          {tierInfo.description}
                         </p>
+                        <div className="pt-2 border-t border-slate-700/40 space-y-2">
+                          <span className="text-xs font-bold text-slate-200">📌 Оқушыға ұсынылатын сараланған тапсырмалар:</span>
+                          <ul className="list-disc list-inside text-xs text-slate-300 space-y-1">
+                            {tierInfo.recommendations.map((rec, i) => (
+                              <li key={i}>{rec}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                        <button
+                          onClick={handleResetQuiz}
+                          className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition-all border border-slate-700"
+                        >
+                          🔄 Тестті қайта өту
+                        </button>
+                        <button
+                          onClick={() => setActiveTab("analytics")}
+                          className="px-5 py-2.5 rounded-xl amber-gradient text-slate-950 font-bold text-xs transition-all shadow-md shadow-amber-500/20"
+                        >
+                          📊 Толық аналитика экранына өту
+                        </button>
+                      </div>
                     </div>
-                `;
-                container.appendChild(card);
-            });
 
-            updateProgressBar();
-        }
+                    {/* Detailed Review of Each Question */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-bold text-slate-100">Сұрақтар бойынша егжей-тегжейлі талдау:</h3>
+                      {filteredQuestions.map((q, idx) => {
+                        const userAns = selectedAnswers[q.id];
+                        const isCorrect = userAns !== undefined && q.options[userAns]?.isCorrect;
 
-        // Answer Selection
-        function selectOption(qId, optIdx) {
-            userAnswers[qId] = optIdx;
-            renderQuiz();
-            updateAnalytics();
-            
-            // Check if all questions are answered for confetti
-            if (Object.keys(userAnswers).length === questionsData.length) {
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-            }
-        }
-
-        // Toggle Hint
-        function toggleHint(qId) {
-            const hintEl = document.getElementById(`hint-${qId}`);
-            hintEl.classList.toggle('hidden');
-        }
-
-        // Progress Bar
-        function updateProgressBar() {
-            const count = Object.keys(userAnswers).length;
-            const total = questionsData.length;
-            const pct = (count / total) * 100;
-            document.getElementById('progress-text').innerText = `${count} / ${total}`;
-            document.getElementById('progress-bar').style.width = `${pct}%`;
-        }
-
-        // FEUDAL HIERARCHY DRAG & DROP LOGIC
-        function setupPyramidDragAndDrop() {
-            const items = document.querySelectorAll('.drag-item');
-            const slots = document.querySelectorAll('.pyramid-slot');
-
-            items.forEach(item => {
-                item.addEventListener('dragstart', (e) => {
-                    e.dataTransfer.setData('text/plain', e.target.id);
-                });
-            });
-
-            slots.forEach(slot => {
-                slot.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    slot.classList.add('drag-over');
-                });
-
-                slot.addEventListener('dragleave', () => {
-                    slot.classList.remove('drag-over');
-                });
-
-                slot.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    slot.classList.remove('drag-over');
-                    const itemId = e.dataTransfer.getData('text/plain');
-                    const draggedEl = document.getElementById(itemId);
-                    if (draggedEl) {
-                        slot.innerHTML = '';
-                        slot.appendChild(draggedEl);
-                    }
-                });
-            });
-        }
-
-        function checkPyramid() {
-            let correct = 0;
-            const slots = document.querySelectorAll('.pyramid-slot');
-            slots.forEach(slot => {
-                const targetRank = slot.getAttribute('data-rank');
-                const child = slot.querySelector('.drag-item');
-                if (child) {
-                    const itemRank = child.getAttribute('data-rank');
-                    if (targetRank === itemRank) {
-                        correct++;
-                        slot.classList.add('bg-emerald-500/30', 'border-emerald-400');
-                    } else {
-                        slot.classList.add('bg-rose-500/30', 'border-rose-400');
-                    }
-                }
-            });
-
-            const feedback = document.getElementById('pyramid-feedback');
-            feedback.classList.remove('hidden');
-            if (correct === 5) {
-                feedback.className = "mt-4 p-4 rounded-xl font-bold text-sm text-center bg-emerald-100 text-emerald-800 border border-emerald-300";
-                feedback.innerHTML = "🎉 Тамаша! Феодалдық сатының (иерархияның) барлық 5 деңгейін дұрыс құрастырдыңыз!";
-                confetti({ particleCount: 80, spread: 60 });
-            } else {
-                feedback.className = "mt-4 p-4 rounded-xl font-bold text-sm text-center bg-amber-100 text-amber-800 border border-amber-300";
-                feedback.innerHTML = `⚠️ Дұрысы: ${correct} / 5 саты. Түстер арқылы қай сатыда қателік бар екенін қарап, түзетіңіз.`;
-            }
-        }
-
-        function resetPyramid() {
-            const container = document.getElementById('draggable-container');
-            const items = document.querySelectorAll('.drag-item');
-            const slots = document.querySelectorAll('.pyramid-slot');
-
-            slots.forEach(s => {
-                s.className = "pyramid-slot border-2 border-dashed border-indigo-300/60 bg-indigo-800/50 m-2 p-3 rounded-xl min-h-[50px] flex items-center justify-center text-sm";
-                s.innerHTML = "Осы жерге қойыңыз";
-            });
-
-            items.forEach(item => {
-                container.appendChild(item);
-            });
-
-            document.getElementById('pyramid-feedback').classList.add('hidden');
-        }
-
-        // MATCHING GAME LOGIC
-        function renderMatching() {
-            const board = document.getElementById('matching-board');
-            board.innerHTML = '';
-
-            // Shuffle terms and definitions
-            const terms = [...matchingData].sort(() => Math.random() - 0.5);
-            const defs = [...matchingData].sort(() => Math.random() - 0.5);
-
-            let termsCol = '<div class="space-y-3"><h4 class="font-bold text-slate-800 mb-2">Терминдер:</h4>';
-            terms.forEach(t => {
-                termsCol += `
-                    <div class="p-4 bg-white rounded-xl border border-slate-200 font-bold text-indigo-900 shadow-sm flex items-center justify-between">
-                        <span>${t.term}</span>
-                        <select id="select-${t.id}" class="text-xs p-2 rounded-lg border border-slate-300 bg-slate-50 font-normal">
-                            <option value="">-- Анықтаманы таңдаңыз --</option>
-                            ${defs.map((d, i) => `<option value="${d.id}">${i + 1}. ${d.def.substring(0, 35)}...</option>`).join('')}
-                        </select>
+                        return (
+                          <div key={q.id} className={`card-glass rounded-xl p-5 border ${
+                            isCorrect ? "border-emerald-500/40 bg-emerald-950/10" : "border-rose-500/40 bg-rose-950/10"
+                          } space-y-3`}>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-slate-300">
+                                Сұрақ #{idx + 1} ({q.levelName})
+                              </span>
+                              <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                                isCorrect ? "bg-emerald-500/20 text-emerald-400" : "bg-rose-500/20 text-rose-400"
+                              }`}>
+                                {isCorrect ? "✓ Дұрыс" : "✕ Қате"}
+                              </span>
+                            </div>
+                            <p className="font-bold text-slate-100 text-sm">{q.question}</p>
+                            
+                            <div className="text-xs space-y-1">
+                              <p className="text-slate-300">
+                                <span className="font-semibold text-slate-400">Сіздің жауабыңыз:</span>{" "}
+                                {userAns !== undefined ? q.options[userAns].text : "Жауап берілмеген"}
+                              </p>
+                              {!isCorrect && (
+                                <p className="text-emerald-400 font-medium">
+                                  <span className="font-semibold text-slate-400">Дұрыс жауап:</span>{" "}
+                                  {q.options.find(o => o.isCorrect)?.text}
+                                </p>
+                              )}
+                              <p className="text-slate-400 pt-2 italic border-t border-slate-800">
+                                💡 Түсініктеме: {q.options[userAns !== undefined ? userAns : 0]?.explanation || "Оқулық теориясын қайталаңыз."}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                `;
-            });
-            termsCol += '</div>';
+                  </div>
+                )}
+              </div>
+            )}
 
-            let defsCol = '<div class="space-y-3"><h4 class="font-bold text-slate-800 mb-2">Анықтамалар тізімі:</h4>';
-            defs.forEach((d, idx) => {
-                defsCol += `
-                    <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-100 text-xs text-indigo-950">
-                        <strong class="text-indigo-700 text-sm mr-2">${idx + 1}.</strong> ${d.def}
-                    </div>
-                `;
-            });
-            defsCol += '</div>';
-
-            board.innerHTML = termsCol + defsCol;
-        }
-
-        function checkMatching() {
-            let correct = 0;
-            matchingData.forEach(item => {
-                const sel = document.getElementById(`select-${item.id}`);
-                if (sel && sel.value === item.id) {
-                    correct++;
-                    sel.classList.add('border-emerald-500', 'bg-emerald-50');
-                } else if (sel) {
-                    sel.classList.add('border-rose-500', 'bg-rose-50');
-                }
-            });
-
-            const feedback = document.getElementById('matching-feedback');
-            feedback.classList.remove('hidden');
-            if (correct === matchingData.length) {
-                feedback.className = "mt-4 p-4 rounded-xl font-bold text-sm text-center bg-emerald-100 text-emerald-800 border border-emerald-300 max-w-md mx-auto";
-                feedback.innerHTML = "✨ Өте тамаша! Барлық терминдер мен анықтамалар дұрыс сәйкестендірілді!";
-                confetti({ particleCount: 70, spread: 60 });
-            } else {
-                feedback.className = "mt-4 p-4 rounded-xl font-bold text-sm text-center bg-amber-100 text-amber-800 border border-amber-300 max-w-md mx-auto";
-                feedback.innerHTML = `Нәтиже: ${correct} / ${matchingData.length} дұрыс. Түзетіп қайта тексеріңіз.`;
-            }
-        }
-
-        // ANALYTICS & DIFFERENTIATION ENGINE
-        function updateAnalytics() {
-            const answeredIds = Object.keys(userAnswers);
-            const totalQuestions = questionsData.length;
-            let correctCount = 0;
-
-            // Topic scores map
-            const topicStats = {
-                't1': { name: 'Тарихтағы орта ғасырлар түсінігі', correct: 0, total: 0 },
-                't2': { name: 'Феодалдық шаруашылық ерекшеліктері', correct: 0, total: 0 },
-                't3': { name: 'Феодалдық қоғамның әлеуметтік құрылымы', correct: 0, total: 0 }
-            };
-
-            // Level stats map
-            const levelStats = {
-                'A': { correct: 0, total: 0 },
-                'B': { correct: 0, total: 0 },
-                'C': { correct: 0, total: 0 }
-            };
-
-            questionsData.forEach(q => {
-                topicStats[q.topicId].total++;
-                levelStats[q.level].total++;
-
-                if (userAnswers.hasOwnProperty(q.id)) {
-                    const isCorrect = q.options[userAnswers[q.id]].isCorrect;
-                    if (isCorrect) {
-                        correctCount++;
-                        topicStats[q.topicId].correct++;
-                        levelStats[q.level].correct++;
-                    }
-                }
-            });
-
-            const overallPercent = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
-
-            // Update UI Elements
-            document.getElementById('analytic-overall-percent').innerText = `${overallPercent}%`;
-            document.getElementById('analytic-correct-count').innerText = `${correctCount} / ${totalQuestions}`;
-
-            // Badge determination
-            let badgeText = 'Бастапқы';
-            let badgeClass = 'text-amber-600';
-            if (overallPercent >= 85) {
-                badgeText = 'Жоғары (Үздік)';
-                badgeClass = 'text-emerald-600';
-            } else if (overallPercent >= 60) {
-                badgeText = 'Орташа (Жеткілікті)';
-                badgeClass = 'text-indigo-600';
-            }
-            const badgeEl = document.getElementById('analytic-level-badge');
-            badgeEl.innerText = badgeText;
-            badgeEl.className = `text-lg font-bold ${badgeClass}`;
-
-            // Differentiation Index Status
-            let diffStatus = 'А-деңгейінде';
-            if (levelStats['C'].correct > 0) diffStatus = 'С-деңгейі (Жоғары талдау)';
-            else if (levelStats['B'].correct > 0) diffStatus = 'В-деңгейі (Қолдану)';
-            document.getElementById('analytic-diff-status').innerText = diffStatus;
-
-            // Topic Progress Bars
-            const topicContainer = document.getElementById('topic-analytics-list');
-            topicContainer.innerHTML = '';
-
-            Object.keys(topicStats).forEach(tId => {
-                const stat = topicStats[tId];
-                const pct = stat.total > 0 ? Math.round((stat.correct / stat.total) * 100) : 0;
-
-                topicContainer.innerHTML += `
+            {/* TAB 3: TERM MATCHING GAME */}
+            {activeTab === "matching" && (
+              <div className="space-y-6">
+                <div className="card-glass p-6 rounded-xl space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <div class="flex justify-between items-center text-xs font-bold mb-1">
-                            <span class="text-slate-700">${stat.name}</span>
-                            <span class="text-indigo-600">${stat.correct}/${stat.total} (${pct}%)</span>
-                        </div>
-                        <div class="w-full bg-slate-100 rounded-full h-3">
-                            <div class="bg-indigo-600 h-3 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
-                        </div>
+                      <h2 className="text-xl font-bold text-slate-100">Тарихи Терминдерді Сәйкестендіру</h2>
+                      <p className="text-xs text-slate-400">Терминді басып, кейін оның дұрыс анықтамасын таңдаңыз</p>
                     </div>
-                `;
-            });
-
-            // Pedagogical Advice
-            const adviceEl = document.getElementById('pedagogical-advice');
-            if (answeredIds.length === 0) {
-                adviceEl.innerHTML = `<p class="italic text-slate-400">Аналитикалық қорытынды жасау үшін тапсырмаларды орындаңыз...</p>`;
-            } else {
-                let weakTopics = [];
-                Object.keys(topicStats).forEach(tId => {
-                    const pct = Math.round((topicStats[tId].correct / topicStats[tId].total) * 100);
-                    if (pct < 60) weakTopics.push(topicStats[tId].name);
-                });
-
-                let adviceHTML = `<p><strong>Меңгеру деңгейі:</strong> Оқушы жалпы тапсырмалардың <strong>${overallPercent}%</strong> орындады.</p>`;
-                if (weakTopics.length > 0) {
-                    adviceHTML += `
-                        <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-900 text-xs">
-                            <strong>⚠️ Қайталауды қажет ететін тақырыптар:</strong>
-                            <ul class="list-disc pl-4 mt-1">
-                                ${weakTopics.map(t => `<li>${t}</li>`).join('')}
-                            </ul>
-                        </div>
-                    `;
-                } else {
-                    adviceHTML += `
-                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-900 text-xs">
-                            <strong>✅ Өте жақсы нәтиже:</strong> Барлық бағдарламалық тақырыптар бойынша жоғары білім деңгейі көрсетілді.
-                        </div>
-                    `;
-                }
-
-                adviceHTML += `
-                    <div class="mt-3 text-xs text-slate-600">
-                        <strong>Саралау бойынша ұсыныс:</strong> 
-                        ${overallPercent < 60 
-                            ? 'Оқушыға А деңгейіндегі терминдік ұғымдар мен негізгі хронологияны қайталау ұсынылады.' 
-                            : 'Оқушыға С деңгейіндегі аналитикалық және салыстырмалы тапсырмаларды көбірек беру ұсынылады.'}
+                    <div className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-bold text-amber-400">
+                      Ұпай: {matchingScore} / 100
                     </div>
-                `;
-                adviceEl.innerHTML = adviceHTML;
-            }
-        }
+                  </div>
+                </div>
 
-        // Print Analytical Report
-        function printReport() {
-            window.print();
-        }
-    </script>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Left Column: Terms */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider">1. ТҮЙІНДІ ТЕРМИНДЕР</h3>
+                    {termMatchingData.map(item => {
+                      const isMatched = matchedPairs.includes(item.id);
+                      const isSelected = selectedTerm?.id === item.id;
+
+                      return (
+                        <button
+                          key={item.id}
+                          disabled={isMatched}
+                          onClick={() => handleTermClick(item)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all text-sm font-bold flex items-center justify-between ${
+                            isMatched
+                              ? "bg-emerald-950/20 border-emerald-500/40 text-emerald-400 cursor-not-allowed opacity-60"
+                              : isSelected
+                              ? "amber-gradient text-slate-950 font-extrabold shadow-lg shadow-amber-500/20"
+                              : "bg-slate-900/80 border-slate-800 text-slate-200 hover:border-amber-500/50 hover:bg-slate-800"
+                          }`}
+                        >
+                          <span>{item.term}</span>
+                          {isMatched && <span>✓ Дұрыс</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right Column: Definitions (Shuffled display) */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider">2. АНЫҚТАМАЛАРЫ</h3>
+                    {termMatchingData.map(item => {
+                      const isMatched = matchedPairs.includes(item.id);
+
+                      return (
+                        <button
+                          key={item.id}
+                          disabled={isMatched}
+                          onClick={() => handleDefClick(item)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all text-xs leading-relaxed ${
+                            isMatched
+                              ? "bg-emerald-950/20 border-emerald-500/40 text-emerald-400 cursor-not-allowed opacity-60"
+                              : "bg-slate-900/80 border-slate-800 text-slate-300 hover:border-amber-500/50 hover:bg-slate-800 cursor-pointer"
+                          }`}
+                        >
+                          {item.definition}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {matchedPairs.length === termMatchingData.length && (
+                  <div className="card-glass rounded-2xl p-6 text-center space-y-4 border border-emerald-500/40 bg-emerald-950/10">
+                    <span className="text-4xl">🎉</span>
+                    <h3 className="text-xl font-bold text-emerald-400">Барлық терминдер сәтті сәйкестендірілді!</h3>
+                    <p className="text-xs text-slate-300">
+                      Сіз орта ғасырлардың негізгі феодалдық терминологиясын 100% дәлдікпен меңгердіңіз.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setMatchedPairs([]);
+                        setMatchingScore(0);
+                        setSelectedTerm(null);
+                      }}
+                      className="px-6 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:brightness-110 transition-all"
+                    >
+                      Ойынды қайта бастау
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* TAB 4: FEUDAL HIERARCHY BUILDER */}
+            {activeTab === "hierarchy" && (
+              <div className="space-y-6">
+                <div className="card-glass p-6 rounded-xl space-y-2">
+                  <h2 className="text-xl font-bold text-slate-100">Ортағасырлық Феодалдық Саты (Пирамида)</h2>
+                  <p className="text-xs text-slate-400">
+                    Төмендегі лауазымдарды жоғарыдан төмен қарай (1-ең жоғарғы сеньор, 4-ең төменгі феодал) дұрыс ретпен орналастырыңыз.
+                  </p>
+                </div>
+
+                <div className="space-y-3 max-w-2xl mx-auto">
+                  {hierarchyList.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className="card-glass p-4 rounded-xl border border-slate-800 flex items-center justify-between gap-4 transition-all hover:border-slate-700"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center font-bold text-amber-400 text-base">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-slate-100 text-sm">{item.title}</h4>
+                          <p className="text-xs text-slate-400">{item.desc}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-1">
+                        <button
+                          disabled={index === 0}
+                          onClick={() => moveHierarchy(index, "up")}
+                          className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700"
+                        >
+                          ▲
+                        </button>
+                        <button
+                          disabled={index === hierarchyList.length - 1}
+                          onClick={() => moveHierarchy(index, "down")}
+                          className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-slate-200 font-bold text-xs flex items-center justify-center border border-slate-700"
+                        >
+                          ▼
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="text-center pt-2">
+                  <button
+                    onClick={checkHierarchy}
+                    className="px-8 py-3 rounded-xl amber-gradient text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/20 hover:brightness-110 transition-all"
+                  >
+                    🔍 Иерархия Дұрыстығын Тексеру
+                  </button>
+                </div>
+
+                {hierarchyFeedback && (
+                  <div className={`max-w-2xl mx-auto p-4 rounded-xl border text-xs sm:text-sm font-medium ${
+                    hierarchyFeedback.success
+                      ? "bg-emerald-950/20 border-emerald-500/40 text-emerald-300"
+                      : "bg-rose-950/20 border-rose-500/40 text-rose-300"
+                  }`}>
+                    {hierarchyFeedback.msg}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* TAB 5: KNOWLEDGE ANALYTICS & DIFFERENTIATION */}
+            {activeTab === "analytics" && (
+              <div className="space-y-6">
+                <div className="card-glass p-6 rounded-xl space-y-2">
+                  <h2 className="text-xl font-bold text-slate-100">Білімді Саралау және Оқу Ойлау Деңгейлері Аналитикасы</h2>
+                  <p className="text-xs text-slate-400">Блум таксономиясы бойынша меңгеру көрсеткіштерін талдау</p>
+                </div>
+
+                {/* Score Cards Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="card-glass rounded-2xl p-5 border-l-4 border-l-blue-500 space-y-2">
+                    <span className="text-xs font-semibold text-slate-400">1-Деңгей: Есте сақтау</span>
+                    <h3 className="text-2xl font-black text-slate-100">
+                      {scoreData.rememberScore.total > 0
+                        ? Math.round((scoreData.rememberScore.correct / scoreData.rememberScore.total) * 100)
+                        : 0}%
+                    </h3>
+                    <p className="text-xs text-slate-400">
+                      {scoreData.rememberScore.correct} / {scoreData.rememberScore.total} дұрыс
+                    </p>
+                  </div>
+
+                  <div className="card-glass rounded-2xl p-5 border-l-4 border-l-purple-500 space-y-2">
+                    <span className="text-xs font-semibold text-slate-400">2-Деңгей: Түсіну</span>
+                    <h3 className="text-2xl font-black text-slate-100">
+                      {scoreData.understandScore.total > 0
+                        ? Math.round((scoreData.understandScore.correct / scoreData.understandScore.total) * 100)
+                        : 0}%
+                    </h3>
+                    <p className="text-xs text-slate-400">
+                      {scoreData.understandScore.correct} / {scoreData.understandScore.total} дұрыс
+                    </p>
+                  </div>
+
+                  <div className="card-glass rounded-2xl p-5 border-l-4 border-l-amber-500 space-y-2">
+                    <span className="text-xs font-semibold text-slate-400">3-Деңгей: Талдау</span>
+                    <h3 className="text-2xl font-black text-slate-100">
+                      {scoreData.analyzeScore.total > 0
+                        ? Math.round((scoreData.analyzeScore.correct / scoreData.analyzeScore.total) * 100)
+                        : 0}%
+                    </h3>
+                    <p className="text-xs text-slate-400">
+                      {scoreData.analyzeScore.correct} / {scoreData.analyzeScore.total} дұрыс
+                    </p>
+                  </div>
+                </div>
+
+                {/* Differentiation Level Report */}
+                <div className="card-glass rounded-2xl p-6 border border-slate-700 space-y-4">
+                  <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                    <span>📋</span> Мұғалім мен Оқушыға арналған Саралау Қорытындысы:
+                  </h3>
+
+                  <div className={`p-4 rounded-xl border ${tierInfo.badgeBg} space-y-2`}>
+                    <div className="font-extrabold text-sm">{tierInfo.tier}</div>
+                    <p className="text-xs text-slate-200 leading-relaxed">{tierInfo.description}</p>
+                  </div>
+
+                  <div className="space-y-2 pt-2">
+                    <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider">Ұсынылатын сараланған оқыту стратегиясы:</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                      <div className="bg-slate-900/80 p-3 rounded-lg border border-slate-800 space-y-1">
+                        <span className="font-bold text-blue-400">А Деңгейі (Күрделі):</span>
+                        <p className="text-slate-300">Ғылыми-зерттеулік сұрақтар, тарихи құжаттармен (хартиялар) жұмыс.</p>
+                      </div>
+                      <div className="bg-slate-900/80 p-3 rounded-lg border border-slate-800 space-y-1">
+                        <span className="font-bold text-amber-400">В Деңгейі (Орташа):</span>
+                        <p className="text-slate-300">Салыстырмалы кестелер құру (сервтер vs вилландар, оброк vs барщина).</p>
+                      </div>
+                      <div className="bg-slate-900/80 p-3 rounded-lg border border-slate-800 space-y-1">
+                        <span className="font-bold text-rose-400">С Деңгейі (Базалық):</span>
+                        <p className="text-slate-300">Терминдер сөздігі, визуальды сатылы пирамиданы жатқа жазу.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 6: EXPRESS THEORY NOTES (АТАМҰРА) */}
+            {activeTab === "theory" && (
+              <div className="space-y-6">
+                <div className="card-glass p-6 rounded-xl space-y-2">
+                  <h2 className="text-xl font-bold text-slate-100">Оқулық бойынша Түйінді Теория Базасы</h2>
+                  <p className="text-xs text-slate-400">Атамұра баспасы және авторлық база негізінде дайындалған экспресс-анықтамалық</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Topic 1 Notes */}
+                  <div className="card-glass rounded-2xl p-5 space-y-3 border border-slate-800">
+                    <span className="text-xs font-bold text-amber-400">§1. Орта ғасырлар түсінігі</span>
+                    <ul className="text-xs text-slate-300 space-y-2 list-disc list-inside leading-relaxed">
+                      <li><strong>Термин авторы:</strong> XV ғ. итальяндық гуманист Флавио Бьондо.</li>
+                      <li><strong>Латынша аудармасы:</strong> Medium (орта), aevum (ғасыр).</li>
+                      <li><strong>Гуманистер:</strong> Адамгершілікті («гуманус») мүддені қорғайтын қайраткерлер.</li>
+                      <li><strong>Периодизация:</strong>
+                        <br/>1) Ерте: V – XI ғ. ортасы
+                        <br/>2) Дамыған: XI ғ. ортасы – XV ғ.
+                        <br/>3) Кейінгі: XV ғ. аяғы – XVII ғ. ортасы
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Topic 2 Notes */}
+                  <div className="card-glass rounded-2xl p-5 space-y-3 border border-slate-800">
+                    <span className="text-xs font-bold text-amber-400">§5. Феодалдық шаруашылық</span>
+                    <ul className="text-xs text-slate-300 space-y-2 list-disc list-inside leading-relaxed">
+                      <li><strong>Феод:</strong> Адал қызметі үшін берілетін мұрагерлік ірі жер иелігі.</li>
+                      <li><strong>Негізгі қағида:</strong> «Қожайынсыз жер болмайды».</li>
+                      <li><strong>Натуралды шаруашылық:</strong> Өнім тек өзін-өзі қамтамасыз етуге бағытталған.</li>
+                      <li><strong>Феодалдық Рента:</strong>
+                        <br/>• Барщина (еңбекпен өтеу)
+                        <br/>• Оброк (өніммен төлеу)
+                        <br/>• Ақшалай рента (кейінгі орта ғасырда)
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Topic 3 Notes */}
+                  <div className="card-glass rounded-2xl p-5 space-y-3 border border-slate-800">
+                    <span className="text-xs font-bold text-amber-400">§6. Әлеуметтік құрылым</span>
+                    <ul className="text-xs text-slate-300 space-y-2 list-disc list-inside leading-relaxed">
+                      <li><strong>Үш сословие:</strong> Дін иелері (құдайға сыйынушылар), Рыцарьлар (қорғаушылар), Шаруалар (асыраушылар).</li>
+                      <li><strong>Франциядағы ереже:</strong> «Менің вассалымның вассалы менің вассалым емес».</li>
+                      <li><strong>Шаруалар жігі:</strong>
+                        <br/>• Басыбайлы (Францияда – сервтер)
+                        <br/>• Ерікті (Англияда – вилландар)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </main>
+
+          {/* FOOTER */}
+          <footer className="border-t border-slate-800 bg-slate-950/80 py-4 text-center text-xs text-slate-500">
+            Орта ғасырлар тарихы • Атамұра баспасы негізінде жасалған оқу-саралау веб-құралы
+          </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
 </body>
 </html>
 ```eof
+
+I have created an interactive Kazakh language history learning application for differentiating student knowledge on the requested Middle Ages topics.
+
+### Key Features Included:
+1. **Interactive Differentiated Quiz (🎯 Сараланған Тест)**: Tests Bloom's taxonomy cognitive levels (Remembering, Understanding, Analyzing) across all three textbook chapters (Атамұра баспасы).
+2. **Term Matching Game (🧩 Тарихи Терминдер)**: Interactive activity for terms like *Феод, Инвеститура, Оммаж, Домен, Донжон*.
+3. **Feudal Hierarchy Pyramid Builder (👑 Феодалдық Саты)**: Interactive drag/reorder mechanics for arranging medieval social hierarchy (*King -> Duke/Count -> Barons -> Knights*).
+4. **Differentiation & Knowledge Analytics Dashboard (📊 Білім Аналитикасы)**: Automatic evaluation of learning percentage, level classification (A, B, C tiers), and personalized pedagogical recommendations for students and teachers.
+5. **Theory Notes Reference (📖 Түйін База)**: Quick reference summary extracted directly from the provided textbook topics.
