@@ -419,7 +419,7 @@ function nextFinal(){state.fi++;save();renderFinal()}
 function renderAnalytics(){
  let c=0,t=0;Object.values(state.modules).forEach(x=>{c+=x.c;t+=x.t});let p=t?Math.round(c/t*100):0;
  $('ringText').textContent=p+'%';$('ring').style.background=`conic-gradient(var(--accent) ${p*3.6}deg,#173044 0deg)`;$('masteryText').textContent=p===0?'Диагностика басталмаған':p>=90?'MASTER — толық меңгеру':p>=75?'EXPERT — жоғары деңгей':p>=60?'ADVANCED — жақсы, бірақ кей тұсты бекіту керек':p>=40?'BUILDER — негіз бар, жүйелеу қажет':'START — тақырыпты қайта қарау керек';
- let skills={Хронология:[0,0],Тұлғалар:[0,0],География:[0,0],Себеп-салдар:[0,0],Дерек:[0,0],Талдау:[0,0]};
+ let skills={'Хронология':[0,0],'Тұлғалар':[0,0],'География':[0,0],'Себеп-салдар':[0,0],'Дерек':[0,0],'Талдау':[0,0]};
  state.quiz.forEach(q=>{if(q){}}); // skill labels are shown through module performance below
  let arr=Object.entries(state.modules).map(([k,v])=>[k,v.c,v.t,v.t?Math.round(v.c/v.t*100):0]);
  $('skills').innerHTML=arr.map(x=>`<div class="skill"><b>${moduleName(x[0])}</b><div style="font-size:25px;margin-top:8px">${x[3]}%</div><div class="bar"><i style="width:${x[3]}%"></i></div><small style="color:var(--muted)">${x[1]} / ${x[2]}</small></div>`).join('');
