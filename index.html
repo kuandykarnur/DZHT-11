@@ -1,270 +1,3346 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="kk">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ТАРИХ LAB — Дамыған орта ғасырлар</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HISTORY LAB — 2-ай | 1-апта</title>
+
 <style>
 :root{
-  --bg:#08111f;--panel:#101c2f;--panel2:#14243b;--line:#263a56;
-  --text:#eef5ff;--muted:#9fb1c9;--accent:#63e6be;--accent2:#7aa7ff;
-  --gold:#ffd166;--danger:#ff6b7a;--shadow:0 20px 60px #0007;
+ --bg:#08090d;
+ --panel:#11131a;
+ --panel2:#171a23;
+ --line:#292e3b;
+ --text:#f5f7fb;
+ --muted:#9da5b5;
+ --gold:#ffc857;
+ --orange:#ff7a45;
+ --red:#ef5350;
+ --green:#55d187;
+ --blue:#5ca8ff;
+ --purple:#a879ff;
+ --cyan:#45d9df;
 }
-*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:
-radial-gradient(circle at 10% 0%,#17345b 0,transparent 35%),radial-gradient(circle at 90% 10%,#24433d 0,transparent 30%),var(--bg);color:var(--text)}
-button,input{font:inherit} button{cursor:pointer}
-.hidden{display:none!important}.app{min-height:100vh}.topbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(18px);background:#08111fcc;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
-.brand{display:flex;gap:12px;align-items:center;font-weight:900;letter-spacing:.4px}.brand .orb{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#63e6be,#7aa7ff);box-shadow:0 8px 30px #63e6be33}
-.container{max-width:1250px;margin:auto;padding:30px 20px 70px}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:stretch}
-.card{background:linear-gradient(145deg,#111f33ee,#0d1829ee);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:24px}
-h1{font-size:clamp(34px,5vw,64px);line-height:1.02;margin:10px 0 18px}h2{margin:0 0 12px}h3{margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:13px}
-.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:#cfe0f6;background:#0c1728}
-.btn{border:0;border-radius:14px;padding:12px 17px;font-weight:800;color:#07131f;background:var(--accent);transition:.2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}.btn.secondary{background:#1c2d46;color:var(--text);border:1px solid var(--line)}.btn.gold{background:var(--gold)}.btn.danger{background:var(--danger)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.topic{position:relative;overflow:hidden;min-height:190px}.topic .art{height:100px;margin:-24px -24px 18px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#172d4a,#0c1727)}
-.topic h3{font-size:19px}.topic p{color:var(--muted);font-size:14px}.topic .tag{position:absolute;right:16px;top:116px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:20px 0}.toolbar .grow{flex:1}
-.progress{height:9px;background:#17253a;border-radius:99px;overflow:hidden}.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0}
-.quizHead{display:flex;justify-content:space-between;gap:16px;align-items:center}.timer{font-variant-numeric:tabular-nums;color:var(--gold);font-weight:900}
-.question{font-size:24px;line-height:1.35;margin:25px 0}.options{display:grid;gap:12px}.opt{padding:16px;border:1px solid var(--line);border-radius:16px;background:#0e1a2b;color:var(--text);text-align:left;transition:.18s}.opt:hover{border-color:#55769e;transform:translateX(3px)}.opt.correct{border-color:var(--accent);background:#12362e}.opt.wrong{border-color:var(--danger);background:#3a1820}.letter{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#20334f;margin-right:10px;font-weight:900}
-.feedback{margin-top:16px;padding:15px;border-radius:14px;background:#0d1828;border:1px solid var(--line)}.feedback.good{border-color:#2eaa87}.feedback.bad{border-color:#c64f60}
-.match{display:grid;grid-template-columns:1fr 1fr;gap:16px}.match .bank,.match .targets{display:grid;gap:10px}.chip{padding:13px;border:1px dashed #45617f;border-radius:13px;background:#0d1929}.drop{min-height:52px;border:1px dashed #53749b;border-radius:13px;padding:10px;background:#0c1727}.drop.active{border-color:var(--accent)}.drag{cursor:grab}
-.timeline{display:flex;gap:10px;flex-wrap:wrap}.year{padding:13px 15px;border-radius:13px;background:#162840;border:1px solid var(--line);cursor:pointer}.year.selected{outline:2px solid var(--accent)}
-.mapWrap{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.map{border-radius:20px;background:#0a1627;border:1px solid var(--line);padding:10px}.map svg{width:100%;height:auto}.region{cursor:pointer;transition:.2s}.region:hover{filter:brightness(1.3)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat{padding:16px;border-radius:17px;background:#0d1929;border:1px solid var(--line)}.stat b{font-size:25px;display:block;margin-top:4px}
-.bar{height:10px;border-radius:99px;background:#1a2940;overflow:hidden}.bar i{height:100%;display:block;background:linear-gradient(90deg,var(--accent),var(--accent2))}
-.login{min-height:100vh;display:grid;place-items:center;padding:20px}.login .card{max-width:520px;width:100%}.field{display:grid;gap:7px;margin:14px 0}.field input{padding:14px;border-radius:13px;border:1px solid var(--line);background:#0b1728;color:var(--text);outline:none}.field input:focus{border-color:var(--accent)}
-.toast{position:fixed;right:20px;bottom:20px;background:#13243a;border:1px solid var(--line);padding:14px 16px;border-radius:14px;box-shadow:var(--shadow);z-index:50}
-footer{margin-top:30px;color:var(--muted);font-size:12px;text-align:center}
-@media(max-width:900px){.hero,.mapWrap{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.grid,.grid2{grid-template-columns:1fr}.topbar{padding:12px 15px}.container{padding:20px 14px 50px}.card{padding:18px}.question{font-size:20px}.match{grid-template-columns:1fr}}
+
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:
+ radial-gradient(circle at 10% 0%,#29200d 0,transparent 28%),
+ radial-gradient(circle at 90% 10%,#18152b 0,transparent 30%),
+ var(--bg);
+ color:var(--text);
+ font-family:Inter,Arial,sans-serif;
+ min-height:100vh;
+}
+
+button,input{
+ font:inherit;
+}
+
+button{
+ cursor:pointer;
+}
+
+.app{
+ display:flex;
+ min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+ width:280px;
+ background:rgba(10,11,16,.96);
+ border-right:1px solid var(--line);
+ padding:22px 16px;
+ position:fixed;
+ left:0;
+ top:0;
+ bottom:0;
+ overflow:auto;
+ z-index:50;
+}
+
+.logo{
+ font-size:25px;
+ font-weight:900;
+ letter-spacing:-1px;
+ margin-bottom:4px;
+}
+
+.logo span{
+ color:var(--gold);
+}
+
+.logoSub{
+ color:var(--muted);
+ font-size:11px;
+ margin-bottom:25px;
+}
+
+.profile{
+ background:linear-gradient(145deg,#191c27,#101219);
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:15px;
+ margin-bottom:20px;
+}
+
+.avatar{
+ width:45px;
+ height:45px;
+ border-radius:14px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:linear-gradient(135deg,var(--gold),var(--orange));
+ color:#111;
+ font-size:21px;
+ font-weight:900;
+ float:left;
+ margin-right:10px;
+}
+
+.profileName{
+ font-weight:800;
+}
+
+.profileXP{
+ color:var(--gold);
+ font-size:12px;
+ margin-top:4px;
+}
+
+.navTitle{
+ color:#656d7e;
+ font-size:10px;
+ font-weight:900;
+ letter-spacing:1.5px;
+ margin:22px 8px 8px;
+ text-transform:uppercase;
+}
+
+.navBtn{
+ width:100%;
+ border:0;
+ background:transparent;
+ color:#c9ced9;
+ text-align:left;
+ padding:11px 12px;
+ border-radius:11px;
+ margin:2px 0;
+ transition:.2s;
+}
+
+.navBtn:hover{
+ background:#1a1d27;
+ color:white;
+}
+
+.navBtn.active{
+ background:linear-gradient(90deg,#302817,#1b1b18);
+ color:var(--gold);
+ border:1px solid #514324;
+}
+
+/* MAIN */
+
+.main{
+ margin-left:280px;
+ width:calc(100% - 280px);
+ padding:28px;
+}
+
+.topbar{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
+ margin-bottom:25px;
+}
+
+.pageTitle{
+ font-size:30px;
+ font-weight:900;
+ letter-spacing:-1.5px;
+}
+
+.pageSub{
+ color:var(--muted);
+ margin-top:5px;
+ font-size:13px;
+}
+
+.topStats{
+ display:flex;
+ gap:10px;
+}
+
+.statMini{
+ border:1px solid var(--line);
+ background:#101219;
+ border-radius:13px;
+ padding:10px 14px;
+ min-width:90px;
+}
+
+.statMini b{
+ display:block;
+ font-size:18px;
+}
+
+.statMini span{
+ font-size:10px;
+ color:var(--muted);
+}
+
+/* HERO */
+
+.hero{
+ background:
+ linear-gradient(110deg,rgba(255,200,87,.09),transparent 40%),
+ linear-gradient(130deg,#171922,#0d0f14);
+ border:1px solid var(--line);
+ border-radius:25px;
+ padding:28px;
+ position:relative;
+ overflow:hidden;
+ margin-bottom:20px;
+}
+
+.hero:after{
+ content:"⚔";
+ position:absolute;
+ right:35px;
+ bottom:-35px;
+ font-size:170px;
+ opacity:.055;
+ transform:rotate(-12deg);
+}
+
+.heroTag{
+ color:var(--gold);
+ font-weight:800;
+ font-size:12px;
+ letter-spacing:1.5px;
+}
+
+.hero h1{
+ font-size:42px;
+ max-width:760px;
+ margin:10px 0;
+ letter-spacing:-2px;
+}
+
+.hero p{
+ color:#aeb5c4;
+ max-width:760px;
+ line-height:1.65;
+}
+
+.progressOuter{
+ height:8px;
+ background:#252833;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:22px;
+}
+
+.progressInner{
+ height:100%;
+ width:0%;
+ background:linear-gradient(90deg,var(--gold),var(--orange));
+ transition:.5s;
+}
+
+/* DASHBOARD CARDS */
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:14px;
+ margin-bottom:20px;
+}
+
+.card{
+ background:linear-gradient(145deg,#141720,#0f1117);
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:18px;
+ transition:.2s;
+}
+
+.card:hover{
+ transform:translateY(-2px);
+ border-color:#414858;
+}
+
+.cardIcon{
+ font-size:28px;
+ margin-bottom:12px;
+}
+
+.card h3{
+ margin:0 0 6px;
+ font-size:16px;
+}
+
+.card p{
+ margin:0;
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.5;
+}
+
+.card button{
+ margin-top:14px;
+}
+
+.btn{
+ border:0;
+ border-radius:11px;
+ padding:11px 15px;
+ font-weight:800;
+ color:#111;
+ background:var(--gold);
+}
+
+.btn.dark{
+ color:#fff;
+ background:#222631;
+ border:1px solid var(--line);
+}
+
+.btn.green{
+ background:var(--green);
+}
+
+.btn.blue{
+ background:var(--blue);
+}
+
+.btn.orange{
+ background:var(--orange);
+}
+
+.btn.red{
+ background:var(--red);
+}
+
+.btn:disabled{
+ opacity:.45;
+ cursor:not-allowed;
+}
+
+/* MODULE */
+
+.moduleHeader{
+ display:flex;
+ justify-content:space-between;
+ align-items:end;
+ margin:28px 0 12px;
+}
+
+.moduleHeader h2{
+ margin:0;
+ font-size:22px;
+}
+
+.moduleHeader span{
+ color:var(--muted);
+ font-size:12px;
+}
+
+.topicGrid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+}
+
+.topic{
+ padding:18px;
+ border-radius:17px;
+ border:1px solid var(--line);
+ background:#101219;
+ cursor:pointer;
+ position:relative;
+ overflow:hidden;
+}
+
+.topic .num{
+ color:var(--gold);
+ font-weight:900;
+ font-size:11px;
+}
+
+.topic h3{
+ margin:8px 0 7px;
+ font-size:15px;
+}
+
+.topic p{
+ color:var(--muted);
+ font-size:11px;
+ line-height:1.5;
+ margin:0;
+}
+
+.topic .topicProgress{
+ margin-top:12px;
+ height:5px;
+ background:#252933;
+ border-radius:10px;
+ overflow:hidden;
+}
+
+.topic .topicProgress div{
+ height:100%;
+ width:0;
+ background:var(--green);
+}
+
+/* QUESTION MODAL */
+
+.overlay{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.82);
+ backdrop-filter:blur(10px);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:100;
+ padding:20px;
+}
+
+.modal{
+ width:min(900px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:#11131a;
+ border:1px solid #343a49;
+ border-radius:25px;
+ padding:25px;
+ box-shadow:0 30px 100px #000;
+}
+
+.modalTop{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:18px;
+}
+
+.close{
+ background:#222630;
+ color:#fff;
+ border:0;
+ width:38px;
+ height:38px;
+ border-radius:12px;
+ font-size:18px;
+}
+
+.modeBadge{
+ display:inline-block;
+ padding:6px 10px;
+ background:#242936;
+ border-radius:20px;
+ color:var(--gold);
+ font-size:10px;
+ font-weight:900;
+}
+
+.question{
+ font-size:23px;
+ line-height:1.4;
+ font-weight:800;
+ margin:18px 0;
+}
+
+.options{
+ display:grid;
+ gap:10px;
+}
+
+.option{
+ border:1px solid var(--line);
+ background:#171a22;
+ color:#e9ecf2;
+ padding:15px;
+ border-radius:13px;
+ text-align:left;
+ transition:.2s;
+}
+
+.option:hover{
+ border-color:#5a6375;
+ background:#1c202a;
+}
+
+.option.correct{
+ border-color:var(--green);
+ background:rgba(85,209,135,.12);
+}
+
+.option.wrong{
+ border-color:var(--red);
+ background:rgba(239,83,80,.1);
+}
+
+.option.locked{
+ pointer-events:none;
+}
+
+.explain{
+ margin-top:16px;
+ border-radius:14px;
+ padding:15px;
+ background:#171a21;
+ color:#c2c8d4;
+ font-size:13px;
+ line-height:1.6;
+ display:none;
+}
+
+.modalFooter{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-top:20px;
+}
+
+.feedback{
+ font-size:12px;
+ color:var(--muted);
+}
+
+/* MATCH */
+
+.matchGrid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:20px;
+}
+
+.matchCol{
+ display:grid;
+ gap:9px;
+}
+
+.matchItem{
+ padding:14px;
+ border:1px solid var(--line);
+ background:#171a21;
+ border-radius:12px;
+ cursor:pointer;
+ font-size:13px;
+}
+
+.matchItem.selected{
+ border-color:var(--gold);
+ box-shadow:0 0 0 2px rgba(255,200,87,.1);
+}
+
+.matchItem.matched{
+ border-color:var(--green);
+ opacity:.6;
+ pointer-events:none;
+}
+
+.matchResult{
+ margin-top:18px;
+ padding:15px;
+ border-radius:14px;
+ background:#151820;
+ display:none;
+}
+
+/* TIMELINE */
+
+.timeline{
+ display:grid;
+ gap:10px;
+}
+
+.timeItem{
+ display:grid;
+ grid-template-columns:130px 1fr;
+ gap:15px;
+ align-items:center;
+ padding:14px;
+ background:#151820;
+ border:1px solid var(--line);
+ border-radius:13px;
+ cursor:pointer;
+}
+
+.timeYear{
+ color:var(--gold);
+ font-weight:900;
+}
+
+.timeItem.correct{
+ border-color:var(--green);
+}
+
+.timeItem.wrong{
+ border-color:var(--red);
+}
+
+/* CASE */
+
+.caseGrid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:12px;
+}
+
+.caseCard{
+ background:linear-gradient(145deg,#181b25,#101218);
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:20px;
+ cursor:pointer;
+}
+
+.caseCard .caseIcon{
+ font-size:35px;
+}
+
+.caseCard h3{
+ margin:10px 0 5px;
+}
+
+.caseCard p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.5;
+}
+
+/* MAP */
+
+.map{
+ min-height:430px;
+ border-radius:22px;
+ border:1px solid var(--line);
+ background:
+ radial-gradient(circle at 25% 35%,rgba(255,200,87,.15),transparent 15%),
+ radial-gradient(circle at 70% 45%,rgba(92,168,255,.12),transparent 18%),
+ linear-gradient(135deg,#111820,#101319);
+ position:relative;
+ overflow:hidden;
+}
+
+.map:before{
+ content:"ЕУРАЗИЯ";
+ position:absolute;
+ left:50%;
+ top:50%;
+ transform:translate(-50%,-50%);
+ font-size:90px;
+ font-weight:900;
+ letter-spacing:10px;
+ color:#fff;
+ opacity:.025;
+}
+
+.mapPoint{
+ position:absolute;
+ border:1px solid #5c6473;
+ background:#171c25;
+ color:#fff;
+ border-radius:50%;
+ width:68px;
+ height:68px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ font-size:10px;
+ cursor:pointer;
+}
+
+.mapPoint:hover{
+ border-color:var(--gold);
+ box-shadow:0 0 30px rgba(255,200,87,.2);
+}
+
+/* ANALYSIS */
+
+.analysis{
+ display:grid;
+ grid-template-columns:1.2fr .8fr;
+ gap:15px;
+}
+
+.bigPercent{
+ font-size:70px;
+ font-weight:900;
+ color:var(--gold);
+}
+
+.bar{
+ height:10px;
+ background:#252a35;
+ border-radius:20px;
+ overflow:hidden;
+ margin:8px 0 15px;
+}
+
+.bar div{
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,var(--red),var(--gold),var(--green));
+ transition:.5s;
+}
+
+.level{
+ display:flex;
+ justify-content:space-between;
+ padding:12px;
+ background:#161920;
+ border-radius:11px;
+ margin-bottom:7px;
+ font-size:12px;
+}
+
+/* TOAST */
+
+.toast{
+ position:fixed;
+ right:25px;
+ bottom:25px;
+ background:#1c2029;
+ border:1px solid #3a414f;
+ padding:14px 18px;
+ border-radius:13px;
+ z-index:300;
+ transform:translateY(100px);
+ opacity:0;
+ transition:.3s;
+}
+
+.toast.show{
+ transform:translateY(0);
+ opacity:1;
+}
+
+/* LOGIN */
+
+.login{
+ position:fixed;
+ inset:0;
+ background:
+ radial-gradient(circle at 50% 20%,#322815,transparent 30%),
+ #08090d;
+ z-index:500;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+
+.loginBox{
+ width:min(470px,100%);
+ padding:35px;
+ border:1px solid var(--line);
+ border-radius:28px;
+ background:rgba(17,19,26,.94);
+ box-shadow:0 30px 100px #000;
+ text-align:center;
+}
+
+.loginLogo{
+ font-size:40px;
+ font-weight:900;
+}
+
+.loginLogo span{
+ color:var(--gold);
+}
+
+.loginBox p{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.6;
+}
+
+.loginBox input{
+ width:100%;
+ padding:15px;
+ border:1px solid var(--line);
+ background:#0e1016;
+ color:#fff;
+ border-radius:13px;
+ outline:none;
+ margin:15px 0 10px;
+}
+
+.loginBox input:focus{
+ border-color:var(--gold);
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .topicGrid{grid-template-columns:repeat(2,1fr)}
+ .caseGrid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:750px){
+ .sidebar{
+  transform:translateX(-100%);
+ }
+ .sidebar.open{
+  transform:translateX(0);
+ }
+ .main{
+  margin-left:0;
+  width:100%;
+  padding:15px;
+ }
+ .grid,.topicGrid,.caseGrid{
+  grid-template-columns:1fr;
+ }
+ .hero h1{
+  font-size:30px;
+ }
+ .topbar{
+  align-items:flex-start;
+ }
+ .topStats{
+  display:none;
+ }
+ .matchGrid{
+  grid-template-columns:1fr;
+ }
+ .analysis{
+  grid-template-columns:1fr;
+ }
+}
+
+/* ART */
+
+.art{
+ height:145px;
+ border-radius:15px;
+ background:linear-gradient(145deg,#25202b,#12141b);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:70px;
+ margin-bottom:15px;
+ position:relative;
+ overflow:hidden;
+}
+
+.art span{
+ filter:drop-shadow(0 12px 20px rgba(0,0,0,.5));
+}
+
+.section{
+ display:none;
+}
+
+.section.active{
+ display:block;
+}
 </style>
 </head>
+
 <body>
-<div id="login" class="login">
-  <div class="card">
-    <div class="brand"><div class="orb"></div><span>ТАРИХ LAB</span></div>
-    <h1 style="font-size:42px">Білімді жаттама.<br>Дәлелде.</h1>
-    <p class="muted">Дамыған орта ғасырлар бойынша көпформатты диагностика. Сұрақтар мен тапсырмалар осы аптадағы авторлық базаға сүйеніп құрастырылған.</p>
-    <div class="field"><label>Оқушының аты-жөні</label><input id="name" placeholder="Мысалы: Айдана Ермек"></div>
-    <button class="btn" onclick="login()">Зертхананы бастау →</button>
-    <p class="small muted" style="margin-top:14px">Демо режимі: деректер браузердің LocalStorage қоймасында сақталады.</p>
-  </div>
+
+<!-- LOGIN -->
+<div class="login" id="login">
+ <div class="loginBox">
+  <div class="loginLogo">HISTORY <span>LAB</span></div>
+  <p>
+   Дүниежүзі тарихы • 2-ай • 1-апта<br>
+   Оқушының тақырыпты қаншалықты меңгергенін анықтайтын интерактивті зертхана.
+  </p>
+  <input id="studentName" placeholder="Оқушының аты-жөні">
+  <button class="btn" style="width:100%" onclick="startLab()">
+   ЗЕРТХАНАҒА КІРУ →
+  </button>
+ </div>
 </div>
 
-<div id="app" class="app hidden">
-<header class="topbar">
-  <div class="brand"><div class="orb"></div><span>ТАРИХ LAB</span></div>
-  <div style="display:flex;gap:8px;align-items:center"><span id="studentBadge" class="pill"></span><button class="btn secondary small" onclick="logout()">Шығу</button></div>
-</header>
-<main class="container" id="main"></main>
-<div id="toast" class="toast hidden"></div>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+ <div class="logo">HISTORY <span>LAB</span></div>
+ <div class="logoSub">MEDIEVAL ANALYTICS • 2АЙ/1АПТА</div>
+
+ <div class="profile">
+  <div class="avatar" id="avatar">?</div>
+  <div class="profileName" id="profileName">Оқушы</div>
+  <div class="profileXP">XP: <span id="xp">0</span></div>
+  <div style="clear:both"></div>
+ </div>
+
+ <div class="navTitle">БАСҚАРУ</div>
+
+ <button class="navBtn active" onclick="showSection('dashboard',this)">
+  🏠 Басты бет
+ </button>
+
+ <button class="navBtn" onclick="showSection('quiz',this)">
+  🧠 Күрделі Quiz
+ </button>
+
+ <button class="navBtn" onclick="showSection('match',this)">
+  🔗 Сәйкестендіру
+ </button>
+
+ <button class="navBtn" onclick="showSection('timeline',this)">
+  ⏳ Уақыт желісі
+ </button>
+
+ <button class="navBtn" onclick="showSection('map',this)">
+  🗺️ Еуразия картасы
+ </button>
+
+ <div class="navTitle">ЗЕРТХАНАЛАР</div>
+
+ <button class="navBtn" onclick="showSection('military',this)">
+  ⚔️ Әскери штаб
+ </button>
+
+ <button class="navBtn" onclick="showSection('art',this)">
+  🏛️ Өнер зертханасы
+ </button>
+
+ <button class="navBtn" onclick="showSection('cases',this)">
+  ⚖️ Кейс зертханасы
+ </button>
+
+ <button class="navBtn" onclick="showSection('detective',this)">
+  🕵️ Тарихи детектив
+ </button>
+
+ <button class="navBtn" onclick="showSection('uprising',this)">
+  🔥 Көтеріліс симуляторы
+ </button>
+
+ <button class="navBtn" onclick="showSection('empire',this)">
+  👑 Империя конструкторы
+ </button>
+
+ <div class="navTitle">НӘТИЖЕ</div>
+
+ <button class="navBtn" onclick="showSection('analysis',this)">
+  📊 Финалдық анализ
+ </button>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+ <div class="topbar">
+  <div>
+   <div class="pageTitle">Тарихи зерттеу орталығы</div>
+   <div class="pageSub">
+    Оқу емес — дәлелдеу. Жаттау емес — түсіндіру.
+   </div>
+  </div>
+
+  <div class="topStats">
+   <div class="statMini">
+    <b id="topAccuracy">0%</b>
+    <span>ДӘЛДІК</span>
+   </div>
+
+   <div class="statMini">
+    <b id="topTasks">0</b>
+    <span>ТАПСЫРМА</span>
+   </div>
+  </div>
+ </div>
+
+ <!-- DASHBOARD -->
+ <section class="section active" id="dashboard">
+
+  <div class="hero">
+   <div class="heroTag">HISTORY LAB / 02–01</div>
+
+   <h1>
+    Еуразияның өзгеруін
+    өзің зертте.
+   </h1>
+
+   <p>
+    Шыңғыс ханнан Жанна д’Аркқа дейінгі тарихи процестерді
+    тестпен ғана емес, карта, уақыт желісі, сәйкестендіру,
+    кейс, әскери стратегия және қорытынды анализ арқылы зертте.
+   </p>
+
+   <div class="progressOuter">
+    <div class="progressInner" id="mainProgress"></div>
+   </div>
+  </div>
+
+  <div class="grid">
+
+   <div class="card">
+    <div class="cardIcon">🧠</div>
+    <h3>Күрделі Quiz</h3>
+    <p>Фактіні емес, себеп-салдарды ажырататын сұрақтар.</p>
+    <button class="btn" onclick="showSection('quiz')">Бастау</button>
+   </div>
+
+   <div class="card">
+    <div class="cardIcon">⚔️</div>
+    <h3>Әскери штаб</h3>
+    <p>Моңғолдардың әскери жүйесін қолданып, стратегия таңда.</p>
+    <button class="btn orange" onclick="showSection('military')">Кіру</button>
+   </div>
+
+   <div class="card">
+    <div class="cardIcon">🗺️</div>
+    <h3>Карта</h3>
+    <p>Мемлекеттер мен тарихи орталықтарды кеңістікте анықта.</p>
+    <button class="btn blue" onclick="showSection('map')">Зерттеу</button>
+   </div>
+
+   <div class="card">
+    <div class="cardIcon">📊</div>
+    <h3>Финалдық анализ</h3>
+    <p>Барлық бөлім бойынша меңгеру деңгейіңді көр.</p>
+    <button class="btn green" onclick="showSection('analysis')">Анализ</button>
+   </div>
+
+  </div>
+
+  <div class="moduleHeader">
+   <h2>📚 Оқу модульдері</h2>
+   <span>Барлық тақырыптар</span>
+  </div>
+
+  <div class="topicGrid">
+
+   <div class="topic" onclick="startTopic('chingiz')">
+    <div class="num">§12</div>
+    <h3>Шыңғыс хан</h3>
+    <p>Темужін, құрылтай, Яса, жорықтар, саяси құрылым.</p>
+    <div class="topicProgress"><div id="p-chingiz"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('empire')">
+    <div class="num">§13</div>
+    <h3>Моңғол империясының құрылуы</h3>
+    <p>Қытай, Жетісу, Хорезм, Батыс жорықтары.</p>
+    <div class="topicProgress"><div id="p-empire"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('military')">
+    <div class="num">§14</div>
+    <h3>Моңғолдардың әскери өнері</h3>
+    <p>Атты әскер, тәртіп, барлау, әскери тактика.</p>
+    <div class="topicProgress"><div id="p-military"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('euroasia')">
+    <div class="num">§15</div>
+    <h3>Еуразияның этносаяси картасы</h3>
+    <p>Алтын Орда, Ильханат, Моғолстан, салдар.</p>
+    <div class="topicProgress"><div id="p-euroasia"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('timur')">
+    <div class="num">§46–48 Ә</div>
+    <h3>Әмір Темір империясы</h3>
+    <p>Самарқанд, жорықтар, Тоқтамыс, Баязид, мәдениет.</p>
+    <div class="topicProgress"><div id="p-timur"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('moscow')">
+    <div class="num">§46–48 Б</div>
+    <h3>Мәскеу мемлекеті</h3>
+    <p>Русь, Александр Невский және саяси өзгерістер.</p>
+    <div class="topicProgress"><div id="p-moscow"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('yuan')">
+    <div class="num">§46–48 В</div>
+    <h3>Құбылай мемлекеті, Ильханат</h3>
+    <p>Юань, Құбылай, Хулагу, Иран, Бағдат.</p>
+    <div class="topicProgress"><div id="p-yuan"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('peasants')">
+    <div class="num">§16</div>
+    <h3>Шаруалар көтерілісі</h3>
+    <p>Жакерия және Уот Тайлер көтерілісі.</p>
+    <div class="topicProgress"><div id="p-peasants"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('wars')">
+    <div class="num">§17</div>
+    <h3>Феодалдық соғыстар</h3>
+    <p>Жүзжылдық соғыс және Алқызыл–Ақ раушандар.</p>
+    <div class="topicProgress"><div id="p-wars"></div></div>
+   </div>
+
+   <div class="topic" onclick="startTopic('joan')">
+    <div class="num">§18</div>
+    <h3>Жанна д’Арк</h3>
+    <p>Орлеан, VII Карл, 1429, 1431, 1453.</p>
+    <div class="topicProgress"><div id="p-joan"></div></div>
+   </div>
+
+  </div>
+
+ </section>
+
+
+ <!-- QUIZ -->
+ <section class="section" id="quiz">
+
+  <div class="hero">
+   <div class="heroTag">MODE 01 / DEEP QUIZ</div>
+   <h1>Тарихи логика тесті</h1>
+   <p>
+    Мұнда дұрыс жауапты жаттап алу жеткіліксіз.
+    Себеп, уақыт, тұлға және салдар арасындағы байланысты тану керек.
+   </p>
+  </div>
+
+  <div class="card">
+   <div style="display:flex;justify-content:space-between">
+    <b>Күрделі сұрақтар банкі</b>
+    <span id="quizCounter" style="color:var(--gold)">0 / 0</span>
+   </div>
+
+   <div class="question" id="quizQuestion">
+    Тестті бастау үшін батырманы бас.
+   </div>
+
+   <div class="options" id="quizOptions"></div>
+
+   <div class="explain" id="quizExplain"></div>
+
+   <div class="modalFooter">
+    <div class="feedback" id="quizFeedback"></div>
+    <button class="btn" id="nextQuiz" onclick="nextQuiz()" disabled>
+     Келесі →
+    </button>
+   </div>
+  </div>
+
+ </section>
+
+
+ <!-- MATCH -->
+ <section class="section" id="match">
+
+  <div class="hero">
+   <div class="heroTag">MODE 02 / CONNECTION LAB</div>
+   <h1>Сәйкестендіру матрицасы</h1>
+   <p>
+    Сол жақтағы тарихи нысанды оң жақтағы дұрыс түсіндірмемен
+    байланыстыр.
+   </p>
+  </div>
+
+  <div class="card">
+   <div class="matchGrid">
+    <div>
+     <h3>Тарихи нысан</h3>
+     <div class="matchCol" id="matchLeft"></div>
+    </div>
+
+    <div>
+     <h3>Сипаттама</h3>
+     <div class="matchCol" id="matchRight"></div>
+    </div>
+   </div>
+
+   <div class="matchResult" id="matchResult"></div>
+  </div>
+
+ </section>
+
+
+ <!-- TIMELINE -->
+ <section class="section" id="timeline">
+
+  <div class="hero">
+   <div class="heroTag">MODE 03 / TIME MACHINE</div>
+   <h1>Хронологиялық уақыт желісі</h1>
+   <p>
+    Оқиғаларды дұрыс уақыт ретіне орналастыр.
+    Бір ғана дата емес — тарихи процестің логикасын түсін.
+   </p>
+  </div>
+
+  <div class="card">
+   <div class="timeline" id="timelineBox"></div>
+
+   <button class="btn" style="margin-top:18px"
+           onclick="checkTimeline()">
+    Хронологияны тексеру
+   </button>
+
+   <div class="matchResult" id="timelineResult"></div>
+  </div>
+
+ </section>
+
+
+ <!-- MAP -->
+ <section class="section" id="map">
+
+  <div class="hero">
+   <div class="heroTag">MODE 04 / EURASIA MAP</div>
+   <h1>Еуразия картасы</h1>
+   <p>
+    Картадағы тарихи нүктені таңда да, оның қандай
+    мемлекетпен/оқиғамен байланысты екенін анықта.
+   </p>
+  </div>
+
+  <div class="map" id="mapArea">
+
+   <button class="mapPoint" style="left:15%;top:25%"
+           onclick="mapQuestion('Қарақорым')">
+    Қарақорым
+   </button>
+
+   <button class="mapPoint" style="left:44%;top:38%"
+           onclick="mapQuestion('Отырар')">
+    Отырар
+   </button>
+
+   <button class="mapPoint" style="left:63%;top:30%"
+           onclick="mapQuestion('Самарқанд')">
+    Самарқанд
+   </button>
+
+   <button class="mapPoint" style="left:78%;top:51%"
+           onclick="mapQuestion('Бағдат')">
+    Бағдат
+   </button>
+
+   <button class="mapPoint" style="left:31%;top:65%"
+           onclick="mapQuestion('Киев')">
+    Киев
+   </button>
+
+   <button class="mapPoint" style="left:71%;top:75%"
+           onclick="mapQuestion('Орлеан')">
+    Орлеан
+   </button>
+
+  </div>
+
+  <div class="card" style="margin-top:15px">
+   <h3>🧭 Карта тапсырмасы</h3>
+   <p id="mapTask">
+    Картадағы нүктелердің бірін таңда.
+   </p>
+   <div id="mapAnswers" class="options"></div>
+  </div>
+
+ </section>
+
+
+ <!-- MILITARY -->
+ <section class="section" id="military">
+
+  <div class="hero">
+   <div class="heroTag">MODE 05 / MILITARY COMMAND</div>
+   <h1>Моңғол әскери штабы</h1>
+   <p>
+    Сен — әскери қолбасшысың. Әр жағдайда оқулықта көрсетілген
+    моңғол әскери жүйесіне сәйкес шешім қабылда.
+   </p>
+  </div>
+
+  <div class="grid">
+
+   <div class="card">
+    <div class="art"><span>🏹</span></div>
+    <h3>Барлау миссиясы</h3>
+    <p>
+     Қарсыластың орналасуын алдын ала анықтау қажет.
+    </p>
+    <button class="btn" onclick="militaryChoice(1)">
+     Шешім қабылдау
+    </button>
+   </div>
+
+   <div class="card">
+    <div class="art"><span>🐎</span></div>
+    <h3>Жылдам маневр</h3>
+    <p>
+     Ұзақ қашықтыққа жылдам қозғалу қажет.
+    </p>
+    <button class="btn orange" onclick="militaryChoice(2)">
+     Шешім қабылдау
+    </button>
+   </div>
+
+   <div class="card">
+    <div class="art"><span>🏰</span></div>
+    <h3>Қамал</h3>
+    <p>
+     Қала бекінісін бұзу керек.
+    </p>
+    <button class="btn red" onclick="militaryChoice(3)">
+     Шешім қабылдау
+    </button>
+   </div>
+
+  </div>
+
+  <div class="card" id="militaryResult">
+   Әскери жағдайды таңда.
+  </div>
+
+ </section>
+
+
+ <!-- ART -->
+ <section class="section" id="art">
+
+  <div class="hero">
+   <div class="heroTag">MODE 06 / ART LAB</div>
+   <h1>Романдық / готикалық өнер зертханасы</h1>
+   <p>
+    Бейнелік белгілер арқылы ортағасырлық мәдениетті
+    ажырат және тарихи контекстпен байланыстыр.
+   </p>
+  </div>
+
+  <div class="grid">
+
+   <div class="card">
+    <div class="art"><span>🏰</span></div>
+    <h3>Архитектуралық зерттеу</h3>
+    <p>Берілген нысанның тарихи сипаттамасын таңда.</p>
+    <button class="btn" onclick="artQuestion('castle')">Зерттеу</button>
+   </div>
+
+   <div class="card">
+    <div class="art"><span>⛪</span></div>
+    <h3>Сәулет логикасы</h3>
+    <p>Ғимараттың сипатын тарихи контекстпен байланыстыр.</p>
+    <button class="btn blue" onclick="artQuestion('church')">Зерттеу</button>
+   </div>
+
+   <div class="card">
+    <div class="art"><span>📜</span></div>
+    <h3>Миниатюра</h3>
+    <p>Тарихи дерек ретінде бейнені талда.</p>
+    <button class="btn orange" onclick="artQuestion('mini')">Зерттеу</button>
+   </div>
+
+  </div>
+
+  <div class="card" id="artResult"></div>
+
+ </section>
+
+
+ <!-- CASES -->
+ <section class="section" id="cases">
+
+  <div class="hero">
+   <div class="heroTag">MODE 07 / CASE LAB</div>
+   <h1>Жағдаяттық кейстер</h1>
+   <p>
+    Кейс таңда. Оқиғаның ішіне кір. Деректерді талдап,
+    тарихи шешім қабылда.
+   </p>
+  </div>
+
+  <div class="caseGrid">
+
+   <div class="caseCard" onclick="openCase(1)">
+    <div class="caseIcon">🏹</div>
+    <h3>Кейс №1 — Жетісу</h3>
+    <p>Күшлік, Жебе ноян және діни еркіндік жағдайы.</p>
+   </div>
+
+   <div class="caseCard" onclick="openCase(2)">
+    <div class="caseIcon">🏰</div>
+    <h3>Кейс №2 — Отырар</h3>
+    <p>1219 жылғы оқиғаларды тарихи логикамен талда.</p>
+   </div>
+
+   <div class="caseCard" onclick="openCase(3)">
+    <div class="caseIcon">👑</div>
+    <h3>Кейс №3 — Алтын Орда</h3>
+    <p>Бату жорығы мен Алтын Орданың құрылуын зертте.</p>
+   </div>
+
+   <div class="caseCard" onclick="openCase(4)">
+    <div class="caseIcon">🔥</div>
+    <h3>Кейс №4 — Жакерия</h3>
+    <p>1358 жылғы Франциядағы әлеуметтік дағдарыс.</p>
+   </div>
+
+   <div class="caseCard" onclick="openCase(5)">
+    <div class="caseIcon">🌹</div>
+    <h3>Кейс №5 — Раушандар</h3>
+    <p>Ланкастерлер мен Йорктер арасындағы тартыс.</p>
+   </div>
+
+   <div class="caseCard" onclick="openCase(6)">
+    <div class="caseIcon">⚔️</div>
+    <h3>Кейс №6 — Орлеан</h3>
+    <p>Жанна д’Арк және Франция тағдыры.</p>
+   </div>
+
+  </div>
+
+ </section>
+
+
+ <!-- DETECTIVE -->
+ <section class="section" id="detective">
+
+  <div class="hero">
+   <div class="heroTag">MODE 08 / HISTORY DETECTIVE</div>
+   <h1>Қате тарихшыны тап</h1>
+   <p>
+    Бір тарихшы бірнеше тұжырым айтты. Бірақ олардың бір бөлігі
+    дерекке сәйкес келмейді. Қатені анықта.
+   </p>
+  </div>
+
+  <div class="card">
+
+   <div class="options" id="detectiveOptions"></div>
+
+   <div class="explain" id="detectiveExplain"></div>
+
+  </div>
+
+ </section>
+
+
+ <!-- UPRISING -->
+ <section class="section" id="uprising">
+
+  <div class="hero">
+   <div class="heroTag">MODE 09 / SOCIAL CRISIS</div>
+   <h1>Көтеріліс симуляторы</h1>
+   <p>
+    Франция мен Англиядағы шаруалар көтерілісінің себептерін,
+    қатысушыларын және нәтижелерін салыстыр.
+   </p>
+  </div>
+
+  <div class="grid">
+
+   <div class="card">
+    <div class="art"><span>🔥</span></div>
+    <h3>Жакерия</h3>
+    <p>1358 жыл • Бовези • Гильом Каль</p>
+    <button class="btn red" onclick="uprising('jacquerie')">
+     Талдау
+    </button>
+   </div>
+
+   <div class="card">
+    <div class="art"><span>⚒️</span></div>
+    <h3>Уот Тайлер</h3>
+    <p>1381 жыл • Эссекс • Уот Тайлер</p>
+    <button class="btn orange" onclick="uprising('wat')">
+     Талдау
+    </button>
+   </div>
+
+  </div>
+
+  <div class="card" id="uprisingResult"></div>
+
+ </section>
+
+
+ <!-- EMPIRE -->
+ <section class="section" id="empire">
+
+  <div class="hero">
+   <div class="heroTag">MODE 10 / EMPIRE BUILDER</div>
+   <h1>Империяны құрастыр</h1>
+   <p>
+    Тарихи құрылымды элементтер арқылы жина.
+    Әр элементтің дұрыс орнын анықта.
+   </p>
+  </div>
+
+  <div class="card">
+
+   <div class="matchGrid">
+
+    <div>
+     <h3>Элементтер</h3>
+     <div class="matchCol" id="empireElements"></div>
+    </div>
+
+    <div>
+     <h3>Функциялар</h3>
+     <div class="matchCol" id="empireFunctions"></div>
+    </div>
+
+   </div>
+
+   <div class="matchResult" id="empireResult"></div>
+
+  </div>
+
+ </section>
+
+
+ <!-- ANALYSIS -->
+ <section class="section" id="analysis">
+
+  <div class="hero">
+   <div class="heroTag">FINAL / ANALYTICS ENGINE</div>
+   <h1>Сенің тарихи профилің</h1>
+   <p>
+    Жүйе барлық тапсырма нәтижесін біріктіріп,
+    тақырыпты меңгеру деңгейін есептейді.
+   </p>
+  </div>
+
+  <div class="analysis">
+
+   <div class="card">
+    <div class="bigPercent" id="finalPercent">0%</div>
+
+    <h3>Жалпы меңгеру</h3>
+
+    <div class="bar">
+     <div id="finalBar"></div>
+    </div>
+
+    <div class="level">
+     <span>0–49%</span>
+     <b>Қайта қарау қажет</b>
+    </div>
+
+    <div class="level">
+     <span>50–69%</span>
+     <b>Негізгі деңгей</b>
+    </div>
+
+    <div class="level">
+     <span>70–84%</span>
+     <b>Жақсы меңгеру</b>
+    </div>
+
+    <div class="level">
+     <span>85–100%</span>
+     <b>Толық меңгеру</b>
+    </div>
+
+    <button class="btn green" onclick="runFinalAnalysis()">
+     🔎 ҚАЙТА ЕСЕПТЕУ
+    </button>
+
+   </div>
+
+
+   <div class="card">
+
+    <h3>📚 Тақырыптық диагностика</h3>
+
+    <div id="topicAnalysis"></div>
+
+   </div>
+
+  </div>
+
+  <div class="card" style="margin-top:15px">
+   <h3>🧠 Мұғалімге арналған қорытынды</h3>
+
+   <div id="teacherAnalysis">
+    Әзірге жеткілікті дерек жоқ.
+    Оқушы бірнеше тапсырма орындағаннан кейін
+    автоматты талдау пайда болады.
+   </div>
+  </div>
+
+ </section>
+
+</main>
 </div>
+
+
+<!-- CASE MODAL -->
+<div class="overlay" id="overlay">
+ <div class="modal">
+
+  <div class="modalTop">
+   <div>
+    <span class="modeBadge" id="modalBadge">CASE</span>
+    <h2 id="modalTitle"></h2>
+   </div>
+
+   <button class="close" onclick="closeModal()">×</button>
+  </div>
+
+  <div id="modalBody"></div>
+
+ </div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
 
 <script>
-const TOPICS = [
- {id:'byz',title:'Византия империясы',sub:'§3 • V–X ғасырлар',desc:'Константинополь, Юстиниан, василевс, Ника көтерілісі, шіркеу, сыртқы қауіптер, Түрік қағанатымен байланыс.',icon:'🏛️'},
- {id:'rus',title:'Киев Русінің құрылуы',sub:'§4 • 3 басылым',desc:'Славян тайпалары, Рюриковичтер, князьдер, 988 жыл, Ярослав Мудрый, басқару және сауда.',icon:'🛡️'},
- {id:'islam',title:'Ислам дінінің пайда болуы',sub:'§8 • 2 басылым',desc:'Арабия, бәдеуилер, Мекке, Қағба, Мұхаммед пайғамбар, хижра және исламның таралуы.',icon:'☪️'},
- {id:'caliph',title:'Араб халифаты және мәдениет',sub:'§9 • 3 бөлім',desc:'Халифтер, Омейя, Аббас, жаулап алулар, мәдениет, ғылым және «Алтын ғасыр».',icon:'📜'},
- {id:'crusade',title:'Крест жорықтары',sub:'§10–11 • §21–23',desc:'Себептері, сегіз жорық, Саладин, Константинопольдің алынуы, салдары және Еуропа–мұсылман әлемі.',icon:'⚔️'}
-];
 
-const Q = [
-{t:'byz',type:'mc',d:1,q:'Рим империясының астанасын Босфордағы Византийге көшірудің негізгі маңызы неде?',o:['Еуропа мен Азия арасындағы маңызды сауда жолдарының қиылысында орналасуы','Қалада алтын кенінің мол болуы','Қалада тек латын тілінің қолданылуы','Қалаға славян тайпаларының қоныстануы'],a:0,e:'Константинополь Еуропа мен Азия, Қара теңіз бен Эгей теңізі арасындағы сауда жолдарының торабында болды.'},
-{t:'byz',type:'mc',d:2,q:'Византияда «василевс» атауы нені білдірді?',o:['Император','Қала басшысы','Шіркеу абызы','Салық жинаушы'],a:0,e:'Византия императоры василевс аталды; ол жоғары сот, сыртқы саясат, заң шығару және әскер басқару қызметтерін атқарды.'},
-{t:'byz',type:'mc',d:2,q:'532 жылғы Ника көтерілісіне тікелей қатысқан саяси топтар қалай аталды?',o:['Димдер','Викарийлер','Магистрлер','Префекттер'],a:0,e:'Димдер Константинопольдегі ықпалды саяси партиялар болды; венеттер мен прасиндер солардың ішіндегі ең ықпалдылары еді.'},
-{t:'byz',type:'mc',d:3,q:'Юстинианның заңдарды жүйелеуі мен билікті нығайтуын бірге қарастырғанда, бұл әрекеттердің ортақ мақсаты қандай?',o:['Мемлекетті басқаруды құқықтық және саяси жағынан күшейту','Шіркеуді толық жою','Византияны көшпелі мемлекетке айналдыру','Сауда жолдарын жабу'],a:0,e:'«Азаматтық құқықтар жинағы» император билігін және империяны басқаруды нығайтқан заңнамалық жетістік ретінде берілген.'},
-{t:'byz',type:'mc',d:3,q:'Византия мен Түрік қағанатының жақындасуына Иран факторы қалай әсер етті?',o:['Сауда және Иранға қарсы әскери ынтымақтастыққа түрткі болды','Екі мемлекеттің соғысуына әкелді','Византияның астанасын көшіруге себеп болды','Христиан дінін жоюға бағытталды'],a:0,e:'Маниах бастаған елшілік пен кейінгі келіссөздер Иранға қарсы сауда және әскери одақ құруға мүмкіндік берді.'},
-{t:'byz',type:'mc',d:2,q:'Византияның алтын ақшасы қалай аталды?',o:['Номисма','Динар','Драхма','Сестерций'],a:0,e:'Базада Византияның алтын ақшасы номисма деп көрсетілген.'},
-{t:'byz',type:'mc',d:2,q:'Юстиниан 532–537 жылдары Константинопольде қандай әйгілі храмды салғызды?',o:['Әулие София','Пантеон','Колизей','Қасиетті қабір шіркеуі'],a:0,e:'Әулие София храмы Юстиниан билігі тұсында 532–537 жылдары салынған.'},
-{t:'byz',type:'mc',d:3,q:'Византияның VII ғасырдан бастап арабтардан бірқатар аймақтардан айырылуын түсіндіретін ең дұрыс тізбек қайсы?',o:['Арабтардың күшеюі → Сирия, Палестина, Месопотамия, Мысырдың алынуы → аумақтың қысқаруы','Славяндардың күшеюі → Константинопольдің көшуі → Римнің құлауы','Ника көтерілісі → Киев Русінің құрылуы → Африканың алынуы','Түрік қағанаты → Ника көтерілісі → Испанияның алынуы'],a:0,e:'Базада арабтардың VII ғасырдың 30-жылдарынан қауіп төндіріп, Сирия, Палестина, Месопотамия, Мысырды алғаны көрсетілген.'},
-{t:'rus',type:'mc',d:1,q:'Шығыс славян тайпаларының жерінде Русь мемлекеті қай ғасырда қалыптасты?',o:['IX ғасырда','VI ғасырда','XI ғасырда','XIII ғасырда'],a:0,e:'Авторлық базада Шығыс славяндарда мемлекет IX ғасырда пайда болғаны көрсетіледі.'},
-{t:'rus',type:'mc',d:2,q:'Киев Русінің құрылуына шешуші саяси қадамдардың бірі қандай болды?',o:['Рюриковичтер әулеті князьдерінің Новгород пен Киевті біріктіруі','Крест жорықтарының басталуы','Аббас әулетінің билікке келуі','Константинопольдің құлауы'],a:0,e:'Базада Киев Русі Рюриковичтер әулеті князьдарының Новгород пен Киевті біріктіруінен пайда болғаны беріледі.'},
-{t:'rus',type:'mc',d:3,q:'988 жылды Киев Русі тарихындағы бетбұрыс ететін негізгі оқиға қандай?',o:['Византиядан христиан дінінің қабылдануы','Киевтің негізі қалануы','Русьтің арабтармен саудасының тоқтауы','Ярославтың таққа отыруы'],a:0,e:'Владимир тұсында 988 жылы Киев Русі Византиядан христиан дінін қабылдады.'},
-{t:'rus',type:'mc',d:3,q:'Ярослав Мудрыйдың қызметін сипаттайтын ең толық нұсқаны таңдаңыз.',o:['Мектептер ашу, сәулет өнерін дамыту, әулеттік некелерді күшейту','Тек әскери жорықтар жүргізу','Тек салықты жою','Константинопольді басып алу'],a:0,e:'Базада Ярославтың монастырьлар жанынан мектептер ашып, сәулетті дамытқаны және Батыс Еуропамен әулеттік некелер орнатқаны көрсетілген.'},
-{t:'rus',type:'mc',d:2,q:'Киев Русінің князь билігін шектейтін халық жиналысы қалай аталды?',o:['Вече','Дума','Митрополит','Дим'],a:0,e:'Вече — князь билігін шектейтін халық жиналысы.'},
-{t:'rus',type:'mc',d:3,q:'«Варягтардан гректерге баратын жол» Киев Русінің қай қызметімен тікелей байланысты?',o:['Сауда және қалалардың байланысы','Шіркеу басқаруы','Жер салығын есептеу','Әскери атақ беру'],a:0,e:'Новгород пен Киев осы маңызды сауда жолында орналасқан; Русьтің арабтармен, хазарлармен саудасы да көрсетілген.'},
-{t:'rus',type:'mc',d:2,q:'Киев Русінің сыртқа шығарған тауарларының дұрыс тізбегін көрсетіңіз.',o:['Құндыз, балауыз, кендір','Шай, кофе, мақта','Папирус, піл сүйегі, бұрыш','Жібек, қалайы, қорғасын'],a:0,e:'Базада құндыз, балауыз, кендір сыртқа шығарылған тауарлар ретінде берілген.'},
-{t:'rus',type:'mc',d:3,q:'1037 жылы Ярослав Киевте қандай маңызды құрылысты салдырды?',o:['София соборын','Әулие София храмын Константинопольде','Қағбаны','Латын империясының сарайын'],a:0,e:'Киевтегі София соборы 1037 жылы Ярослав Мудрый тұсында салынған.'},
-{t:'islam',type:'mc',d:1,q:'Ислам діні пайда болған негізгі аймақ қайсы?',o:['Арабия түбегі','Балқан түбегі','Кіші Азияның солтүстігі','Скандинавия'],a:0,e:'Авторлық база ислам дінінің Арабия түбегінде пайда болғанын көрсетеді.'},
-{t:'islam',type:'mc',d:2,q:'Исламға дейінгі араб қоғамындағы негізгі діни сипат қандай болды?',o:['Пұтқа табынушылық','Христиандықтың толық үстемдігі','Буддизм','Зороастризмнің мемлекеттік діні'],a:0,e:'Базада исламға дейінгі арабтардың діні пұтқа табынушылық болғаны көрсетілген.'},
-{t:'islam',type:'mc',d:2,q:'Қағба орналасқан қала?',o:['Мекке','Мәдина','Дамаск','Бағдад'],a:0,e:'Қағба Мекке қаласында орналасқан.'},
-{t:'islam',type:'mc',d:3,q:'Меккедегі әлеуметтік қайшылықтардың күшеюі исламның алғашқы үндеуінің әлеуметтік мазмұнымен қалай байланысады?',o:['Кедейлер мен әлсіз әлеуметтік топтарды қорғау идеяларының маңызын арттырды','Құлдықты күшейтті','Сауданы тоқтатты','Тек әскери ақсүйектердің мүддесін қорғады'],a:0,e:'Базада исламның кедейлерге, жетім-жесірлерге және әлсіздерге қатысты әділет идеясын көтергені көрінеді.'},
-{t:'islam',type:'mc',d:2,q:'Ислам дінінің негізін қалаушы ретінде базада кім көрсетілген?',o:['Мұхаммед пайғамбар','Әбу Бәкір','Омар','Осман'],a:0,e:'Базада ислам дінінің негізін салушы Мұхаммед пайғамбар деп көрсетілген.'},
-{t:'islam',type:'mc',d:3,q:'Арабиядағы көшпелі тайпалардың тұрмысын дұрыс сипаттайтын жұпты таңдаңыз.',o:['Бәдеуилер — көшпелі және жартылай көшпелі мал шаруашылығы','Бәдеуилер — тек теңіз саудасы','Қалалықтар — тек аңшылық','Сейидтер — егіншілердің атауы'],a:0,e:'Бәдеуилер шөлді аймақтарда көшпелі және жартылай көшпелі мал шаруашылығымен айналысқан.'},
-{t:'caliph',type:'mc',d:2,q:'Халифтер басқарған жалпы арабтық мемлекет қалай аталды?',o:['Араб халифаты','Киев Русі','Византия империясы','Латын империясы'],a:0,e:'Базада халифтер басқарған жалпы арабтық мемлекет Араб халифаты деп аталады.'},
-{t:'caliph',type:'mc',d:3,q:'Араб халифатында мұсылман емес халықтардан алынған салық қалай аталды?',o:['Жизия','Номисма','Рента','Зекет'],a:0,e:'Базада мұсылман емес тұрғындардан алынатын жизия көрсетілген.'},
-{t:'caliph',type:'mc',d:2,q:'Араб халифатының даму шыңы базада қай әулет тұсымен байланыстырылған?',o:['Омейя әулеті','Рюриковичтер','Штауфендер','Палеологтар'],a:0,e:'Авторлық базада Араб халифатының орта ғасырлардағы ең қуатты кезеңі Омейя әулеті тұсымен байланыстырылған.'},
-{t:'caliph',type:'mc',d:3,q:'Аббас әулеті тұсында халифаттың аумақтық сипаты қалай сипатталады?',o:['Азия, Африка және Еуропаның бөліктерін қамтыған кең аумақ','Тек Арабия түбегімен шектелді','Тек Еуропада орналасты','Тек Кавказда орналасты'],a:0,e:'Базада Аббас әулеті тұсында Араб халифаты Азия, Африка, Еуропаның бөліктерін қамтығаны көрсетілген.'},
-{t:'caliph',type:'mc',d:3,q:'Мәдени «Алтын ғасырды» түсіндіру үшін қай байланыс маңызды?',o:['Ғылым, білім, медицина, математика сияқты салалардың дамуы және білім мұрасын жинақтау','Тек әскери жорықтардың көбеюі','Қалалардың толық құлдырауы','Сауда жолдарының жабылуы'],a:0,e:'Авторлық база мұсылман әлемі мәдениетінің дамуын ғылым-білім және қалалық мәдениетпен байланыстырады.'},
-{t:'caliph',type:'mc',d:3,q:'Араб халифатының әлсіреуін түсіндіретін базадағы факторлардың бірі қандай?',o:['Ұзаққа созылған ішкі қақтығыстар мен саяси бытыраңқылық','Тек климаттың өзгеруі','Византияның бірден жойылуы','Киев Русінің құрылуы'],a:0,e:'Базада ұзақ жылдарға созылған қақтығыстар халифатты әлсіреткен жағдай ретінде беріледі.'},
-{t:'crusade',type:'mc',d:1,q:'Крест жорықтары қамтыған негізгі уақыт аралығы қандай?',o:['1096–1270 жылдар','395–476 жылдар','527–565 жылдар','750–900 жылдар'],a:0,e:'Атамұра бөлімінде крест жорықтарының 1096–1270 жылдарды қамтығаны көрсетілген.'},
-{t:'crusade',type:'mc',d:2,q:'1095 жылы крест жорығын жариялаған Рим папасы кім?',o:['ІІ Урбан','ІІІ Иннокентий','ІХ Людовик','ІІ Филипп'],a:0,e:'1095 жылы наурызда Рим папасы ІІ Урбан Клермон соборында крест жорығын жариялаған.'},
-{t:'crusade',type:'mc',d:3,q:'Алғашқы крест жорығында біртұтас басқарудың болмауы қандай мәселе туғызды?',o:['Әртүрлі жасақтардың ортақ стратегиямен тұрақты әрекет етуін қиындатты','Жорықтың бірден тоқтауына себеп болды','Византияның құлауына әкелді','Араб халифатын қайта құрды'],a:0,e:'Базада кресшілердің ең басты қиындықтарының бірі ретінде біртұтас басқарудың болмауы көрсетілген.'},
-{t:'crusade',type:'mc',d:2,q:'1099 жылы 15 шілдеде кресшілер қай қаланы басып алды?',o:['Иерусалимді','Бағдадты','Киевті','Александрияны'],a:0,e:'Базада Иерусалимнің 1099 жылы 15 шілдеде алынғаны көрсетілген.'},
-{t:'crusade',type:'mc',d:3,q:'Саладиннің Иерусалимді қайтаруы қай жылы болды?',o:['1187 жылы','1099 жылы','1147 жылы','1204 жылы'],a:0,e:'Саладин Иерусалимді 1187 жылы қайтарып алды.'},
-{t:'crusade',type:'mc',d:3,q:'Үшінші крест жорығына қатысқан үш ірі билеуші дұрыс көрсетілген қатарды таңдаңыз.',o:['Фридрих Барбаросса, ІІ Филипп Август, І Ричард','ІІ Урбан, Ярослав Мудрый, Юстиниан','Саладин, Владимир, Конрад','Омар, Осман, Муавия'],a:0,e:'Үшінші жорықты Германия императоры І Фридрих Барбаросса, Франция королі ІІ Филипп Август және Англия королі І Ричард басқарды.'},
-{t:'crusade',type:'mc',d:3,q:'Төртінші крест жорығының ерекше бұрылысын анықтаңыз.',o:['Кресшілер Константинопольді алып, Латын империясын құрды','Кресшілер Иерусалимді алғаш рет алды','Кресшілер Араб халифатын құрды','Кресшілер Киевті алды'],a:0,e:'1204 жылы Константинополь алынып, Византия орнына Латын империясы құрылды.'},
-{t:'crusade',type:'mc',d:3,q:'Крест жорықтарының Батыс Еуропа үшін ұзақ мерзімді ықпалының бірі ретінде база нені көрсетеді?',o:['Шығыстың саудасы, қолөнері және тауарлары туралы байланыстардың күшеюі','Еуропаның толық оқшаулануы','Барлық қалалардың жойылуы','Жерорта теңізі саудасының тоқтауы'],a:0,e:'Базада крест жорықтарының Батыс Еуропаға Шығыстың саудасы, қолөнері және тауарлары арқылы ықпал еткені көрсетілген.'}
-];
+/* =====================================================
+   HISTORY LAB ENGINE
+===================================================== */
 
-const MATCH = [
-{t:'rus',title:'Князьді өз қызметімен сәйкестендір',pairs:[['Игорь','Олегтен кейін таққа отырды'],['Святослав','Киев Русінің қуатын арттырды'],['Владимир','988 жылы христиан дінін қабылдатты'],['Ярослав Мудрый','Мектептер ашып, әулеттік некелерді күшейтті']]},
-{t:'byz',title:'Византия ұғымдарын сәйкестендір',pairs:[['Василевс','Император'],['Патриарх','Таққа отырған императорға тәж кигізуші'],['Эпарх','Қала басшысы'],['Димдер','Қала тәртібіне және қоғамдық шараларға қатысқан саяси топтар']]},
-{t:'crusade',title:'Жорықты мерзімімен сәйкестендір',pairs:[['Бірінші','1096–1099'],['Екінші','1147–1149'],['Үшінші','1189–1192'],['Төртінші','1202–1204'],['Бесінші','1217–1221'],['Алтыншы','1228–1229'],['Жетінші','1248–1254'],['Сегізінші','1270']]},
-{t:'caliph',title:'Араб халифатының негізгі ұғымдарын сәйкестендір',pairs:[['Халиф','Мемлекет басшысы атауы'],['Жизия','Мұсылман емес тұрғындардан алынған салық'],['Омейя','Халифаттың аса қуатты кезеңімен байланысты әулет'],['Аббас','Халифаттың кейінгі билеуші әулеті']]},
-{t:'islam',title:'Арабия қоғамының ұғымдарын сәйкестендір',pairs:[['Бәдеуилер','Көшпелі және жартылай көшпелі мал шаруашылығымен айналысушылар'],['Қағба','Меккедегі қасиетті ғибадатхана'],['Мекке','Қағба орналасқан қала'],['Сейид/шейх','Тайпа көсемі']]},
-];
+const state={
+ name:"",
+ xp:0,
+ answered:0,
+ correct:0,
+ topic:{
+  chingiz:{a:0,c:0},
+  empire:{a:0,c:0},
+  military:{a:0,c:0},
+  euroasia:{a:0,c:0},
+  timur:{a:0,c:0},
+  moscow:{a:0,c:0},
+  yuan:{a:0,c:0},
+  peasants:{a:0,c:0},
+  wars:{a:0,c:0},
+  joan:{a:0,c:0}
+ }
+};
 
-const CHRONO = [
-{t:'byz',title:'Византия оқиғаларын ертеректен кейінге орналастыр',items:['330 — Константинопольдің жаңа астана ретінде аталуына байланысты кезең','395 — Рим империясының Батыс және Шығыс болып бөлінуі','527 — Юстинианның билікке келуі','532 — Ника көтерілісі','532–537 — Әулие Софияның салынуы']},
-{t:'rus',title:'Киев Русі тарихының тізбегін ретте',items:['IX ғасыр — Шығыс славяндарда Русьтің қалыптасуы','912–945 — Игорьдің билігі','945–972 — Святославтың билігі','980–1015 — Владимирдің билігі','1019–1054 — Ярослав Мудрыйдың билігі']},
-{t:'crusade',title:'Алғашқы крест жорығының кезеңдерін ретте',items:['1095 — ІІ Урбан Клермонда жорыққа шақырды','1096 — кресшілер Константинопольге жетті','1097 — Никея алынды','1097 — Антиохия үшін ұзақ қоршау','1099 — Иерусалим алынды']},
-];
+let quizIndex=0;
+let quizQuestions=[];
+let quizAnswered=false;
 
-const SCENARIOS = [
-{t:'byz',title:'Дипломатиялық кабинет',q:'Сен Византия кеңесшісісің. Түрік қағанатымен байланыс орнатуда Иран факторын ескеру керек. Қай шешім базадағы деректерге ең сәйкес?',o:['Сауда және Иранға қарсы әскери ынтымақтастықты күшейту','Барлық сауда жолын жабу','Түрік қағанатымен байланысты үзу','Константинопольді Киевке көшіру'],a:0,e:'Маниах елшілігі мен II Юстин кезеңіндегі келіссөздер Иранға қарсы сауда және әскери одақпен байланыстырылған.'},
-{t:'rus',title:'Князь кеңесі',q:'Сауда жолы мен мемлекеттің ішкі басқаруын қатар күшейткің келеді. Қай жұп ең қисынды?',o:['Киев пен Новгород байланысын сақтау + веченің рөлін ескеру','Қағбаны қорғау + жизия енгізу','Латын империясын құру + Ника көтерілісін ұйымдастыру','Саладинмен келісім + Клермон соборын шақыру'],a:0,e:'Киев Русінде Киев–Новгород сауда жолы және князь билігін шектейтін вече туралы деректер бар.'},
-{t:'islam',title:'Мекке саудагері',q:'Меккедегі байлық пен әлеуметтік қайшылықты ескере отырып, исламның алғашқы әлеуметтік үндеуін қай нұсқа дұрыс көрсетеді?',o:['Кедейлер, жетімдер және әлсіздерге әділеттілік идеясын күшейту','Тек бай көпестерді қолдау','Сауданы толық тоқтату','Көшпелі мал шаруашылығын жою'],a:0,e:'Базада исламның әлсіз әлеуметтік топтарға назар аударғаны көрсетілген.'},
-{t:'caliph',title:'Халифат әкімшісі',q:'Мұсылман емес тұрғындарға қатысты базадағы салық атауын дұрыс таңда.',o:['Жизия','Номисма','Вече','Рента'],a:0,e:'Жизия — базада мұсылман емес халыққа қатысты көрсетілген салық.'},
-{t:'crusade',title:'Крест жорығының сарапшысы',q:'1204 жылғы оқиғаны көрген тарихшы ретінде ең маңызды саяси салдарды таңда.',o:['Константинополь алынып, Латын империясы құрылды','Саладин Иерусалимді қайтарды','Киев Русі христиандықты қабылдады','Юстиниан заңдары жазылды'],a:0,e:'Төртінші крест жорығында 1204 жылы Константинополь алынып, Латын империясы құрылды.'}
-];
-
-let state={name:'',score:0,total:0,correct:0,mode:'',topic:'all',qIndex:0,items:[],answers:[],compet:{білу:0,түсіну:0,қолдану:0,талдау:0},seconds:0,timer:null};
-
-function login(){
- const n=document.getElementById('name').value.trim(); if(!n){toast('Атыңызды енгізіңіз');return}
- state.name=n; localStorage.setItem('historyLabUser',n); showApp(); dashboard();
+function save(){
+ localStorage.setItem("historyLab",JSON.stringify(state));
+ updateUI();
 }
-function showApp(){document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');document.getElementById('studentBadge').textContent=state.name}
-function logout(){localStorage.removeItem('historyLabUser');location.reload()}
-function toast(s){const x=document.getElementById('toast');x.textContent=s;x.classList.remove('hidden');setTimeout(()=>x.classList.add('hidden'),2200)}
-function art(icon,topic){return `<div class="art"><div style="font-size:64px;filter:drop-shadow(0 15px 20px #0008)">${icon}</div></div>`}
-function dashboard(){
- document.getElementById('main').innerHTML=`
- <section class="hero">
-  <div class="card"><span class="pill">1-ай • 4-апта • Дамыған орта ғасырлар</span>
-   <h1>Тарихты<br><span style="color:var(--accent)">зертте.</span></h1>
-   <p class="muted" style="font-size:17px;max-width:720px">Бұл — жай тест емес. Жауап беру, сәйкестендіру, хронология, карта-сценарий және дерек талдауы арқылы тақырыпты қаншалықты түсінгенің анықталады.</p>
-   <div class="toolbar"><button class="btn" onclick="start('quiz','all')">Диагностика бастау →</button><button class="btn secondary" onclick="report()">Менің нәтижем</button></div>
-  </div>
-  <div class="card"><h2>Сенің прогрессің</h2><div class="stats">
-   <div class="stat"><span class="muted">Жалпы</span><b id="sTotal">0</b></div><div class="stat"><span class="muted">Дұрыс</span><b id="sCorrect">0%</b></div><div class="stat"><span class="muted">Деңгей</span><b id="sLevel">—</b></div><div class="stat"><span class="muted">Серия</span><b id="sStreak">0</b></div>
-  </div><div style="margin-top:18px"><div class="small muted">Меңгеру</div><div class="progress"><i id="masterBar"></i></div></div>
-  </div>
- </section>
- <div class="toolbar"><div class="grow"><h2>Тақырып зертханалары</h2><div class="muted">Әр зертханада бөлек диагностика жасауға болады.</div></div></div>
- <section class="grid">${TOPICS.map(x=>`<div class="card topic">${art(x.icon,x.id)}<span class="pill tag">${x.sub}</span><h3>${x.title}</h3><p>${x.desc}</p><button class="btn secondary small" onclick="start('quiz','${x.id}')">Зертханаға кіру →</button></div>`).join('')}</section>
- <div class="toolbar"><h2 style="width:100%">Форматтар</h2></div>
- <section class="grid2">
-  <div class="card"><h3>🧠 Кешенді диагностика</h3><p class="muted">30 кездейсоқ сұрақ: білу → түсіну → қолдану → талдау.</p><button class="btn" onclick="start('quiz','all')">Бастау</button></div>
-  <div class="card"><h3>🔗 Сәйкестендіру</h3><p class="muted">Ұғым, тұлға, оқиға және нәтиже арасындағы байланысты тап.</p><button class="btn secondary" onclick="start('match','all')">Бастау</button></div>
-  <div class="card"><h3>⏳ Хронология</h3><p class="muted">Оқиғаларды уақыт осіне қой. Жаттау емес, тарихи тізбекті түсіну.</p><button class="btn secondary" onclick="start('chrono','all')">Бастау</button></div>
-  <div class="card"><h3>🗺️ Карта-сценарий</h3><p class="muted">Картадағы бағыт пен оқиға логикасын талда.</p><button class="btn secondary" onclick="start('scenario','all')">Бастау</button></div>
- </section>
- <footer>Контенттің негізі: осы чатқа жүктелген 1-ай 4-апта авторлық база және оқулық. Сыртқы дерек қолданылмайды.</footer>`;
- loadProgress();
+
+function load(){
+ const x=localStorage.getItem("historyLab");
+
+ if(x){
+  Object.assign(state,JSON.parse(x));
+ }
 }
-function loadProgress(){
- const p=JSON.parse(localStorage.getItem('historyLabStats')||'{}');let total=p.total||0,acc=p.total?Math.round(p.correct/p.total*100):0;
- document.getElementById('sTotal').textContent=total;document.getElementById('sCorrect').textContent=acc+'%';
- document.getElementById('sLevel').textContent=acc>=85?'ЗЕРТТЕУШІ':acc>=65?'ТАЛДАУШЫ':acc>=50?'ДАМУДА':'БАСТАУ';
- document.getElementById('sStreak').textContent=p.streak||0;document.getElementById('masterBar').style.width=acc+'%';
+
+function updateUI(){
+
+ document.getElementById("xp").textContent=state.xp;
+ document.getElementById("topTasks").textContent=state.answered;
+
+ const acc=state.answered?
+ Math.round(state.correct/state.answered*100):0;
+
+ document.getElementById("topAccuracy").textContent=acc+"%";
+
+ const progress=Math.min(100,
+ Math.round(state.answered/60*100));
+
+ document.getElementById("mainProgress").style.width=progress+"%";
+
+ for(const key in state.topic){
+
+  const t=state.topic[key];
+
+  const p=t.a?
+  Math.round(t.c/t.a*100):0;
+
+  const el=document.getElementById("p-"+key);
+
+  if(el) el.style.width=p+"%";
+ }
+
+ runFinalAnalysis(false);
 }
-function filtered(arr,topic){return topic==='all'?arr:arr.filter(x=>x.t===topic)}
-function start(mode,topic){
- clearInterval(state.timer);state.mode=mode;state.topic=topic;state.qIndex=0;state.score=0;state.correct=0;state.compet={білу:0,түсіну:0,қолдану:0,талдау:0};
- if(mode==='quiz'){let pool=filtered(Q,topic).sort(()=>Math.random()-.5);state.items=pool.slice(0,Math.min(30,pool.length)).map(x=>({...x,o:shuffle([...x.o])}));}
- if(mode==='match'){state.items=filtered(MATCH,topic); if(!state.items.length)state.items=MATCH;}
- if(mode==='chrono'){state.items=filtered(CHRONO,topic); if(!state.items.length)state.items=CHRONO;}
- if(mode==='scenario'){state.items=filtered(SCENARIOS,topic); if(!state.items.length)state.items=SCENARIOS;}
- if(mode==='quiz'){renderQuiz();}else if(mode==='match'){renderMatch()}else if(mode==='chrono'){renderChrono()}else renderScenario();
+
+function startLab(){
+
+ const name=document.getElementById("studentName").value.trim();
+
+ if(!name){
+  toast("Атыңды енгіз.");
+  return;
+ }
+
+ state.name=name;
+
+ document.getElementById("profileName").textContent=name;
+ document.getElementById("avatar").textContent=name[0].toUpperCase();
+
+ document.getElementById("login").style.display="none";
+
+ save();
+
+ toast("Зертханаға қош келдің, "+name+"!");
 }
-function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function showSection(id,btn){
+
+ document.querySelectorAll(".section")
+ .forEach(x=>x.classList.remove("active"));
+
+ const sec=document.getElementById(id);
+
+ if(sec) sec.classList.add("active");
+
+ document.querySelectorAll(".navBtn")
+ .forEach(x=>x.classList.remove("active"));
+
+ if(btn) btn.classList.add("active");
+
+ if(id==="quiz") initQuiz();
+ if(id==="match") initMatch();
+ if(id==="timeline") initTimeline();
+ if(id==="detective") initDetective();
+ if(id==="empire") initEmpire();
+
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function toast(text){
+
+ const t=document.getElementById("toast");
+
+ t.textContent=text;
+ t.classList.add("show");
+
+ setTimeout(()=>t.classList.remove("show"),2500);
+}
+
+function record(topic,isCorrect){
+
+ state.answered++;
+
+ state.topic[topic].a++;
+
+ if(isCorrect){
+  state.correct++;
+  state.topic[topic].c++;
+  state.xp+=10;
+ }else{
+  state.xp+=2;
+ }
+
+ save();
+}
+
+
+/* =====================================================
+   QUIZ DATABASE
+   ONLY SOURCE-DERIVED CONTENT
+===================================================== */
+
+const QUESTIONS=[
+
+/* ШЫҢҒЫС ХАН */
+
+{
+ topic:"chingiz",
+ q:"1206 жылы Онон өзенінің бойындағы құрылтайдың тарихи маңызын ең дәл көрсететін жауапты таңда.",
+ a:[
+  "Темужінге «Шыңғыс хан» атағы беріліп, ұлы хан ретінде көтерілді",
+  "Бату Алтын Орданың ханы болып сайланды",
+  "Құбылай Юань әулетін құрды",
+  "Хулагу Иранға жорық бастады"
+ ],
+ c:0,
+ e:"1206 жылы Онон өзенінің бойындағы құрылтайда Темужін «Шыңғыс хан» деген атпен ұлы хан болып көтерілді."
+},
+
+{
+ topic:"chingiz",
+ q:"Қай оқиғалар тізбегі Шыңғыс ханның Қазақстан мен Орталық Азияға қарай жылжу логикасын дұрыс береді?",
+ a:[
+  "1218 Жетісу → 1219 Қазақстан мен Орта Азия → 1220 Бұхара/Самарқан → 1221 Мерв",
+  "1206 Жетісу → 1211 Мерв → 1218 Пекин → 1223 Бағдат",
+  "1219 Қытай → 1220 Жетісу → 1221 Киев → 1223 Иран",
+  "1221 Жетісу → 1223 Қытай → 1218 Мерв → 1219 Пекин"
+ ],
+ c:0,
+ e:"Базада Жетісудың 1218 жылы бағындырылуы, 1219 жылы Қазақстан мен Орта Азияны жаулау, 1220 жылы Бұхара мен Самарқан, 1221 жылы Мерв көрсетілген."
+},
+
+{
+ topic:"chingiz",
+ q:"Яса заңдарының саяси-әскери сипатын ең жақсы дәлелдейтін жұпты таңда.",
+ a:[
+  "Әскери міндет + тәртіпті қатаң сақтау",
+  "Тек сауда ережелері + қала құрылысы",
+  "Тек неке мәселелері + қолөнер",
+  "Тек дін мәселелері + теңіз саудасы"
+ ],
+ c:0,
+ e:"Яса қылмыс, соғыс, отбасы және неке, мақтау, салт-дәстүр мәселелерін қамтыды; әскери тәртіпке қатаң талаптар қойылды."
+},
+
+{
+ topic:"chingiz",
+ q:"Шыңғыс хан мемлекетінің аумақтық-саяси құрылымын сипаттайтын дұрыс нұсқа:",
+ a:[
+  "Орталық және екі қанат; қанаттар түмендерге, кейін мыңдық, жүздік, ондықтарға бөлінді",
+  "Тек қалаларға бөлініп, әр қала тәуелсіз болды",
+  "Екі ғана провинциядан тұрды",
+  "Тек діни орталықтарға бөлінді"
+ ],
+ c:0,
+ e:"База бойынша Шыңғыс хан мемлекетті орталыққа және екі қанатқа бөлді; әскери-әкімшілік жүйеде түмен, мыңдық, жүздік, ондықтар болды."
+},
+
+{
+ topic:"chingiz",
+ q:"1215 жылғы оқиға қайсы?",
+ a:[
+  "Моңғол әскерлері ұзақ соғыстан кейін Пекинді алды",
+  "Жетісу толық бағындырылды",
+  "Қалқа өзеніндегі шайқас өтті",
+  "Алтын Орда құрылды"
+ ],
+ c:0,
+ e:"Атамұра материалында 1215 жылы Пекиннің алынуы көрсетілген."
+},
+
+/* МОНҒОЛ ИМПЕРИЯСЫ */
+
+{
+ topic:"empire",
+ q:"1211–1279 жылдардағы Қытай-моңғол соғысының үш кезеңді құрылымын дұрыс анықта.",
+ a:[
+  "1211–1220; 1227–1234; 1235–1279",
+  "1206–1211; 1215–1220; 1223–1230",
+  "1218–1223; 1224–1240; 1241–1250",
+  "1235–1240; 1240–1260; 1260–1270"
+ ],
+ c:0,
+ e:"Базада Қытай-моңғол соғысы үш кезеңге бөлінеді: 1211–1220, 1227–1234 және 1235–1279."
+},
+
+{
+ topic:"empire",
+ q:"Жетісудағы Күшлікке қарсы Жебе ноянның әрекетінде қай фактор маңызды болды?",
+ a:[
+  "Діни еркіндік ұранын көтеруі және жергілікті мұсылмандардың қолдауы",
+  "Ағылшын королінен көмек алуы",
+  "Рим папасының әскер жіберуі",
+  "Алтын Ордадан салық жинауы"
+ ],
+ c:0,
+ e:"Материалда Жебе ноянның 1217 жылы Жетісуға жіберілгені, «Діни еркіндік» ұранын көтергені және жергілікті мұсылмандардың қолдау көрсеткені беріледі."
+},
+
+{
+ topic:"empire",
+ q:"1258 жылғы оқиға:",
+ a:[
+  "Моңғолдар Бағдатты басып алды",
+  "Құбылай Қытайды толық бағындырды",
+  "Жанна д’Арк Орлеанды азат етті",
+  "Алтын Орда құрылды"
+ ],
+ c:0,
+ e:"Хулагу әскерлері 1258 жылы ақпанда Аббасилер халифатының астанасы Бағдатты басып алды."
+},
+
+{
+ topic:"empire",
+ q:"1256 жылғы оқиға мен тұлғаны дұрыс байланыстыр.",
+ a:[
+  "Хулагу — Иранға кірді",
+  "Бату — Парижді алды",
+  "Құбылай — Бағдатты алды",
+  "Жебе — Орлеанды алды"
+ ],
+ c:0,
+ e:"1256 жылы Хулагу әскері Иран жеріне кірді."
+},
+
+{
+ topic:"empire",
+ q:"Құбылайдың Қытайдағы тарихи рөлін көрсет.",
+ a:[
+  "1279 жылы Қытайды біржолата бағындырып, Юань әулетінің негізін қалады",
+  "1219 жылы Отырарды қорғады",
+  "1358 жылы Жакерияны басқарды",
+  "1402 жылы Баязидті жеңді"
+ ],
+ c:0,
+ e:"База бойынша Құбылай 1279 жылы Қытайды толық бағындырып, Юань әулетінің негізін қалаған."
+},
+
+/* ӘСКЕРИ ӨНЕР */
+
+{
+ topic:"military",
+ q:"Моңғол әскері үшін жеңіл атты әскердің негізгі қызметін көрсет.",
+ a:[
+  "Қарауыл және барлау; кенеттен шабуыл жасау",
+  "Тек қамал салу",
+  "Тек салық жинау",
+  "Тек дипломатиялық келіссөз жүргізу"
+ ],
+ c:0,
+ e:"Атамұра материалында жеңіл атты әскер қарауылдық және барлау қызметін атқарып, кенеттен шабуыл жасағаны көрсетілген."
+},
+
+{
+ topic:"military",
+ q:"Қай әрекет моңғолдардың тактикалық тәсілдеріне сәйкес келеді?",
+ a:[
+  "Әдейі шегініп, қарсыласты соңына ертіп, қайта шабуыл жасау",
+  "Әскерді бір жерге жинап, қозғалыссыз күту",
+  "Қарсыласпен тек дипломатиялық келіссөз жүргізу",
+  "Атты әскерді пайдаланбау"
+ ],
+ c:0,
+ e:"Материалда тосқауыл, кенеттен шабуыл және әдейі шегіну арқылы жауды соңына ертіп қайта шабуылдау тәсілдері аталады."
+},
+
+{
+ topic:"military",
+ q:"Моңғолдардың ұзақ қашықтыққа тез қозғалуына мүмкіндік берген факторлардың бірі:",
+ a:[
+  "Атты әскердің жетегінде қосымша бос аттардың болуы",
+  "Әскердің жаяу жүруі",
+  "Тек өзен көлігін пайдалануы",
+  "Қамал ішінде тұрақты отыруы"
+ ],
+ c:0,
+ e:"Материалда қосымша бос аттардың алыс қашықтыққа тез жетуге жағдай жасағаны көрсетілген."
+},
+
+{
+ topic:"military",
+ q:"Қамалды алу кезінде моңғолдар қандай құралдар мен әдістерді қолданды?",
+ a:[
+  "Үлкен тас лақтыратын құралдар, өрттеу, өзен арнасын бұру және қамал бұзатын мамандар",
+  "Тек садақ",
+  "Тек дипломатиялық елшілік",
+  "Тек жаяу әскер"
+ ],
+ c:0,
+ e:"Атамұра материалында қамал бұзатын құралдар, ағаш қабырғаны өрттеу, су тасқынын жасау және өзен арнасын бұру секілді тәсілдер көрсетіледі."
+},
+
+/* ЕУРАЗИЯ */
+
+{
+ topic:"euroasia",
+ q:"Моңғол үстемдігінің Қазақстан аумағындағы теріс салдарын көрсететін ең толық нұсқа:",
+ a:[
+  "Қалалардың қиратылуы, егіншіліктің құлдырауы, суару жүйелерінің талқандалуы",
+  "Сауданың толық тоқтауы және барлық мемлекеттердің жойылуы",
+  "Тек теңіз саудасының тоқтауы",
+  "Тек Еуропадағы қалалардың өсуі"
+ ],
+ c:0,
+ e:"Атамұра материалында Отырар, Сығанақ сияқты қалалардың қирауы және суару жүйелерінің талқандалуы айтылған."
+},
+
+{
+ topic:"euroasia",
+ q:"1312 жылы Өзбек ханның шешімі:",
+ a:[
+  "Исламды Алтын Орданың мемлекеттік діні ету",
+  "Юань әулетін құру",
+  "Жакерияны тоқтату",
+  "Мәскеуді астана ету"
+ ],
+ c:0,
+ e:"1312 жылы Өзбек хан исламды Алтын Орданың мемлекеттік діні етіп жариялаған."
+},
+
+{
+ topic:"euroasia",
+ q:"Алтын Ордадағы этникалық құрамға қатысты дұрыс тұжырым:",
+ a:[
+  "Монғолдар сан жағынан аз болып, түркі тайпалары басым бөлікті құрады",
+  "Барлық халық тек моңғолдардан тұрды",
+  "Тек еуропалық халықтар өмір сүрді",
+  "Халықтың барлығы отырықшы болды"
+ ],
+ c:0,
+ e:"Атамұра материалында Алтын Ордада монғолдар саны аз, түркі тайпаларының басым болғаны көрсетілген."
+},
+
+/* ӘМІР ТЕМІР */
+
+{
+ topic:"timur",
+ q:"Әмір Темірдің мемлекетін бір орталыққа біріктіру мақсатына сәйкес келетін нысан:",
+ a:[
+  "Самарқанд — астана",
+  "Қарақорым — астана",
+  "Орлеан — астана",
+  "Эссекс — астана"
+ ],
+ c:0,
+ e:"База бойынша Әмір Темір өз мемлекетінің астанасы ретінде Самарқандты жариялаған."
+},
+
+{
+ topic:"timur",
+ q:"Әмір Темір мен Баязид арасындағы шешуші оқиға:",
+ a:[
+  "1402 жылы Анкара түбіндегі шайқаста Әмір Темірдің жеңісі",
+  "1258 жылы Бағдаттың алынуы",
+  "1218 жылы Жетісудың алынуы",
+  "1431 жылы Жанна д’Арктың өлімі"
+ ],
+ c:0,
+ e:"1402 жылы Анкара түбінде Әмір Темір Баязидті жеңген."
+},
+
+{
+ topic:"timur",
+ q:"Әмір Темірдің мәдени саясатына сәйкес келетін әрекет:",
+ a:[
+  "Жаулап алған аймақтардың ғалымдарын, суретшілерін және қолөнершілерін өз еліне жинау",
+  "Барлық қолөнершілерді қуып жіберу",
+  "Қалаларды толық жою",
+  "Ғалымдарға тыйым салу"
+ ],
+ c:0,
+ e:"Базада Әмір Темір жаулап алған аймақтардың ғалымдары, суретшілері мен қолөнершілерін өз еліне жинағаны көрсетілген."
+},
+
+{
+ topic:"timur",
+ q:"Әмір Темір қайтыс болған орын мен жыл:",
+ a:[
+  "1405 жылы ақпанда Отырарда",
+  "1431 жылы Орлеанда",
+  "1258 жылы Бағдатта",
+  "1381 жылы Эссексте"
+ ],
+ c:0,
+ e:"База бойынша Әмір Темір 1405 жылы ақпанда Отырарда қайтыс болған."
+},
+
+/* МӘСКЕУ */
+
+{
+ topic:"moscow",
+ q:"Моңғол шапқыншылығы кезінде салыстырмалы түрде қауіпсіз болған орыс жерлерінің бірі:",
+ a:[
+  "Новгород жері",
+  "Киев",
+  "Рязань",
+  "Владимир"
+ ],
+ c:0,
+ e:"Базада Еділ–Ока аралығы, Новгород жері және Солтүстік Русь қауіпсіздеу аймақтар ретінде көрсетіледі."
+},
+
+{
+ topic:"moscow",
+ q:"Русьтің моңғолдармен қарым-қатынасында болашақты ойлаған князьдердің бірі:",
+ a:[
+  "Александр Невский",
+  "Баязид",
+  "Хулагу",
+  "Гильом Каль"
+ ],
+ c:0,
+ e:"Базада Александр Невский осы контексте аталады."
+},
+
+/* ҚҰБЫЛАЙ / ИЛЬХАНАТ */
+
+{
+ topic:"yuan",
+ q:"Ильханат атауының Хулагумен байланысын көрсет.",
+ a:[
+  "Хулагу Иранды билеп, ильхан атағын алғандықтан Иран мемлекеті Ильхандар мемлекеті аталды",
+  "Хулагу Қытайда Юань әулетін құрды",
+  "Хулагу Англияда король болды",
+  "Хулагу Жанна д’Арктың қарсыласы болды"
+ ],
+ c:0,
+ e:"Материалда Хулагудың ұлы хан Құбылайдан ильхан атағын алғаны және осыдан Иранның Ильхандар мемлекеті аталғаны беріледі."
+},
+
+{
+ topic:"yuan",
+ q:"1260 жылы Хулагу қандай күштен жеңілді?",
+ a:[
+  "Мысырлық мәмлүктерден",
+  "Жапон әскерінен",
+  "Ағылшындардан",
+  "Новгород әскерінен"
+ ],
+ c:0,
+ e:"Базада 1260 жылы Хулагудың мысырлық мәмлүктерден жеңілгені көрсетілген."
+},
+
+/* КӨТЕРІЛІСТЕР */
+
+{
+ topic:"peasants",
+ q:"Жакерия көтерілісінің негізгі контекстін дұрыс көрсет.",
+ a:[
+  "1358 жыл, Бовези, Жүзжылдық соғыс пен «Қара індеттен» кейінгі күйзеліс, салықтың өсуі",
+  "1381 жыл, Эссекс, Юань әулетінің дағдарысы",
+  "1455 жыл, Англия, раушандар соғысы",
+  "1429 жыл, Орлеан, Жанна д’Арк"
+ ],
+ c:0,
+ e:"Атамұрада Жакерияның 1358 жылы Бовезиде болғаны және оның себептері ретінде соғыс, «Қара індет», салықтың өсуі көрсетіледі."
+},
+
+{
+ topic:"peasants",
+ q:"Уот Тайлер көтерілісінің Жакериядан басты айырмашылығы:",
+ a:[
+  "Ол Англияда 1381 жылы Эссекс графтығында басталды",
+  "Ол Францияда 1358 жылы басталды",
+  "Оны Гильом Каль басқарды",
+  "Ол Орлеанда өтті"
+ ],
+ c:0,
+ e:"Уот Тайлер көтерілісі 1381 жылы Англияның оңтүстік-шығысындағы Эссекс графтығында басталған."
+},
+
+/* ФЕОДАЛДЫҚ СОҒЫСТАР */
+
+{
+ topic:"wars",
+ q:"Алқызыл және Ақ раушандар соғысының екі жауын дұрыс көрсет.",
+ a:[
+  "Ланкастерлер мен Йорктер",
+  "Франция мен Англия",
+  "Моңғолдар мен қыпшақтар",
+  "Жактар мен феодалдар"
+ ],
+ c:0,
+ e:"База бойынша екі тарап — Плантагенет әулетінің екі бұтағы: Ланкастерлер және Йорктер."
+},
+
+{
+ topic:"wars",
+ q:"Раушандар соғысының 1455–1485 жылдар аралығында болуының негізгі контексті:",
+ a:[
+  "Англиядағы Ланкастерлер мен Йорктер арасындағы билік үшін күрес",
+  "Франциядағы шаруалар көтерілісі",
+  "Моңғолдардың Қытайға жорығы",
+  "Жанна д’Арктың Орлеанды азат етуі"
+ ],
+ c:0,
+ e:"1455–1485 жылдардағы соғыс Англиядағы Ланкастерлер мен Йорктер арасындағы билік үшін күреспен байланысты."
+},
+
+{
+ topic:"wars",
+ q:"Соғыс нәтижесінде Англияда билікке келген тұлға:",
+ a:[
+  "VII Генрих Тюдор",
+  "VII Карл",
+  "Бату",
+  "Хулагу"
+ ],
+ c:0,
+ e:"База бойынша отыз жылдық соғыстан кейін VII Генрих Тюдор билікке келді."
+},
+
+/* ЖАННА */
+
+{
+ topic:"joan",
+ q:"1429 жылы Жанна д’Арктың тарихи әрекетін көрсет.",
+ a:[
+  "VII Карлдың қабылдауында болып, Францияны азат ету үшін жасақ сұрады",
+  "Англия короліне ант берді",
+  "Бағдатты басып алды",
+  "Самарқандты астана етті"
+ ],
+ c:0,
+ e:"База бойынша 1429 жылы Жанна д’Арк VII Карлдың қабылдауында болып, Францияны азат ету үшін жасақ беруді өтінген."
+},
+
+{
+ topic:"joan",
+ q:"Жанна д’Арк неге «Орлеан қызы» атанды?",
+ a:[
+  "Орлеан оқиғаларынан кейін халық арасында осындай атауға ие болды",
+  "Домремиде туғандықтан",
+  "Реймсте тәж кигендіктен",
+  "Англияға барғандықтан"
+ ],
+ c:0,
+ e:"База бойынша Жанна д’Арк Орлеан оқиғасынан кейін халық арасында «Орлеан қызы» деп атала бастады."
+},
+
+{
+ topic:"joan",
+ q:"Жанна д’Арктың өміріндегі 1431 жыл қандай оқиғамен байланысты?",
+ a:[
+  "Ағылшын соты оны сиқыршы деп айыптап, отқа өртеді",
+  "Орлеан қоршауы басталды",
+  "Жүзжылдық соғыс басталды",
+  "Алтын Орда құрылды"
+ ],
+ c:0,
+ e:"База бойынша 1431 жылы Жанна д’Арк ағылшын сотында айыпталып, отқа өртелген."
+},
+
+{
+ topic:"joan",
+ q:"Жүзжылдық соғыстың аяқталған жылы ретінде көрсетілетін дата:",
+ a:[
+  "1453",
+  "1429",
+  "1431",
+  "1381"
+ ],
+ c:0,
+ e:"Базада соғыстың біткен жылы ретінде 1453 жыл көрсетілген."
+}
+
+];
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(arr){
+
+ const a=[...arr];
+
+ for(let i=a.length-1;i>0;i--){
+
+  const j=Math.floor(Math.random()*(i+1));
+
+  [a[i],a[j]]=[a[j],a[i]];
+ }
+
+ return a;
+}
+
+
+/* =====================================================
+   QUIZ
+===================================================== */
+
+function initQuiz(){
+
+ quizQuestions=shuffle(QUESTIONS);
+ quizIndex=0;
+
+ renderQuiz();
+}
+
 function renderQuiz(){
- const x=state.items[state.qIndex],pct=Math.round(state.qIndex/state.items.length*100);
- document.getElementById('main').innerHTML=`<div class="card">
- <div class="quizHead"><div><span class="pill">Диагностика • ${state.qIndex+1}/${state.items.length}</span></div><div class="timer" id="timer">01:00</div></div>
- <div class="progress" style="margin-top:14px"><i style="width:${pct}%"></i></div>
- <div class="question">${x.q}</div>
- <div class="options">${x.o.map((o,i)=>`<button class="opt" onclick="answerQuiz(${i})"><span class="letter">${String.fromCharCode(65+i)}</span>${o}</button>`).join('')}</div>
- <div id="feedback"></div>
- <div class="toolbar"><button class="btn secondary" onclick="dashboard()">← Бөлімдер</button></div>
- </div>`;
- state.seconds=60;state.timer=setInterval(()=>{state.seconds--;document.getElementById('timer').textContent='00:'+String(state.seconds).padStart(2,'0');if(state.seconds<=0){clearInterval(state.timer);answerQuiz(-1)}},1000);
+
+ if(quizIndex>=quizQuestions.length){
+
+  document.getElementById("quizQuestion").textContent=
+  "🎉 Quiz аяқталды!";
+
+  document.getElementById("quizOptions").innerHTML=
+  `<div class="card">
+    Барлық сұрақ аяқталды.<br>
+    <b>Нәтижеңді «Финалдық анализден» көр.</b>
+   </div>`;
+
+  document.getElementById("quizCounter").textContent=
+  quizQuestions.length+" / "+quizQuestions.length;
+
+  document.getElementById("nextQuiz").style.display="none";
+
+  return;
+ }
+
+ quizAnswered=false;
+
+ const q=quizQuestions[quizIndex];
+
+ document.getElementById("quizCounter").textContent=
+ `${quizIndex+1} / ${quizQuestions.length}`;
+
+ document.getElementById("quizQuestion").textContent=q.q;
+
+ document.getElementById("quizExplain").style.display="none";
+
+ document.getElementById("quizFeedback").textContent=
+ "Бір ғана жауап дұрыс.";
+
+ const options=shuffle(
+  q.a.map((text,i)=>({text,index:i}))
+ );
+
+ document.getElementById("quizOptions").innerHTML=
+ options.map(x=>
+ `<button class="option"
+  data-index="${x.index}"
+  onclick="answerQuiz(this,${q.c})">
+  <b>${letter(x.index,options)}</b>
+  ${x.text}
+ </button>`
+ ).join("");
+
+ document.getElementById("nextQuiz").disabled=true;
 }
-function answerQuiz(i){
- clearInterval(state.timer);const x=state.items[state.qIndex];const opts=[...document.querySelectorAll('.opt')];let correctText=x.o[x.a]; // a will be corrected after shuffle below
- // Since options are shuffled, find original correct text by comparing to original object
- const original=Q.find(z=>z.q===x.q);let ok=i>=0 && x.o[i]===original.o[original.a];
- opts.forEach((b,k)=>{if(x.o[k]===original.o[original.a])b.classList.add('correct');if(k===i&&!ok)b.classList.add('wrong')});
- if(ok){state.correct++;state.score+=x.d;state.compet[['','білу','түсіну','қолдану','талдау'][x.d]||'түсіну']++;}
- state.answers.push(ok);
- const f=document.getElementById('feedback');f.className='feedback '+(ok?'good':'bad');f.innerHTML=`<b>${ok?'Дұрыс!':'Талдап көр.'}</b><br>${original.e}`;
- opts.forEach(b=>b.disabled=true);
- f.innerHTML+=`<div class="toolbar"><button class="btn" onclick="${state.qIndex+1<state.items.length?'nextQuiz()':'finishQuiz()'}">${state.qIndex+1<state.items.length?'Келесі →':'Нәтижені көру'}</button></div>`;
+
+function letter(originalIndex,options){
+
+ const pos=options.findIndex(x=>x.index===originalIndex);
+
+ return ["A","B","C","D"][pos]+".";
 }
-function nextQuiz(){state.qIndex++;renderQuiz()}
-function finishQuiz(){
- const total=state.items.length,acc=Math.round(state.correct/total*100);saveStats(total,state.correct);
- document.getElementById('main').innerHTML=`<div class="card">
- <span class="pill">Диагностика аяқталды</span><h1 style="font-size:48px">${acc}%</h1>
- <p class="muted">Сен ${total} тапсырманың ${state.correct}-іне дұрыс жауап бердің.</p>
- <div class="stats"><div class="stat"><span class="muted">Білу</span><b>${state.compet.білу}</b></div><div class="stat"><span class="muted">Түсіну</span><b>${state.compet.түсіну}</b></div><div class="stat"><span class="muted">Қолдану</span><b>${state.compet.қолдану}</b></div><div class="stat"><span class="muted">Талдау</span><b>${state.compet.талдау}</b></div></div>
- <div style="margin-top:18px"><div class="small muted">Меңгеру пайызы</div><div class="bar"><i style="width:${acc}%"></i></div></div>
- <div class="toolbar"><button class="btn" onclick="dashboard()">Басты бет</button><button class="btn secondary" onclick="report()">Толық аналитика</button></div>
- </div>`;
+
+function answerQuiz(btn,correct){
+
+ if(quizAnswered)return;
+
+ quizAnswered=true;
+
+ const selected=Number(btn.dataset.index);
+
+ const q=quizQuestions[quizIndex];
+
+ const ok=selected===correct;
+
+ document.querySelectorAll("#quizOptions .option")
+ .forEach(x=>{
+
+  x.classList.add("locked");
+
+  if(Number(x.dataset.index)===correct)
+   x.classList.add("correct");
+
+ });
+
+ if(!ok)btn.classList.add("wrong");
+
+ record(q.topic,ok);
+
+ document.getElementById("quizExplain").innerHTML=
+ (ok?"✅ Дұрыс. ":"❌ Қате. ")+q.e;
+
+ document.getElementById("quizExplain").style.display="block";
+
+ document.getElementById("quizFeedback").textContent=
+ ok?"Дұрыс жауап +10 XP":"Қате жауап. Түсіндірмені оқы.";
+
+ document.getElementById("nextQuiz").disabled=false;
 }
-function saveStats(total,correct){
- let p=JSON.parse(localStorage.getItem('historyLabStats')||'{}');p.total=(p.total||0)+total;p.correct=(p.correct||0)+correct;p.streak=(p.streak||0)+(correct?1:0);localStorage.setItem('historyLabStats',JSON.stringify(p));
+
+function nextQuiz(){
+
+ quizIndex++;
+
+ renderQuiz();
 }
-function renderMatch(){
- const x=state.items[state.qIndex], pairs=shuffle(x.pairs.map(p=>({l:p[0],r:p[1]})));let targets=shuffle(pairs.map(p=>p.r));
- document.getElementById('main').innerHTML=`<div class="card"><span class="pill">Сәйкестендіру • ${state.qIndex+1}/${state.items.length}</span><h2 style="margin-top:15px">${x.title}</h2><p class="muted">Сол жақтағы ұғымды оң жақтағы анықтамамен таңда.</p>
- <div class="match"><div class="bank">${pairs.map((p,i)=>`<button class="chip drag" data-left="${escape(p.l)}" onclick="pickLeft(this)">${p.l}</button>`).join('')}</div>
- <div class="targets">${targets.map((r,i)=>`<button class="drop" data-right="${escape(r)}" onclick="pickRight(this)">${r}</button>`).join('')}</div></div>
- <div id="matchResult"></div><div class="toolbar"><button class="btn secondary" onclick="dashboard()">← Бөлімдер</button></div></div>`;
- window.matchPairs=pairs;window.selectedLeft=null;
+
+
+/* =====================================================
+   TOPIC
+===================================================== */
+
+function startTopic(topic){
+
+ quizQuestions=shuffle(
+  QUESTIONS.filter(x=>x.topic===topic)
+ );
+
+ quizIndex=0;
+
+ showSection("quiz");
+
+ renderQuiz();
 }
-function escape(s){return s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
-function pickLeft(el){document.querySelectorAll('[data-left]').forEach(x=>x.style.outline='');el.style.outline='2px solid var(--accent)';window.selectedLeft=el.dataset.left}
-function pickRight(el){
- if(!window.selectedLeft)return toast('Алдымен сол жақтан ұғымды таңда');
- const pair=window.matchPairs.find(p=>p.l===window.selectedLeft);const ok=pair&&pair.r===el.dataset.right;
- el.style.borderColor=ok?'var(--accent)':'var(--danger)';el.innerHTML=(ok?'✓ ':'✕ ')+el.dataset.right;
- if(ok){document.querySelector(`[data-left="${CSS.escape(window.selectedLeft)}"]`).disabled=true;window.selectedLeft=null;state.correct++;if(document.querySelectorAll('[data-left]:disabled').length===window.matchPairs.length){saveStats(window.matchPairs.length,state.correct);document.getElementById('matchResult').innerHTML='<div class="feedback good"><b>Толық сәйкестендірдің!</b><div class="toolbar"><button class="btn" onclick="state.qIndex++;state.qIndex<state.items.length?renderMatch():dashboard()">Келесі →</button></div></div>'}}
- else toast('Бұл анықтама сәйкес емес.');
+
+
+/* =====================================================
+   MATCHING
+===================================================== */
+
+const MATCH=[
+ ["Құрылтай","Ірі әскери және ішкі саяси мәселелер шешілетін империялық жиналыс"],
+ ["Яса","Моңғолдардың заңдары мен ережелерінің жинағы"],
+ ["Қарақорым","Моңғол империясының орталығы"],
+ ["Алтын Орда","Бату құрған мемлекет"],
+ ["Ильхан","Хулагуға қатысты атақ"],
+ ["Орлеан қызы","Жанна д’Арк"],
+ ["Жакерия","1358 жылғы Франциядағы шаруалар көтерілісі"],
+ ["Раушандар соғысы","Ланкастерлер мен Йорктер арасындағы соғыс"]
+];
+
+let matchSelected=null;
+let matchDone=0;
+
+function initMatch(){
+
+ matchSelected=null;
+ matchDone=0;
+
+ const shuffledRight=shuffle(
+  MATCH.map(x=>x[1])
+ );
+
+ document.getElementById("matchLeft").innerHTML=
+ MATCH.map((x,i)=>
+ `<div class="matchItem"
+       data-id="${i}"
+       onclick="selectMatch('L',${i},this)">
+       ${x[0]}
+ </div>`
+ ).join("");
+
+ document.getElementById("matchRight").innerHTML=
+ shuffledRight.map(text=>{
+  const id=MATCH.findIndex(x=>x[1]===text);
+
+  return `<div class="matchItem"
+       data-id="${id}"
+       onclick="selectMatch('R',${id},this)">
+       ${text}
+       </div>`;
+ }).join("");
+
+ document.getElementById("matchResult").style.display="none";
 }
-function renderChrono(){
- const x=state.items[state.qIndex], shuffled=shuffle([...x.items]);document.getElementById('main').innerHTML=`<div class="card"><span class="pill">Хронология • ${state.qIndex+1}/${state.items.length}</span><h2 style="margin-top:15px">${x.title}</h2><p class="muted">Элементтерді ең ерте оқиғадан ең кейінгі оқиғаға қарай шертіп ретте. Қайта шерту — орын ауыстыру.</p><div class="timeline" id="tl">${shuffled.map((s,i)=>`<button class="year" onclick="cycleYear(this)">${s}</button>`).join('')}</div><div class="toolbar"><button class="btn" onclick="checkChrono()">Тексеру</button><button class="btn secondary" onclick="dashboard()">← Бөлімдер</button></div><div id="chronoResult"></div></div>`;
+
+function selectMatch(side,id,el){
+
+ if(el.classList.contains("matched"))return;
+
+ if(!matchSelected){
+
+  matchSelected={side,id,el};
+
+  el.classList.add("selected");
+
+  return;
+ }
+
+ if(matchSelected.side===side){
+
+  document.querySelectorAll(".matchItem")
+  .forEach(x=>x.classList.remove("selected"));
+
+  matchSelected={side,id,el};
+  el.classList.add("selected");
+
+  return;
+ }
+
+ const first=matchSelected;
+
+ const ok=first.id===id;
+
+ if(ok){
+
+  first.el.classList.add("matched");
+  el.classList.add("matched");
+
+  matchDone++;
+
+  state.xp+=10;
+
+  if(matchDone===MATCH.length){
+
+   state.answered+=MATCH.length;
+   state.correct+=MATCH.length;
+
+   MATCH.forEach(x=>{
+    // matching жалпы аналитикаға енгізіледі
+   });
+
+   document.getElementById("matchResult").style.display="block";
+
+   document.getElementById("matchResult").innerHTML=
+   "🏆 Барлық сәйкестік дұрыс! +80 XP";
+  }
+
+ }else{
+
+  el.style.borderColor="var(--red)";
+
+  setTimeout(()=>{
+   el.style.borderColor="";
+  },500);
+
+  state.xp+=1;
+ }
+
+ first.el.classList.remove("selected");
+
+ matchSelected=null;
+
+ save();
 }
-function cycleYear(el){let p=el.parentElement; if(!el.nextElementSibling)p.prepend(el);else p.insertBefore(el,el.nextElementSibling)}
-function checkChrono(){
- const x=state.items[state.qIndex],now=[...document.querySelectorAll('#tl .year')].map(e=>e.textContent),ok=now.every((v,i)=>v===x.items[i]);
- if(ok){state.correct++;saveStats(x.items.length,1)}document.getElementById('chronoResult').innerHTML=`<div class="feedback ${ok?'good':'bad'}"><b>${ok?'Дұрыс рет!':'Әлі де ретте.'}</b><p>${x.items.join(' → ')}</p><button class="btn" onclick="state.qIndex++;state.qIndex<state.items.length?renderChrono():dashboard()">${state.qIndex+1<state.items.length?'Келесі →':'Аяқтау'}</button></div>`;
+
+
+/* =====================================================
+   TIMELINE
+===================================================== */
+
+const EVENTS=[
+ ["1206","Темужін Шыңғыс хан атанды"],
+ ["1211","Цзиньге қарсы жорық басталды"],
+ ["1215","Пекин алынды"],
+ ["1218","Жетісу моңғолдарға өтті"],
+ ["1219","Қазақстан мен Орта Азияны жаулау басталды"],
+ ["1220","Бұхара мен Самарқан алынды"],
+ ["1223","Қалқа өзеніндегі шайқас"],
+ ["1227","Шыңғыс хан қайтыс болды"],
+ ["1236","Батысқа жорық басталды"],
+ ["1243","Сарай-Бату салынды, Алтын Орда құрылды"],
+ ["1258","Бағдат алынды"],
+ ["1279","Қытай толық бағындырылды"],
+ ["1312","Өзбек хан исламды мемлекеттік дін етті"],
+ ["1358","Жакерия көтерілісі"],
+ ["1381","Уот Тайлер көтерілісі"],
+ ["1402","Анкара түбіндегі шайқас"],
+ ["1405","Әмір Темір Отырарда қайтыс болды"],
+ ["1429","Жанна д’Арк VII Карлға барды"],
+ ["1431","Жанна д’Арк өлім жазасына кесілді"],
+ ["1453","Жүзжылдық соғыс аяқталды"],
+ ["1455","Раушандар соғысы басталды"]
+];
+
+let timelineOrder=[];
+
+function initTimeline(){
+
+ timelineOrder=shuffle(EVENTS).slice(0,10);
+
+ document.getElementById("timelineBox").innerHTML=
+ timelineOrder.map((e,i)=>
+ `<div class="timeItem"
+       draggable="true"
+       data-year="${e[0]}"
+       ondragstart="dragStart(event,${i})"
+       ondragover="event.preventDefault()"
+       ondrop="dropTime(event,${i})">
+   <div class="timeYear">${e[0]}</div>
+   <div>${e[1]}</div>
+ </div>`
+ ).join("");
+
+ document.getElementById("timelineResult").style.display="none";
 }
-function renderScenario(){
- const x=state.items[state.qIndex];document.getElementById('main').innerHTML=`<div class="card"><span class="pill">Карта-сценарий • ${state.qIndex+1}/${state.items.length}</span><div class="mapWrap" style="margin-top:18px"><div class="map">
- <svg viewBox="0 0 700 400" role="img"><defs><linearGradient id="sea" x1="0" x2="1"><stop stop-color="#0d2a45"/><stop offset="1" stop-color="#102e39"/></linearGradient></defs><rect width="700" height="400" rx="20" fill="url(#sea)"/>
- <path d="M90 70 Q180 20 290 90 T430 100 Q520 70 620 150 L570 310 Q430 350 300 300 Q180 340 90 260Z" fill="#304a43" stroke="#6c8b73" stroke-width="3"/>
- <circle class="region" cx="170" cy="150" r="18" fill="#63e6be" onclick="mapToast('Константинополь')"/><circle class="region" cx="350" cy="190" r="18" fill="#ffd166" onclick="mapToast('Мекке/Шығыс бағыты туралы деректі тексер')"/><circle class="region" cx="500" cy="250" r="18" fill="#ff7a90" onclick="mapToast('Иерусалим')"/>
- <text x="130" y="125" fill="white" font-size="16">Константинополь</text><text x="470" y="225" fill="white" font-size="16">Иерусалим</text><text x="300" y="220" fill="white" font-size="16">Шығыс</text>
- <path d="M190 150 C280 110 380 150 485 240" fill="none" stroke="#7aa7ff" stroke-width="5" stroke-dasharray="10 8"/>
- </svg></div><div><h2>${x.title}</h2><p class="question" style="font-size:20px">${x.q}</p><div class="options">${x.o.map((o,i)=>`<button class="opt" onclick="answerScenario(${i})"><span class="letter">${String.fromCharCode(65+i)}</span>${o}</button>`).join('')}</div><div id="scenarioResult"></div></div></div></div>`;
+
+let dragIndex=null;
+
+function dragStart(e,i){
+ dragIndex=i;
 }
-function mapToast(s){toast(s)}
-function answerScenario(i){const x=state.items[state.qIndex],ok=i===x.a;document.querySelectorAll('.opt').forEach((b,k)=>{b.disabled=true;if(k===x.a)b.classList.add('correct');if(k===i&&!ok)b.classList.add('wrong')});if(ok){state.correct++;saveStats(1,1)}document.getElementById('scenarioResult').innerHTML=`<div class="feedback ${ok?'good':'bad'}"><b>${ok?'Дәлелді шешім!':'Деректі қайта салыстыр.'}</b><p>${x.e}</p><button class="btn" onclick="state.qIndex++;state.qIndex<state.items.length?renderScenario():dashboard()">${state.qIndex+1<state.items.length?'Келесі →':'Аяқтау'}</button></div>`}
-function report(){
- const p=JSON.parse(localStorage.getItem('historyLabStats')||'{}'),acc=p.total?Math.round(p.correct/p.total*100):0;
- document.getElementById('main').innerHTML=`<div class="card"><span class="pill">Жеке аналитика</span><h2 style="margin-top:15px">${state.name}</h2><p class="muted">Бұл көрсеткіш браузерде сақталған осы құрылғыдағы нәтижелерден есептеледі.</p>
- <div class="stats"><div class="stat"><span class="muted">Жауап</span><b>${p.total||0}</b></div><div class="stat"><span class="muted">Дұрыс</span><b>${p.correct||0}</b></div><div class="stat"><span class="muted">Меңгеру</span><b>${acc}%</b></div><div class="stat"><span class="muted">Деңгей</span><b>${acc>=85?'ЗЕРТТЕУШІ':acc>=65?'ТАЛДАУШЫ':acc>=50?'ДАМУДА':'БАСТАУ'}</b></div></div>
- <h3 style="margin-top:25px">Диагностикалық интерпретация</h3>
- <div class="grid2"><div class="card"><b>85–100%</b><p class="muted">Тақырыпты жүйелі түсіндіреді, деректерді байланыстырып талдай алады.</p></div><div class="card"><b>65–84%</b><p class="muted">Негізгі мазмұнды меңгерген, бірақ күрделі байланыстарды бекіту керек.</p></div><div class="card"><b>50–64%</b><p class="muted">Негізгі ұғымдар бар, себеп–салдар мен хронологияда қосымша жұмыс қажет.</p></div><div class="card"><b>0–49%</b><p class="muted">Тақырыптарды қайта қарап, қысқа блоктармен қайталау ұсынылады.</p></div></div>
- <div class="toolbar"><button class="btn" onclick="dashboard()">← Басты бет</button><button class="btn danger" onclick="resetStats()">Нәтижені тазарту</button></div></div>`;
+
+function dropTime(e,i){
+
+ if(dragIndex===null)return;
+
+ [timelineOrder[dragIndex],timelineOrder[i]]=
+ [timelineOrder[i],timelineOrder[dragIndex]];
+
+ dragIndex=null;
+
+ initTimelineRenderOnly();
 }
-function resetStats(){localStorage.removeItem('historyLabStats');toast('Нәтижелер тазартылды');report()}
-const old=localStorage.getItem('historyLabUser');if(old){state.name=old;showApp();dashboard()}
+
+function initTimelineRenderOnly(){
+
+ document.getElementById("timelineBox").innerHTML=
+ timelineOrder.map((e,i)=>
+ `<div class="timeItem"
+ draggable="true"
+ data-year="${e[0]}"
+ ondragstart="dragStart(event,${i})"
+ ondragover="event.preventDefault()"
+ ondrop="dropTime(event,${i})">
+ <div class="timeYear">${e[0]}</div>
+ <div>${e[1]}</div>
+ </div>`
+ ).join("");
+}
+
+function checkTimeline(){
+
+ const years=timelineOrder.map(x=>Number(x[0]));
+
+ const sorted=[...years].sort((a,b)=>a-b);
+
+ const correct=years.every((x,i)=>x===sorted[i]);
+
+ const result=document.getElementById("timelineResult");
+
+ result.style.display="block";
+
+ if(correct){
+
+  result.innerHTML=
+  "✅ Керемет! Хронологиялық логиканы дұрыс құрдың. +100 XP";
+
+  state.xp+=100;
+  state.answered+=10;
+  state.correct+=10;
+
+ }else{
+
+  result.innerHTML=
+  "❌ Реті толық дұрыс емес. Даталарды процестің логикасымен қайта орналастыр.";
+
+  state.xp+=5;
+  state.answered+=10;
+ }
+
+ save();
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+const MAPDATA={
+ "Қарақорым":{
+  q:"Қарақорым қандай тарихи нысанмен байланысты?",
+  a:["Моңғол империясының орталығы","Жанна д’Арк туған жер","Жакерия көтерілісінің орталығы","Раушандар соғысының орны"],
+  c:0,
+  topic:"empire"
+ },
+ "Отырар":{
+  q:"Отырар қай оқиғамен байланысты?",
+  a:["1219 жылғы моңғолдардың Қазақстанға жорығы","1453 жылғы соғыс","1381 жылғы көтеріліс","1402 жылғы Анкара шайқасы"],
+  c:0,
+  topic:"chingiz"
+ },
+ "Самарқанд":{
+  q:"Самарқанд қай тұлғаның мемлекетінде ерекше маңызға ие болды?",
+  a:["Әмір Темір","Уот Тайлер","Бату","Жанна д’Арк"],
+  c:0,
+  topic:"timur"
+ },
+ "Бағдат":{
+  q:"Бағдат қай оқиғамен байланысты?",
+  a:["1258 жылы Хулагу әскерінің басып алуы","1218 жылы Жетісудың алынуы","1405 жылы Әмір Темірдің өлімі","1358 жылы Жакерия"],
+  c:0,
+  topic:"yuan"
+ },
+ "Киев":{
+  q:"Киевті Бату әскері қай жылы алды?",
+  a:["1240","1206","1358","1453"],
+  c:0,
+  topic:"empire"
+ },
+ "Орлеан":{
+  q:"Орлеан қай тұлғамен байланысты?",
+  a:["Жанна д’Арк","Шыңғыс хан","Әмір Темір","Хулагу"],
+  c:0,
+  topic:"joan"
+ }
+};
+
+function mapQuestion(place){
+
+ const d=MAPDATA[place];
+
+ document.getElementById("mapTask").textContent=
+ `${place}: ${d.q}`;
+
+ document.getElementById("mapAnswers").innerHTML=
+ shuffle(d.a.map((x,i)=>({x,i})))
+ .map(o=>
+ `<button class="option"
+ onclick="mapAnswer(this,${o.i},${d.c},'${d.topic}')">
+ ${o.x}
+ </button>`
+ ).join("");
+}
+
+function mapAnswer(el,selected,correct,topic){
+
+ const ok=selected===correct;
+
+ document.querySelectorAll("#mapAnswers .option")
+ .forEach(x=>x.classList.add("locked"));
+
+ if(ok)el.classList.add("correct");
+ else el.classList.add("wrong");
+
+ record(topic,ok);
+
+ toast(ok?"🗺️ Дұрыс!":"❌ Қате.");
+}
+
+
+/* =====================================================
+   MILITARY SIMULATOR
+===================================================== */
+
+function militaryChoice(type){
+
+ const result=document.getElementById("militaryResult");
+
+ let text="";
+ let ok=false;
+
+ if(type===1){
+
+  text=
+  "🎯 Дұрыс шешім: барлау бөлімдерін пайдалану. "+
+  "Шыңғыс хан әскерінде барлау жүргізетін арнайы бөлімдер болған.";
+
+  ok=true;
+ }
+
+ if(type===2){
+
+  text=
+  "🐎 Дұрыс шешім: қосымша бос аттарды пайдалану. "+
+  "Бұл ұзақ қашықтыққа жылдам жетуге жағдай жасаған.";
+
+  ok=true;
+ }
+
+ if(type===3){
+
+  text=
+  "🏰 Дұрыс шешім: қамал бұзатын құралдар мен арнайы мамандарды пайдалану. "+
+  "Материалда үлкен тастарды лақтыратын құралдар, өрттеу, "+
+  "өзен арнасын бұру сияқты тәсілдер аталады.";
+
+  ok=true;
+ }
+
+ result.innerHTML=
+ `<h3>${ok?"✅ Стратегия дұрыс":"❌ Стратегия қате"}</h3>
+  <p>${text}</p>`;
+
+ record("military",ok);
+}
+
+
+/* =====================================================
+   ART LAB
+===================================================== */
+
+function artQuestion(type){
+
+ const result=document.getElementById("artResult");
+
+ let title="";
+ let body="";
+
+ if(type==="castle"){
+
+  title="🏰 Бекініс зерттеуі";
+
+  body=`
+  <div class="options">
+   <button class="option"
+   onclick="artAnswer(this,true)">
+   Қорғанысқа арналған бекініс ретінде қарастыру
+   </button>
+
+   <button class="option"
+   onclick="artAnswer(this,false)">
+   Бұл теңіз флотының кемесі
+   </button>
+  </div>`;
+ }
+
+ if(type==="church"){
+
+  title="⛪ Ортағасырлық сәулет";
+
+  body=`
+  <div class="options">
+   <button class="option"
+   onclick="artAnswer(this,true)">
+   Діни-мәдени контекстте зерттеу
+   </button>
+
+   <button class="option"
+   onclick="artAnswer(this,false)">
+   Оны әскери атты әскер түрі деп қабылдау
+   </button>
+  </div>`;
+ }
+
+ if(type==="mini"){
+
+  title="📜 Миниатюраны зерттеу";
+
+  body=`
+  <div class="options">
+   <button class="option"
+   onclick="artAnswer(this,true)">
+   Бейнені тарихи дерек ретінде контекстпен талдау
+   </button>
+
+   <button class="option"
+   onclick="artAnswer(this,false)">
+   Бейнені автоматты түрде барлық тарихи фактінің дәлелі деп қабылдау
+   </button>
+  </div>`;
+ }
+
+ result.innerHTML=`<h3>${title}</h3>${body}`;
+}
+
+function artAnswer(el,ok){
+
+ el.classList.add(ok?"correct":"wrong");
+
+ document.querySelectorAll("#artResult .option")
+ .forEach(x=>x.classList.add("locked"));
+
+ record("euroasia",ok);
+}
+
+
+/* =====================================================
+   CASE ENGINE
+===================================================== */
+
+const CASES={
+
+1:{
+ title:"Кейс №1 — Жетісудағы таңдау",
+ badge:"1217–1218",
+ body:`
+ <p>
+ Жетісуда Күшлік билігі кезінде жергілікті мұсылмандарға
+ қысым күшейді. Жебе ноян бастаған моңғол әскері
+ «Діни еркіндік» ұранын көтерді.
+ </p>
+
+ <h3>Сенің міндетің:</h3>
+
+ <div class="options">
+
+ <button class="option"
+ onclick="caseAnswer(this,true,'empire')">
+ Жергілікті мұсылмандардың Жебені қолдауын тарихи фактор ретінде бағалау
+ </button>
+
+ <button class="option"
+ onclick="caseAnswer(this,false,'empire')">
+ Жергілікті халықтың барлығы Күшлікті қолдады деп қорытындылау
+ </button>
+
+ </div>
+ `
+},
+
+2:{
+ title:"Кейс №2 — Отырар",
+ badge:"1219",
+ body:`
+ <p>
+ Моңғолдар Қазақстан мен Орта Азияны жаулауды бастады.
+ Отырарды әмір Ғайыр хан қорғады. Қаладағы соғыс
+ алты айға созылды.
+ </p>
+
+ <div class="options">
+
+ <button class="option"
+ onclick="caseAnswer(this,true,'chingiz')">
+ Отырар оқиғасын 1219 жылғы моңғол жорығының контекстіне қою
+ </button>
+
+ <button class="option"
+ onclick="caseAnswer(this,false,'chingiz')">
+ Отырарды 1453 жылғы Жүзжылдық соғысқа жатқызу
+ </button>
+
+ </div>
+ `
+},
+
+3:{
+ title:"Кейс №3 — Алтын Орда",
+ badge:"1243",
+ body:`
+ <p>
+ Бату әскері батыс жорықтарынан кейін Еділдің төменгі
+ сағасына оралды.
+ </p>
+
+ <div class="options">
+
+ <button class="option"
+ onclick="caseAnswer(this,true,'euroasia')">
+ 1243 жылы Сарай-Бату салынып, Алтын Орда құрылды
+ </button>
+
+ <button class="option"
+ onclick="caseAnswer(this,false,'euroasia')">
+ 1243 жылы Юань әулеті құрылды
+ </button>
+
+ </div>
+ `
+},
+
+4:{
+ title:"Кейс №4 — Жакерия",
+ badge:"1358",
+ body:`
+ <p>
+ Франциядағы шаруалар соғыстан, «Қара індеттен» және
+ салықтың өсуінен кейін көтерілді.
+ </p>
+
+ <div class="options">
+
+ <button class="option"
+ onclick="caseAnswer(this,true,'peasants')">
+ Бұл факторларды Жакерияның әлеуметтік-экономикалық себептерімен байланыстыру
+ </button>
+
+ <button class="option"
+ onclick="caseAnswer(this,false,'peasants')">
+ Оны Юань әулетінің құлауымен байланыстыру
+ </button>
+
+ </div>
+ `
+},
+
+5:{
+ title:"Кейс №5 — Раушандар соғысы",
+ badge:"1455–1485",
+ body:`
+ <p>
+ Англияда Плантагенет әулетінің екі бұтағы билік үшін
+ күресті.
+ </p>
+
+ <div class="options">
+
+ <button class="option"
+ onclick="caseAnswer(this,true,'wars')">
+ Ланкастерлер мен Йорктер арасындағы күрес
+ </button>
+
+ <button class="option"
+ onclick="caseAnswer(this,false,'wars')">
+ Франция мен Англия арасындағы сыртқы соғыс
+ </button>
+
+ </div>
+ `
+},
+
+6:{
+ title:"Кейс №6 — Орлеан",
+ badge:"1429",
+ body:`
+ <p>
+ Жанна д’Арк VII Карлға келіп, Францияны азат ету үшін
+ жасақ сұрады.
+ </p>
+
+ <div class="options">
+
+ <button class="option"
+ onclick="caseAnswer(this,true,'joan')">
+ Оны Францияның Жүзжылдық соғыс жағдайындағы азаттық күресімен байланыстыру
+ </button>
+
+ <button class="option"
+ onclick="caseAnswer(this,false,'joan')">
+ Оны Алтын Орданың құрылуымен байланыстыру
+ </button>
+
+ </div>
+ `
+}
+
+};
+
+function openCase(id){
+
+ const c=CASES[id];
+
+ document.getElementById("modalBadge").textContent=c.badge;
+ document.getElementById("modalTitle").textContent=c.title;
+ document.getElementById("modalBody").innerHTML=c.body;
+
+ document.getElementById("overlay").style.display="flex";
+}
+
+function closeModal(){
+
+ document.getElementById("overlay").style.display="none";
+}
+
+function caseAnswer(el,ok,topic){
+
+ document.querySelectorAll("#modalBody .option")
+ .forEach(x=>x.classList.add("locked"));
+
+ el.classList.add(ok?"correct":"wrong");
+
+ record(topic,ok);
+
+ if(ok){
+
+  toast("Кейс дұрыс шешілді +10 XP");
+
+ }else{
+
+  toast("Кейс шешімін қайта талда.");
+ }
+}
+
+
+/* =====================================================
+   DETECTIVE
+===================================================== */
+
+const DETECTIVE=[
+ "1206 жылы Темужін Онон өзеніндегі құрылтайда Шыңғыс хан атанды.",
+ "1218 жылы Жетісу моңғолдардың қолына өтті.",
+ "1243 жылы Сарай-Бату салынып, Алтын Орда құрылды.",
+ "1312 жылы Өзбек хан исламды мемлекеттік дін етті.",
+ "1402 жылы Әмір Темір Анкарада Баязидті жеңді.",
+ "1429 жылы Жанна д’Арк VII Карлдың қабылдауында болды.",
+ "1455 жылы Жакерия көтерілісі басталды."
+];
+
+function initDetective(){
+
+ document.getElementById("detectiveOptions").innerHTML=
+ shuffle(DETECTIVE.map((x,i)=>({x,i})))
+ .map(o=>
+ `<button class="option"
+ onclick="detectiveAnswer(this,${o.i})">
+ ${o.x}
+ </button>`
+ ).join("");
+
+ document.getElementById("detectiveExplain").style.display="none";
+}
+
+function detectiveAnswer(el,id){
+
+ const wrong=id===6;
+
+ document.querySelectorAll("#detectiveOptions .option")
+ .forEach(x=>x.classList.add("locked"));
+
+ el.classList.add(wrong?"correct":"wrong");
+
+ const exp=document.getElementById("detectiveExplain");
+
+ exp.innerHTML=wrong?
+ "✅ Қате тұжырым осы: Жакерия 1358 жылы болды. 1455 жыл Алқызыл және Ақ раушандар соғысының басталуымен байланысты."
+ :
+ "❌ Бұл тұжырым дерекке сәйкес келеді. Басқа тұжырымдарды тексер.";
+
+ exp.style.display="block";
+
+ record("wars",wrong);
+}
+
+
+/* =====================================================
+   UPRISING
+===================================================== */
+
+function uprising(type){
+
+ const result=document.getElementById("uprisingResult");
+
+ if(type==="jacquerie"){
+
+  result.innerHTML=`
+  <h3>🔥 Жакерия — 1358</h3>
+  <p>
+   Бовези округінде болды. Көтеріліске шаруалармен қатар
+   қолөнершілер, ұсақ саудагерлер және кейбір қала тұрғындары
+   қатысты. Гильом Каль жетекшілік етті.
+  </p>
+  <p><b>Негізгі контекст:</b> Жүзжылдық соғыс,
+  «Қара індет», салықтың өсуі.</p>
+  `;
+ }
+
+ if(type==="wat"){
+
+  result.innerHTML=`
+  <h3>⚒️ Уот Тайлер — 1381</h3>
+  <p>
+   Англияның Эссекс графтығында басталды.
+   Көтерілісті бұрын Жүзжылдық соғысқа қатысқан
+   Уот Тайлер басқарды.
+  </p>
+  <p><b>Себеп:</b> Франциямен соғысты жалғастыру үшін
+  жаңа салық енгізілуі.</p>
+  `;
+ }
+
+ state.xp+=15;
+
+ save();
+}
+
+
+/* =====================================================
+   EMPIRE BUILDER
+===================================================== */
+
+const EMPIRE=[
+ ["Ұлы хан","Мемлекет басшысы"],
+ ["Құрылтай","Ірі әскери және ішкі саясат мәселелерін шешу"],
+ ["Яса","Заң ережелері"],
+ ["Дарғы бектер","Аймақтарды басқару"],
+ ["Қарақорым","Империя орталығы"],
+ ["Бату","Алтын Орданы құрған тұлға"]
+];
+
+function initEmpire(){
+
+ document.getElementById("empireElements").innerHTML=
+ EMPIRE.map((x,i)=>
+ `<div class="matchItem"
+ onclick="empireSelect('L',${i},this)">
+ ${x[0]}
+ </div>`).join("");
+
+ document.getElementById("empireFunctions").innerHTML=
+ shuffle(EMPIRE.map((x,i)=>({text:x[1],id:i})))
+ .map(x=>
+ `<div class="matchItem"
+ onclick="empireSelect('R',${x.id},this)">
+ ${x.text}
+ </div>`).join("");
+
+ empireSelected=null;
+ empireDone=0;
+}
+
+let empireSelected=null;
+let empireDone=0;
+
+function empireSelect(side,id,el){
+
+ if(el.classList.contains("matched"))return;
+
+ if(!empireSelected){
+
+  empireSelected={side,id,el};
+  el.classList.add("selected");
+  return;
+ }
+
+ if(empireSelected.side===side){
+
+  document.querySelectorAll("#empire .matchItem")
+  .forEach(x=>x.classList.remove("selected"));
+
+  empireSelected={side,id,el};
+  el.classList.add("selected");
+  return;
+ }
+
+ const first=empireSelected;
+
+ if(first.id===id){
+
+  first.el.classList.add("matched");
+  el.classList.add("matched");
+
+  empireDone++;
+  state.xp+=10;
+
+  if(empireDone===EMPIRE.length){
+
+   document.getElementById("empireResult").style.display="block";
+   document.getElementById("empireResult").innerHTML=
+   "👑 Империя толық дұрыс құрылды!";
+  }
+
+ }else{
+
+  toast("Бұл функция сәйкес келмейді.");
+ }
+
+ first.el.classList.remove("selected");
+ empireSelected=null;
+
+ save();
+}
+
+
+/* =====================================================
+   FINAL ANALYSIS
+===================================================== */
+
+function runFinalAnalysis(show=true){
+
+ const percent=state.answered?
+ Math.round(state.correct/state.answered*100):0;
+
+ const final=document.getElementById("finalPercent");
+
+ if(final)final.textContent=percent+"%";
+
+ const bar=document.getElementById("finalBar");
+
+ if(bar)bar.style.width=percent+"%";
+
+ const container=document.getElementById("topicAnalysis");
+
+ if(!container)return;
+
+ container.innerHTML="";
+
+ for(const key in state.topic){
+
+  const t=state.topic[key];
+
+  const p=t.a?
+  Math.round(t.c/t.a*100):0;
+
+  const names={
+   chingiz:"§12 Шыңғыс хан",
+   empire:"§13 Моңғол империясы",
+   military:"§14 Әскери өнер",
+   euroasia:"§15 Еуразия картасы",
+   timur:"Әмір Темір",
+   moscow:"Мәскеу мемлекеті",
+   yuan:"Құбылай / Ильханат",
+   peasants:"Шаруалар көтерілісі",
+   wars:"Феодалдық соғыстар",
+   joan:"Жанна д’Арк"
+  };
+
+  container.innerHTML+=`
+   <div style="margin-bottom:14px">
+
+    <div style="
+     display:flex;
+     justify-content:space-between;
+     font-size:12px;
+     margin-bottom:5px">
+
+     <span>${names[key]}</span>
+     <b>${p}%</b>
+
+    </div>
+
+    <div class="bar">
+     <div style="width:${p}%"></div>
+    </div>
+
+   </div>
+  `;
+ }
+
+ const teacher=document.getElementById("teacherAnalysis");
+
+ const weak=[];
+ const strong=[];
+
+ for(const key in state.topic){
+
+  const t=state.topic[key];
+
+  if(!t.a)continue;
+
+  const p=Math.round(t.c/t.a*100);
+
+  if(p<60)weak.push(key);
+  if(p>=85)strong.push(key);
+ }
+
+ teacher.innerHTML=`
+ <p>
+ <b>Оқушы:</b> ${state.name||"Оқушы"}
+ </p>
+
+ <p>
+ <b>Жалпы меңгеру:</b> ${percent}%
+ </p>
+
+ <p>
+ <b>Орындалған:</b> ${state.answered} тапсырма
+ </p>
+
+ <p>
+ <b>Дұрыс:</b> ${state.correct}
+ </p>
+
+ <p>
+ <b>XP:</b> ${state.xp}
+ </p>
+
+ <p>
+ <b>Диагностика:</b>
+ ${
+  percent>=85
+  ?"Тақырыптар жоғары деңгейде меңгерілген."
+  :
+  percent>=70
+  ?"Негізгі материал жақсы меңгерілген, бірақ кейбір күрделі байланыстарды бекіту қажет."
+  :
+  percent>=50
+  ?"Негізгі білім бар, алайда даталар, тұлғалар және себеп-салдарлық байланыстарды қайталау қажет."
+  :
+  "Материалды қайта қарап, тақырыптық тапсырмаларды қайталап орындау ұсынылады."
+ }
+ </p>
+
+ <p>
+ <b>Әлсіз аймақтар:</b>
+ ${weak.length?weak.join(", "):"анықталған жоқ"}
+ </p>
+
+ <p>
+ <b>Күшті аймақтар:</b>
+ ${strong.length?strong.join(", "):"әлі анықталған жоқ"}
+ </p>
+ `;
+
+ if(show)toast("📊 Анализ жаңартылды.");
+}
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+load();
+
+if(state.name){
+
+ document.getElementById("login").style.display="none";
+
+ document.getElementById("profileName").textContent=state.name;
+ document.getElementById("avatar").textContent=
+ state.name[0].toUpperCase();
+
+}
+
+updateUI();
+
 </script>
+
 </body>
 </html>
